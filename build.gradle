@@ -1,0 +1,99 @@
+group 'br.com.luizalabs'
+version '0.0.1'
+description = "API para importação e consulta de arquivos de log do jogo Quake"
+
+buildscript {
+    ext.artifactId = 'quaklog-api'
+    ext.archive_extension = 'jar'
+    ext.archive_file_name = "${artifactId}.${archive_extension}"
+
+    ext.jacoco_palantir_version = '0.4.0'
+    ext.google_jib_version = '1.8.0'
+
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.palantir:jacoco-coverage:$jacoco_palantir_version"
+    }
+}
+
+apply plugin: 'jacoco'
+apply plugin: 'com.palantir.jacoco-full-report'
+
+jacoco {
+    toolVersion = "0.8.3"
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+subprojects {
+    ext {
+        versions = [
+                junit  : "5.2.0",
+                assertj: "3.11.1",
+                spring : "2.2.2.RELEASE",
+                swagger: '2.9.2',
+                inject : '1',
+                mockito: '1.10.19',
+                lombok : '1.18.10',
+        ]
+
+        libs = [
+                inject                      : [
+                        "javax.inject:javax.inject:${versions.inject}"
+                ],
+                spring_test                 : [
+                        "org.springframework.boot:spring-boot-starter-test:${versions.spring}",
+                ],
+                unit_test                   : [
+                        "org.junit.jupiter:junit-jupiter-api:${versions.junit}",
+                        "org.junit.jupiter:junit-jupiter-params:${versions.junit}",
+                        "org.junit.jupiter:junit-jupiter-engine:${versions.junit}",
+                        "org.mockito:mockito-all:${versions.mockito}"
+
+                ],
+                spring_config               : [
+                        "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
+                        "io.springfox:springfox-swagger2:${versions.swagger}",
+                ],
+                spring_annotation_processor : [
+                        "org.springframework.boot:spring-boot-configuration-processor:${versions.spring}",
+                ],
+                communs_libs                : [
+                        "org.projectlombok:lombok:${versions.lombok}"
+                ],
+                communs_annotation_pŕocessor: [
+                        "org.projectlombok:lombok:${versions.lombok}"
+                ],
+                entrypoint                  : [
+                        "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
+                        "io.springfox:springfox-swagger-ui:${versions.swagger}",
+                ],
+                database                    : [
+                        "org.springframework.boot:spring-boot-starter-data-mongodb:${versions.spring}",
+                ],
+        ]
+    }
+}
+
+configure(allprojects - project(":application")) {
+    apply plugin: "java"
+    apply plugin: 'jacoco'
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+wrapper {
+    gradleVersion = '5.5.1'
+}

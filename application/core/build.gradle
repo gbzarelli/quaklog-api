@@ -1,0 +1,12 @@
+description = "Casos de uso do projeto"
+
+sourceCompatibility = '1.8'
+
+dependencies {
+    implementation libs.inject
+    implementation libs.communs_libs
+
+    annotationProcessor libs.communs_annotation_pŕocessor
+
+    testImplementation libs.unit_test
+}

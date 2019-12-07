@@ -1,0 +1,56 @@
+//https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
+plugins {
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+}
+
+sourceCompatibility = '1.8'
+
+//Generate jar with other name
+bootJar {
+    archiveFileName = "${rootProject.ext.archive_file_name}"
+}
+
+//task to copy jar to root build dir
+task copyBootJar(type: Copy) {
+    from bootJar
+    into rootProject.buildDir
+}
+
+//Execute copy after compile
+compileJava.finalizedBy copyBootJar
+
+//Automatic Property Expansion Using Gradle
+// (https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html)
+processResources {
+    filesMatching("application.yml") {
+        expand('project': rootProject.properties)
+    }
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'br.com.luizalabs.quakelog/Application**',
+                    'br.com.luizalabs.quakelog/ServletInitializer**'
+            ])
+        })
+    }
+}
+
+dependencies {
+    implementation project(":application:core")
+
+    implementation libs.database
+    implementation libs.spring_config
+    implementation libs.entrypoint
+    implementation libs.communs_libs
+    implementation libs.inject
+
+    annotationProcessor libs.spring_annotation_processor
+    annotationProcessor libs.communs_annotation_pŕocessor
+
+    testImplementation libs.spring_test
+    testImplementation libs.unit_test
+}

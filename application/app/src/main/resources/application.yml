@@ -1,0 +1,13 @@
+server:
+  port: 9999
+
+application:
+  version: ${project.version}
+  name: ${project.name}
+  description: ${project.description}
+  artifact-id: ${project.artifactId}
+
+spring:
+  data:
+    mongodb:
+      host: \${MONGODB_HOST:localhost}
