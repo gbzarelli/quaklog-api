@@ -28,18 +28,18 @@ seja permitido posteriormente realizar consultas mais detalhadas.
 
 A `QuakLog` disponibiliza os seguintes `endpoints` em sua `API`
 
->1. Importação (**POST**) do arquivo de log
-- PATH: **/game/import**
+#### 1 - Importação (**POST**) do arquivo de log
+- PATH: **/game**
 - Headers:
     - Content-Type: `multipart/form-data`
-    - LogFile-Date: `{logFileDate}`
+    - Log-File-Date: `{logFileDate}`
         * Exemplo do parametro `logFileDate`: `2019-12-07`
-- Body: {arquivo}
+- Body: from-data name="file" value: {bytes}
 - Resultado esperado: (Code: `201`)
     * Header de resposta:
       * Location: **/game/date/{gameDate}**
 
->2. Consulta de jogos por data (**GET**)
+#### 2 -  Consulta de jogos por data (**GET**)
 - PATH: **/game/date/{gameDate}**
   - Exemplo do parametro `date`: `2019-12-07`
 - Resultado esperado: (Code: `200`)
@@ -72,7 +72,7 @@ Body:
     }
 ```
 
->3. Consulta de jogo (**GET**)
+#### 3 -  Consulta de jogo (**GET**)
 - PATH: **/game/{UUID}**
 - Resultado esperado: (Code: `200`)
 Body:
