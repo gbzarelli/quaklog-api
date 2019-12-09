@@ -23,3 +23,9 @@ Text = { 16:36 ClientUserinfoChanged: 2 n\Oootsimo\t\0\model\razor/id\hmodel\raz
 Regex: (?<=n\\)(.*?)(?=\\t)
 Extract: {Oootsimo}
 =============================================
+
+0:33 Kill: 1022 5 22: <world> killed Assasinu Credi by MOD_TRIGGER_HURT
+0:32 Kill: 1022 6 22: <world> killed Zeh by MOD_TRIGGER_HURT
+1:25 Kill: 4 5 10: Isgalamido killed Assasinu Credi by MOD_RAILGUN
+1:25 Kill: 4 5 10: Isgalamido killed Assasinu Credi by MOD_RAILGUN
+4:59 Kill: 6 7 7: Zeh killed Mal by MOD_ROCKET_SPLASH
