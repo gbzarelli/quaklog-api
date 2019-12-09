@@ -25,7 +25,9 @@ public class GameRegexUtils {
 
     public static Map<String, String> extractPairsMap(String splitBy, String text) {
         Map<String, String> map = new HashMap<>();
-
+        if(text.startsWith(splitBy)){
+            text = text.substring(1);
+        }
         String[] split = text.split(Pattern.quote(splitBy));
         String key = "null";
         for (int i = 0; i < split.length; i++) {

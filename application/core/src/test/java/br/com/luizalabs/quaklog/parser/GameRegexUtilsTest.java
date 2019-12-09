@@ -1,6 +1,5 @@
 package br.com.luizalabs.quaklog.parser;
 
-import lombok.val;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -10,15 +9,46 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameRegexUtilsTest {
 
     private static final String CLIENT_USER_INFO_CHANGED = "n\\Isgalamido\\t\\0\\model\\uriel/zael\\hmodel\\uriel/zael\\g_redteam\\\\g_blueteam\\\\c1\\5\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0";
+    private static final String INIT_GAME = "\\sv_floodProtect\\1\\sv_maxPing\\0\\sv_minPing\\0\\sv_maxRate\\10000\\sv_minRate\\0\\sv_hostname\\Code Miner Server\\g_gametype\\0\\sv_privateClients\\2\\sv_maxclients\\16\\sv_allowDownload\\0\\bot_minplayers\\0\\dmflags\\0\\fraglimit\\20\\timelimit\\15\\g_maxGameClients\\0\\capturelimit\\8\\version\\ioq3 1.36 linux-x86_64 Apr 12 2009\\protocol\\68\\mapname\\q3dm17\\gamename\\baseq3\\g_needpass\\0";
 
     @Test
-    void x() {
+    void extractParametersFromClientChanged() {
         Map<String, String> map = GameRegexUtils.extractPairsMap("\\", CLIENT_USER_INFO_CHANGED);
-        assertContainsKeys(map);
-        assertValues(map);
+        assertValuesClient(map);
     }
 
-    private void assertValues(Map<String, String> map) {
+    @Test
+    void extractParametersFromInitGame() {
+        Map<String, String> map = GameRegexUtils.extractPairsMap("\\", INIT_GAME);
+        assertValuesInitGame(map);
+    }
+
+
+    private void assertValuesInitGame(Map<String, String> map) {
+        assertEquals("1", map.get("sv_floodProtect"));
+        assertEquals("0", map.get("sv_maxPing"));
+        assertEquals("0", map.get("sv_minPing"));
+        assertEquals("10000", map.get("sv_maxRate"));
+        assertEquals("0", map.get("sv_minRate"));
+        assertEquals("Code Miner Server", map.get("sv_hostname"));
+        assertEquals("0", map.get("g_gametype"));
+        assertEquals("2", map.get("sv_privateClients"));
+        assertEquals("16", map.get("sv_maxclients"));
+        assertEquals("0", map.get("sv_allowDownload"));
+        assertEquals("0", map.get("bot_minplayers"));
+        assertEquals("0", map.get("dmflags"));
+        assertEquals("20", map.get("fraglimit"));
+        assertEquals("15", map.get("timelimit"));
+        assertEquals("0", map.get("g_maxGameClients"));
+        assertEquals("8", map.get("capturelimit"));
+        assertEquals("ioq3 1.36 linux-x86_64 Apr 12 2009", map.get("version"));
+        assertEquals("68", map.get("protocol"));
+        assertEquals("q3dm17", map.get("mapname"));
+        assertEquals("baseq3", map.get("gamename"));
+        assertEquals("0", map.get("g_needpass"));
+    }
+
+    private void assertValuesClient(Map<String, String> map) {
         assertEquals("Isgalamido", map.get("n"));
         assertEquals("0", map.get("t"));
         assertEquals("uriel/zael", map.get("model"));
@@ -32,22 +62,6 @@ class GameRegexUtilsTest {
         assertEquals("0", map.get("l"));
         assertEquals("0", map.get("tt"));
         assertEquals("0", map.get("tl"));
-    }
-
-    private void assertContainsKeys(Map<String, String> map) {
-        assertTrue(map.containsKey("n"));
-        assertTrue(map.containsKey("t"));
-        assertTrue(map.containsKey("model"));
-        assertTrue(map.containsKey("hmodel"));
-        assertTrue(map.containsKey("g_redteam"));
-        assertTrue(map.containsKey("g_blueteam"));
-        assertTrue(map.containsKey("c1"));
-        assertTrue(map.containsKey("c2"));
-        assertTrue(map.containsKey("hc"));
-        assertTrue(map.containsKey("w"));
-        assertTrue(map.containsKey("l"));
-        assertTrue(map.containsKey("tt"));
-        assertTrue(map.containsKey("tl"));
     }
 
 }
