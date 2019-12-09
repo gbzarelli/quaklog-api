@@ -32,7 +32,7 @@ class GamesImportedTest {
         GamesImported imported = GamesImported.fromList(games);
         assertEquals(games.size(), imported.getGames().size());
 
-        IntStream.range(0, games.size()).forEachOrdered(i -> assertEquals(games.get(i).toString(), imported.getGames().get(i)));
+        IntStream.range(0, games.size()).forEachOrdered(i -> assertEquals(games.get(i).toString(), imported.getGames().get(i).toString()));
     }
 
 }

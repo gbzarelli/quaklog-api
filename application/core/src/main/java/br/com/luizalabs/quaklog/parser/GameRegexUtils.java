@@ -1,5 +1,6 @@
 package br.com.luizalabs.quaklog.parser;
 
+import jdk.internal.jline.internal.Nullable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.val;
@@ -11,12 +12,16 @@ import java.util.regex.Pattern;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GameRegexUtils {
 
-    public static final Pattern TIME_PATTERN = Pattern.compile("\\d.*(?<=\\d:\\d\\d)");
-    public static final Pattern KEY_PATTERN = Pattern.compile("(?<=:\\d\\d\\s)(.*?)(?=:)");
+    static final Pattern TIME_PATTERN = Pattern.compile("\\d.*(?<=\\d:\\d\\d)");
+    static final Pattern KEY_PATTERN = Pattern.compile("(?<=:\\d\\d\\s)(.*?)(?=:)");
+
     public static final Pattern SINGLE_ID_AFTER_KEY_PATTERN = Pattern.compile("(?<=[a-zA-Z]:\\s)\\d+");
     public static final Pattern AFTER_KEY = Pattern.compile("(?<=[a-zA-Z]:\\s).+$");
     public static final Pattern AFTER_KEY_AND_NUMBER_GROUP2 = Pattern.compile("\\w+:\\s\\d+\\s(.*)");
-    public static final Pattern AFTER_NUMERIC = Pattern.compile("(?<=\\d\\s\\b).*");
+    public static final Pattern KILL_IDS = Pattern.compile("(?<=:\\s).*\\d");
+    public static final Pattern KILL_KILLER = Pattern.compile("(?<=\\d:\\s).*(?=\\skilled)");
+    public static final Pattern KILL_KILLED = Pattern.compile("(?<=\\skilled\\s).*(?=\\sby)");
+    public static final Pattern KILL_MODE = Pattern.compile("(?<=\\sby\\s).*");
 
     public static Integer extractInteger(Pattern pattern, String value, Integer defaultValue) {
         final val matcher = pattern.matcher(value);
@@ -39,5 +44,14 @@ public class GameRegexUtils {
             }
         }
         return map;
+    }
+
+    @Nullable
+    public static String extractString(Pattern pattern, String value) {
+        final val matcher = pattern.matcher(value);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
     }
 }
