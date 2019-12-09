@@ -1,20 +1,21 @@
 package br.com.luizalabs.quaklog.parser.objects;
 
 import br.com.luizalabs.quaklog.parser.ParseObject;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Map;
 
-@AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @ToString
 public class ClientUserInfoChangedObParser implements ParseObject {
+    @NonNull
     private String gameTime;
+    @NonNull
     private int id;
+    @NonNull
     private String name;
+    @NonNull
     private Map<String, String> arguments;
 }
