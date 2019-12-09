@@ -4,10 +4,7 @@ import br.com.luizalabs.quaklog.entity.GamesImported;
 import br.com.luizalabs.quaklog.entity.vo.GameUUID;
 import br.com.luizalabs.quaklog.entrypoint.dto.GamesImportedDTO;
 import br.com.luizalabs.quaklog.usecase.GameImporterUseCase;
-import lombok.val;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +19,8 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class GameImporterRestEntryPointTest {
