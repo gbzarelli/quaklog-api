@@ -17,7 +17,7 @@ public abstract class Notifiable {
     }
 
     public boolean hasNotifications() {
-        return notifications.isEmpty();
+        return !notifications.isEmpty();
     }
 
     public Set<String> getNotifications() {
