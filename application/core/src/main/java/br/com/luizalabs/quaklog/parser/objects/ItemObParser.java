@@ -11,6 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ItemObParser implements ParseObject {
+    private String gameTime;
     private int id;
     private String item;
 }

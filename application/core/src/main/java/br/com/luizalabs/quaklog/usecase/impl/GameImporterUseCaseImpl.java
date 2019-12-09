@@ -27,8 +27,8 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
             val line = reader.readLine();
             val gameParserOptional = GameParserKeys.getParserByText(line);
             if (gameParserOptional.isPresent()) {
-                val gameParser = gameParserOptional.get();
-                gameParser.parsable.parse(line);
+//                val gameParser = gameParserOptional.get();
+//                gameParser.parsable.parse(line);
             }
         }
 

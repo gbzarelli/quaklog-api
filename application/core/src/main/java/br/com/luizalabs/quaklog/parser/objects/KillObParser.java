@@ -14,6 +14,8 @@ public class KillObParser implements ParseObject {
 
     public static final int WORLD_USER_ID = 1022;
 
+    private String gameTime;
+
     private int killerID;
     private int killedID;
     private int killedModeID;

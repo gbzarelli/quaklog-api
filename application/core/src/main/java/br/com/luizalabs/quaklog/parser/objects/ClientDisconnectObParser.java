@@ -11,5 +11,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ClientDisconnectObParser implements ParseObject {
+    private String gameTime;
     private int id;
 }

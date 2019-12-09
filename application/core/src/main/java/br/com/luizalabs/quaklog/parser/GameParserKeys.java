@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static br.com.luizalabs.quaklog.parser.GameRegexUtils.KEY_PATTERN;
+
 /**
  * Keys extracted from GameKeysTest.java
  */
@@ -21,7 +23,6 @@ public enum GameParserKeys {
     KILL("Kill", new KillParser()),
     CLIENT_CONNECT("ClientConnect", new ClientConnectParser());
 
-    private static final Pattern EXTRACT_KEY_PATTERN = Pattern.compile("(?<=:\\d\\d\\s)(.*?)(?=:)");
     public final String key;
     public final Parsable parsable;
 
@@ -31,7 +32,7 @@ public enum GameParserKeys {
     }
 
     public static Optional<GameParserKeys> getParserByText(String text) {
-        final val matcher = EXTRACT_KEY_PATTERN.matcher(text);
+        final val matcher = KEY_PATTERN.matcher(text);
         if (matcher.find()) {
             return getByKey(matcher.group());
         }

@@ -16,6 +16,12 @@ Extrair valores após KEY
 Text = { 20:40 Item: 2 ammo_rockets}
 Regex: (?<=[a-zA-Z]:).+$
 Extract: { 2 ammo_rockets}
+
+Extrair id após KEY
+Text = { 25:11 Item: 2 item_armor_body}
+Regex: (?<=[a-zA-Z]:\s)\d+
+Extract: {2}
+
 =============================================
 Extrair nome da KEY: ClientUserinfoChanged
 

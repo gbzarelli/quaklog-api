@@ -13,6 +13,7 @@ import java.util.Map;
 @Setter
 @ToString
 public class ClientUserInfoChangedObParser implements ParseObject {
+    private String gameTime;
     private int id;
     private String name;
     private Map<String, String> arguments;
