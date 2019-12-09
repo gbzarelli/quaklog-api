@@ -35,17 +35,9 @@ public class ClientUserInfoChangedParser implements Parsable<ClientUserInfoChang
     }
 
     private Map<String, String> extractParameters(String value) {
-        //ISSUE: Poderia pensar em um regex melhor
-        final val matcher = GameRegexUtils.AFTER_KEY.matcher(value);
+        final val matcher = GameRegexUtils.AFTER_KEY_AND_NUMBER_GROUP2.matcher(value);
         if (matcher.find()) {
-            final val afterKey = matcher.group();
-            val matcher2 = GameRegexUtils.AFTER_NUMERIC.matcher(afterKey);
-            String parameters;
-            if (matcher2.find()) {
-                parameters = matcher2.group();
-            } else {
-                parameters = afterKey;
-            }
+            final val parameters = matcher.group(1);
             return GameRegexUtils.extractPairsMap("\\", parameters);
         }
         return Collections.emptyMap();

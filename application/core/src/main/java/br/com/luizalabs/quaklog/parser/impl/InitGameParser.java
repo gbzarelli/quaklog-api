@@ -25,7 +25,6 @@ public class InitGameParser implements Parsable<InitGameObParser> {
     }
 
     private Map<String, String> extractParameters(String value) {
-        //ISSUE: Poderia pensar em um regex melhor
         final val matcher = GameRegexUtils.AFTER_KEY.matcher(value);
         if (matcher.find()) {
             final val afterKey = matcher.group();
