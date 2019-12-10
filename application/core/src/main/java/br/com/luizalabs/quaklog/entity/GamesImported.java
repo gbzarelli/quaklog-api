@@ -7,15 +7,25 @@ import lombok.Getter;
 import lombok.val;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GamesImported extends Notifiable {
 
+
+    public static GamesImported fromList(List<GameUUID> gamesUUIDs) {
+        return new GamesImported(gamesUUIDs);
+    }
+
     public static GamesImported fromList(List<GameUUID> gamesUUIDs, String... notifications) {
+        return fromList(gamesUUIDs, Arrays.asList(notifications));
+    }
+
+    public static GamesImported fromList(List<GameUUID> gamesUUIDs, Collection<String> notifications) {
         val game = new GamesImported(gamesUUIDs);
-        Arrays.stream(notifications).forEach(game::addNotification);
+        game.addNotifications(notifications);
         return game;
     }
 

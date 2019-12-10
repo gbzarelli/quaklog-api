@@ -5,9 +5,9 @@ import lombok.val;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import static br.com.luizalabs.quaklog.parser.GameRegexUtils.KEY_PATTERN;
+
 
 /**
  * Keys extracted from GameKeysTest.java
@@ -24,11 +24,16 @@ public enum GameParserKeys {
     CLIENT_CONNECT("ClientConnect", new ClientConnectParser());
 
     public final String key;
-    public final Parsable parsable;
+    private final Parsable parsable;
 
     GameParserKeys(String key, Parsable parsable) {
         this.key = key;
         this.parsable = parsable;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends ParseObject> Parsable<T> getParsable() {
+        return parsable;
     }
 
     public static Optional<GameParserKeys> getParserByText(String text) {

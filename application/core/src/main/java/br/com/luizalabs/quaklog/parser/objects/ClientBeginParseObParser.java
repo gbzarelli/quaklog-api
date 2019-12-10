@@ -11,5 +11,5 @@ public class ClientBeginParseObParser implements ParseObject {
     @NonNull
     private String gameTime;
     @NonNull
-    private int id;
+    private Integer id;
 }

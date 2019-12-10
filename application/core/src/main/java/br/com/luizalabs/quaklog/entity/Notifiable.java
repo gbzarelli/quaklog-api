@@ -1,15 +1,17 @@
 package br.com.luizalabs.quaklog.entity;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Notifiable {
 
-    private final Set<String> notifications = new HashSet<>();
+    private final List<String> notifications = new ArrayList<>();
 
     void addNotification(String message) {
         notifications.add(message);
+    }
+
+    void addNotifications(Collection<String> notifications) {
+        this.notifications.addAll(notifications);
     }
 
     void addNotifiable(Notifiable notifiable) {
@@ -20,7 +22,7 @@ public abstract class Notifiable {
         return !notifications.isEmpty();
     }
 
-    public Set<String> getNotifications() {
-        return Collections.unmodifiableSet(notifications);
+    public List<String> getNotifications() {
+        return Collections.unmodifiableList(notifications);
     }
 }

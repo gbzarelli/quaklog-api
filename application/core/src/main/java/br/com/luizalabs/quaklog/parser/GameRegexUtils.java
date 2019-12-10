@@ -1,6 +1,5 @@
 package br.com.luizalabs.quaklog.parser;
 
-import jdk.internal.jline.internal.Nullable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.val;
@@ -46,7 +45,6 @@ public class GameRegexUtils {
         return map;
     }
 
-    @Nullable
     public static String extractString(Pattern pattern, String value) {
         final val matcher = pattern.matcher(value);
         if (matcher.find()) {

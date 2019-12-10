@@ -15,11 +15,11 @@ public class KillObParser implements ParseObject {
     @NonNull
     private String gameTime;
     @NonNull
-    private int killerID;
+    private Integer killerID;
     @NonNull
-    private int killedID;
+    private Integer killedID;
     @NonNull
-    private int killedModeID;
+    private Integer killedModeID;
     @NonNull
     private String killed;
     @NonNull

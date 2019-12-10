@@ -13,7 +13,7 @@ public class ClientUserInfoChangedObParser implements ParseObject {
     @NonNull
     private String gameTime;
     @NonNull
-    private int id;
+    private Integer id;
     @NonNull
     private String name;
     @NonNull
