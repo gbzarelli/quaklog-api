@@ -3,7 +3,7 @@ package br.com.luizalabs.quaklog.usecase.impl;
 import br.com.luizalabs.quaklog.entity.Game;
 import br.com.luizalabs.quaklog.entity.GamesImported;
 import br.com.luizalabs.quaklog.entity.vo.GameUUID;
-import br.com.luizalabs.quaklog.parser.GameParserKeys;
+import br.com.luizalabs.quaklog.parser.GameParserKey;
 import br.com.luizalabs.quaklog.processor.GameParseProcessor;
 import br.com.luizalabs.quaklog.usecase.GameImporterUseCase;
 import br.com.luizalabs.quaklog.usecase.repository.GameRepository;
@@ -50,7 +50,7 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
         while (reader.ready()) {
             numberLine++;
             val line = reader.readLine();
-            val keyExtracted = GameParserKeys.getParserByText(line);
+            val keyExtracted = GameParserKey.getParserByText(line);
 
             if (!keyExtracted.isPresent()) {
                 val message = logKeyNotFound(gameBuilder, numberLine, line);
@@ -62,7 +62,7 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
                 val parserKey = keyExtracted.get();
 
                 if (isShutdownKeyAndGameIsRunning(gameBuilder, parserKey)) {
-                    parseProcessor.processLine(gameBuilder, parserKey.getParsable(), line);
+                    parseProcessor.processLine(gameBuilder, parserKey, line);
                     gamesImported.add(buildAndPersistGame(gameBuilder));
                     gameBuilder = null;
                 } else if (isInitGameKey(parserKey)) {
@@ -72,7 +72,7 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
                     gameBuilder = parseProcessor.initGame(parserKey.getParsable(), line);
                     gameBuilder.importDate(gameDate);
                 } else if (isGameRunning(gameBuilder)) {
-                    parseProcessor.processLine(gameBuilder, parserKey.getParsable(), line);
+                    parseProcessor.processLine(gameBuilder, parserKey, line);
                 } else {
                     throw new IllegalArgumentException("No games are running and receive: {" + parserKey.key + "} with value: {" + line + "}");
                 }
@@ -86,16 +86,16 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
         return GamesImported.fromList(gamesImported, importNotifications);
     }
 
-    private boolean isInitGameKey(GameParserKeys parserKey) {
-        return parserKey == GameParserKeys.INIT_GAME;
+    private boolean isInitGameKey(GameParserKey parserKey) {
+        return parserKey == GameParserKey.INIT_GAME;
     }
 
-    private boolean isShutdownKeyAndGameIsRunning(Game.GameBuilder gameBuilder, GameParserKeys parserKey) {
+    private boolean isShutdownKeyAndGameIsRunning(Game.GameBuilder gameBuilder, GameParserKey parserKey) {
         return isShutdownKey(parserKey) && isGameRunning(gameBuilder);
     }
 
-    private boolean isShutdownKey(GameParserKeys parserKey) {
-        return parserKey == GameParserKeys.SHUTDOWN_GAME;
+    private boolean isShutdownKey(GameParserKey parserKey) {
+        return parserKey == GameParserKey.SHUTDOWN_GAME;
     }
 
     private GameUUID buildAndPersistGame(Game.GameBuilder gameBuilder) {
