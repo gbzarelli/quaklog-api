@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,8 +32,7 @@ public class Game extends Notifiable {
         players = new HashMap<>();
     }
 
-
-    public void addPlayer(Player player) {
+    private void addPlayer(Player player) {
         if (players.containsKey(player.getId())) return;
         players.put(player.getId(), player);
         addKillListener(player);
@@ -46,6 +46,9 @@ public class Game extends Notifiable {
         totalKills.addAndGet(1);
     }
 
+    public Map<Integer, Player> getPlayers() {
+        return Collections.unmodifiableMap(players);
+    }
 
     public static class GameBuilder {
         private final Game game;
@@ -62,6 +65,15 @@ public class Game extends Notifiable {
         public GameBuilder importDate(LocalDate localDate) {
             game.importDate = localDate;
             return this;
+        }
+
+        public GameBuilder addPlayer(Player player) {
+            game.addPlayer(player);
+            return this;
+        }
+
+        public Player getPlayer(Integer id) {
+            return game.players.get(id);
         }
 
         public Game build() {

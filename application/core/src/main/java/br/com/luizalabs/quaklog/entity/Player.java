@@ -10,6 +10,7 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ToString
@@ -26,23 +27,43 @@ public class Player {
     private final AtomicInteger kills;
     private final List<KillHistory> kdHistory;
     private final List<Item> items;
-    private ConnectStatus connectStatus;
+    private final List<PlayerGameTime> times;
     private PlayerKillListener killListener;
+    private String name;
+    private Map<String, String> parameters;
 
-    public Player(Integer id) {
+    public Player(GameTime time, Integer id) {
         this.id = id;
         this.kills = new AtomicInteger();
         this.kdHistory = new ArrayList<>();
         this.items = new ArrayList<>();
-        this.connectStatus = ConnectStatus.CONNECTED;
+        times = new ArrayList<>();
+        connect(time);
+    }
+
+    public ConnectStatus getConnectStatus() {
+        return times.get(times.size() - 1).getStatus();
+    }
+
+    public void changeInfos(String playerName, Map<String, String> parameters) {
+        this.name = playerName;
+        this.parameters = parameters;
+    }
+
+    private void connect(GameTime time) {
+        times.add(PlayerGameTime.newConnectedTime(time));
     }
 
     public void setKillListener(PlayerKillListener killListener) {
         this.killListener = killListener;
     }
 
-    public void setConnectStatus(ConnectStatus connectStatus) {
-        this.connectStatus = connectStatus;
+    public void begin(GameTime timeBegin) {
+        times.add(PlayerGameTime.newBeginTime(timeBegin));
+    }
+
+    public void disconnect(GameTime timeBegin) {
+        times.add(PlayerGameTime.newDisconnectedTime(timeBegin));
     }
 
     public List<KillHistory> getKdHistory() {
