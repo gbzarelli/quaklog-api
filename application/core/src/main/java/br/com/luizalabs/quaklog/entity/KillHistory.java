@@ -12,10 +12,10 @@ public class KillHistory {
 
     private final GameTime gameTime;
     private final KillMode killMode;
-    private final Player player;
+    private final Integer player;
     private final Mod mod;
 
-    private KillHistory(GameTime gameTime, KillMode killMode, Player player, Mod mod) {
+    private KillHistory(GameTime gameTime, KillMode killMode, Integer player, Mod mod) {
         this.gameTime = gameTime;
         this.killMode = killMode;
         this.player = player;
@@ -23,10 +23,10 @@ public class KillHistory {
     }
 
     static KillHistory killed(GameTime gameTime, Player player, Mod mod) {
-        return new KillHistory(gameTime, KillMode.KILL, player, mod);
+        return new KillHistory(gameTime, KillMode.KILL, player.getId(), mod);
     }
 
     static KillHistory deadBy(GameTime gameTime, Player player, Mod mod) {
-        return new KillHistory(gameTime, KillMode.DEAD, player, mod);
+        return new KillHistory(gameTime, KillMode.DEAD, player.getId(), mod);
     }
 }
