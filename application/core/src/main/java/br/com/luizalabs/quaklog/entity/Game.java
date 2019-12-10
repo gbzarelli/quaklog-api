@@ -1,23 +1,58 @@
 package br.com.luizalabs.quaklog.entity;
 
+import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import br.com.luizalabs.quaklog.entity.vo.GameUUID;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Setter(AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Game extends Notifiable {
 
-    private GameUUID gameUUID = new GameUUID();
+    private final GameUUID gameUUID;
+    private final Map<Integer, Player> players;
+    private final WorldPlayer world;
+    private final GameTime startGameTime;
     private LocalDate importDate;
+    private AtomicInteger totalKills;
+    private Map<String, String> gameParameters;
+
+    private Game(GameTime startGameTime) {
+        this.startGameTime = startGameTime;
+        gameUUID = new GameUUID();
+        world = new WorldPlayer();
+        addKillListener(world);
+        players = new HashMap<>();
+    }
+
+
+    public void addPlayer(Player player) {
+        if (players.containsKey(player.getId())) return;
+        players.put(player.getId(), player);
+        addKillListener(player);
+    }
+
+    private void addKillListener(Player world) {
+        world.setKillListener(killed -> incrementGameKill());
+    }
+
+    private void incrementGameKill() {
+        totalKills.addAndGet(1);
+    }
+
 
     public static class GameBuilder {
-        private Game game = new Game();
+        private final Game game;
+
+        public GameBuilder(GameTime startGameTime) {
+            game = new Game(startGameTime);
+        }
 
         public GameBuilder addNotification(String notification) {
             game.addNotification(notification);
@@ -30,8 +65,12 @@ public class Game extends Notifiable {
         }
 
         public Game build() {
-            //TODO CHECK
             return game;
+        }
+
+        public GameBuilder gameParameters(Map<String, String> parameters) {
+            game.gameParameters = parameters;
+            return this;
         }
     }
 }

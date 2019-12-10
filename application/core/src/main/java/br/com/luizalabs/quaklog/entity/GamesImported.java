@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GamesImported extends Notifiable {
 
-
     public static GamesImported fromList(List<GameUUID> gamesUUIDs) {
         return new GamesImported(gamesUUIDs);
     }
