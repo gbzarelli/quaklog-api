@@ -10,6 +10,7 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ToString
 @EqualsAndHashCode
@@ -22,6 +23,7 @@ public class Player {
     }
 
     private final Integer id;
+    private final AtomicInteger kills;
     private final List<KillHistory> kdHistory;
     private final List<Item> items;
     private ConnectStatus connectStatus;
@@ -29,6 +31,7 @@ public class Player {
 
     public Player(Integer id) {
         this.id = id;
+        this.kills = new AtomicInteger();
         this.kdHistory = new ArrayList<>();
         this.items = new ArrayList<>();
         this.connectStatus = ConnectStatus.CONNECTED;
@@ -62,10 +65,18 @@ public class Player {
         if (killListener != null) killListener.kill(client);
         client.deadBy(gameTime, this, mod);
         kdHistory.add(KillHistory.killed(gameTime, client, mod));
+        kills.incrementAndGet();
     }
 
-    private void deadBy(GameTime gameTime, Player client, Mod mod) {
-        kdHistory.add(KillHistory.deadBy(gameTime, client, mod));
+    private void deadBy(GameTime gameTime, Player player, Mod mod) {
+        kdHistory.add(KillHistory.deadBy(gameTime, player, mod));
+        if (isWorld(player)) {
+            kills.decrementAndGet();
+        }
+    }
+
+    private boolean isWorld(Player player) {
+        return player.id.equals(WorldPlayer.WORLD_ID);
     }
 
 }
