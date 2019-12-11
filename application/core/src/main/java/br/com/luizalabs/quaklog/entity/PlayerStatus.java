@@ -10,20 +10,20 @@ import lombok.ToString;
 @ToString
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class PlayerGameTime {
+public class PlayerStatus {
 
     private final GameTime time;
     private final ConnectStatus status;
 
-    static PlayerGameTime newConnectedTime(GameTime time) {
-        return new PlayerGameTime(time, ConnectStatus.CONNECTED);
+    static PlayerStatus newConnectedTime(GameTime time) {
+        return new PlayerStatus(time, ConnectStatus.CONNECTED);
     }
 
-    static PlayerGameTime newDisconnectedTime(GameTime time) {
-        return new PlayerGameTime(time, ConnectStatus.DISCONNECTED);
+    static PlayerStatus newDisconnectedTime(GameTime time) {
+        return new PlayerStatus(time, ConnectStatus.DISCONNECTED);
     }
 
-    static PlayerGameTime newBeginTime(GameTime time) {
-        return new PlayerGameTime(time, ConnectStatus.BEGIN);
+    static PlayerStatus newBeginTime(GameTime time) {
+        return new PlayerStatus(time, ConnectStatus.BEGIN);
     }
 }

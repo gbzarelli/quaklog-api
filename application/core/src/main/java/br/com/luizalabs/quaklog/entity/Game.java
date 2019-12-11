@@ -2,115 +2,112 @@ package br.com.luizalabs.quaklog.entity;
 
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import br.com.luizalabs.quaklog.entity.vo.GameUUID;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Setter(AccessLevel.PRIVATE)
+@Getter
+@AllArgsConstructor
 public class Game extends Notifiable {
 
-    private final Map<Integer, Player> players;
+    private final Collection<Player> players;
     private final Map<String, String> gameParameters;
-    private final AtomicInteger totalKills;
-    @Getter
+    private final Integer totalKills;
     private final GameTime startGameTime;
-    @Getter
     private final LocalDate gameDate;
-    @Getter
-    private GameUUID gameUUID;
-    @Getter
-    private WorldPlayer world;
-    @Getter
-    private GameTime endGameTime;
+    private final GameUUID gameUUID;
+    private final WorldPlayer world;
+    private final GameTime endGameTime;
 
-    private Game(GameTime startGameTime, LocalDate gameDate) {
-        this.startGameTime = startGameTime;
-        this.gameDate = gameDate;
-        gameUUID = GameUUID.create();
-        world = new WorldPlayer();
-        totalKills = new AtomicInteger();
-        gameParameters = new HashMap<>();
-        players = new HashMap<>();
-        addKillListener(world);
-    }
+    public static class GameBuilder extends Notifiable {
+        private Map<Integer, Player> players;
+        private Map<String, String> gameParameters;
+        private AtomicInteger totalKills;
+        private GameTime startGameTime;
+        private LocalDate gameDate;
+        private GameUUID gameUUID;
+        private WorldPlayer world;
+        private GameTime endGameTime;
 
-    public Integer getTotalKills() {
-        return totalKills.get();
-    }
-
-    private void addKillListener(Player world) {
-        world.setKillListener(killed -> incrementGameKill());
-    }
-
-    private void incrementGameKill() {
-        totalKills.addAndGet(1);
-    }
-
-    public Map<String, String> getGameParameters() {
-        return Collections.unmodifiableMap(gameParameters);
-    }
-
-    public Collection<Player> getPlayers() {
-        return Collections.unmodifiableCollection(players.values());
-    }
-
-    public static class GameBuilder {
-        private final Game game;
-
-        public GameBuilder(GameTime gameTime, LocalDate gameDate) {
-            game = new Game(gameTime, gameDate);
+        public GameBuilder(GameTime startGameTime, LocalDate gameDate) {
+            this.startGameTime = startGameTime;
+            this.gameDate = gameDate;
+            gameUUID = GameUUID.create();
+            world = new WorldPlayer();
+            totalKills = new AtomicInteger();
+            gameParameters = new HashMap<>();
+            players = new HashMap<>();
+            addKillListener(world);
         }
 
-        public GameBuilder addNotification(String notification) {
-            game.addNotification(notification);
-            return this;
+        @Override
+        public void addNotification(String notification) {
+            super.addNotification(notification);
         }
 
         public GameBuilder addPlayer(Player player) {
-            if (game.players.containsKey(player.getId())) return this;
-            game.players.put(player.getId(), player);
-            game.addKillListener(player);
+            if (players.containsKey(player.getId())) return this;
+            players.put(player.getId(), player);
+            addKillListener(player);
             return this;
         }
 
+        private void addKillListener(Player world) {
+            world.setKillListener(killed -> incrementGameKill());
+        }
+
+        private void incrementGameKill() {
+            totalKills.addAndGet(1);
+        }
+
         public Player getPlayer(Integer id) {
-            if (id.equals(game.world.getId())) return game.world;
-            return game.players.get(id);
+            if (id.equals(world.getId())) return world;
+            return players.get(id);
         }
 
         public Game build() {
+            val game = new Game(
+                    Collections.unmodifiableCollection(players.values()),
+                    Collections.unmodifiableMap(gameParameters),
+                    totalKills.get(),
+                    startGameTime,
+                    gameDate,
+                    gameUUID,
+                    world,
+                    endGameTime
+            );
+            game.addNotifiable(this);
             return game;
         }
 
         public GameBuilder setGameParameters(Map<String, String> parameters) {
-            game.gameParameters.clear();
-            game.gameParameters.putAll(parameters);
+            gameParameters.clear();
+            gameParameters.putAll(parameters);
             return this;
         }
 
         public GameBuilder setEndGameTime(GameTime endGameTime) {
-            game.endGameTime = endGameTime;
+            this.endGameTime = endGameTime;
             return this;
         }
 
 
         public GameBuilder setTotalKills(Integer totalKills) {
-            game.totalKills.set(totalKills);
+            this.totalKills.set(totalKills);
             return this;
         }
 
 
         public GameBuilder setGameUUID(GameUUID gameUUID) {
-            game.gameUUID = gameUUID;
+            this.gameUUID = gameUUID;
             return this;
         }
 
         public GameBuilder setWorld(WorldPlayer world) {
-            game.world = world;
+            this.world = world;
             return this;
         }
 

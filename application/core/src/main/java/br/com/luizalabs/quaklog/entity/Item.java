@@ -12,4 +12,9 @@ public class Item {
     public static Item valueOf(String itemName) {
         return new Item(itemName);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

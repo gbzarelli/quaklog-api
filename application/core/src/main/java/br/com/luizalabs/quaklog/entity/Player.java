@@ -26,10 +26,15 @@ public class Player {
     private final Integer id;
     @Getter
     private String name;
+
+    /**
+     * AtomicInteger kills;
+     * CONTROLADO APENAS PELA SOMA DAS KILLS MENOS A MORTE PELO <world>
+     **/
     private final AtomicInteger kills;
     private final List<KillHistory> kdHistory;
     private final List<Item> items;
-    private final List<PlayerGameTime> times;
+    private final List<PlayerStatus> status;
     private PlayerKillListener killListener;
     private Map<String, String> parameters;
 
@@ -38,7 +43,7 @@ public class Player {
         this.kills = new AtomicInteger();
         this.kdHistory = new ArrayList<>();
         this.items = new ArrayList<>();
-        times = new ArrayList<>();
+        status = new ArrayList<>();
         connect(time);
     }
 
@@ -46,8 +51,8 @@ public class Player {
         return kills.get();
     }
 
-    public List<PlayerGameTime> getTimes() {
-        return Collections.unmodifiableList(times);
+    public List<PlayerStatus> getStatus() {
+        return Collections.unmodifiableList(status);
     }
 
     public Map<String, String> getParameters() {
@@ -63,7 +68,7 @@ public class Player {
     }
 
     public ConnectStatus getConnectStatus() {
-        return times.get(times.size() - 1).getStatus();
+        return status.get(status.size() - 1).getStatus();
     }
 
     public void changeInfos(String playerName, Map<String, String> parameters) {
@@ -72,7 +77,7 @@ public class Player {
     }
 
     private void connect(GameTime time) {
-        times.add(PlayerGameTime.newConnectedTime(time));
+        status.add(PlayerStatus.newConnectedTime(time));
     }
 
     void setKillListener(PlayerKillListener killListener) {
@@ -80,19 +85,15 @@ public class Player {
     }
 
     public void begin(GameTime timeBegin) {
-        times.add(PlayerGameTime.newBeginTime(timeBegin));
+        status.add(PlayerStatus.newBeginTime(timeBegin));
     }
 
     public void disconnect(GameTime timeBegin) {
-        times.add(PlayerGameTime.newDisconnectedTime(timeBegin));
+        status.add(PlayerStatus.newDisconnectedTime(timeBegin));
     }
 
     public void addItem(Item item) {
         items.add(item);
-    }
-
-    public void deadByWorld(GameTime gameTime, WorldPlayer world, Mod mod) {
-        kdHistory.add(KillHistory.deadBy(gameTime, world, mod));
     }
 
     public void kill(GameTime gameTime, Player client, Mod mod) {
@@ -105,8 +106,6 @@ public class Player {
     private void deadBy(GameTime gameTime, Player player, Mod mod) {
         kdHistory.add(KillHistory.deadBy(gameTime, player, mod));
         if (isWorld(player)) {
-            //Não estrou controlando se o valor passa a ser negativo, posteriormente,
-            //poderia aprimorar essa parte para um objeto mais complexo;
             kills.decrementAndGet();
         }
     }

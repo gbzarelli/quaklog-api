@@ -11,7 +11,16 @@ import lombok.NoArgsConstructor;
 public class GameRepositoryMapper {
 
     public static GameEntity toDatabaseEntity(Game game) {
-        return new GameEntity(game.getGameUUID().toString(), game.getGameDate());
+        return GameEntity.builder()
+                .date(game.getGameDate())
+                .endGameTime(game.getEndGameTime() == null ? null : game.getEndGameTime().toString())
+                .gameParameters(game.getGameParameters())
+                .players(PlayerRepositoryMapper.toDatabaseEntity(game.getPlayers()))
+                .startGameTime(game.getStartGameTime().toString())
+                .uuid(game.getGameUUID().toString())
+                .world(PlayerRepositoryMapper.toDatabaseEntity(game.getWorld()))
+                .totalKills(game.getTotalKills())
+                .build();
     }
 
     public static Game toDomainEntity(GameEntity gameEntity) {
