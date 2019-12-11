@@ -9,7 +9,7 @@ public class WorldPlayer extends Player {
     static final Integer WORLD_ID = 1022;
 
     WorldPlayer() {
-        super(GameTime.parse("00:00"), WORLD_ID);
+        super(GameTime.of("00:00"), WORLD_ID);
         changeInfos("<world>", Collections.emptyMap());
     }
 

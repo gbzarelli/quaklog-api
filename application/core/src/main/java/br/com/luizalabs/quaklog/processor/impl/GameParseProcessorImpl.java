@@ -21,7 +21,7 @@ class GameParseProcessorImpl implements GameParseProcessor {
     @Override
     public Game.GameBuilder initGame(LocalDate gameDate, Parsable<InitGameObParser> gameParser, String line) throws GameParserException {
         val initGameObParser = gameParser.parse(line);
-        val gameTime = GameTime.parse(initGameObParser.getGameTime());
+        val gameTime = GameTime.of(initGameObParser.getGameTime());
         return new Game.GameBuilder(gameTime, gameDate).setGameParameters(initGameObParser.getArguments());
     }
 
@@ -55,16 +55,16 @@ class GameParseProcessorImpl implements GameParseProcessor {
     }
 
     private void processShutdownGame(Game.GameBuilder gameBuilder, ShutdownGameObParser parse) {
-        gameBuilder.setEndGameTime(GameTime.parse(parse.getGameTime()));
+        gameBuilder.setEndGameTime(GameTime.of(parse.getGameTime()));
     }
 
     private void processClientDisconnected(Game.GameBuilder gameBuilder, ClientDisconnectObParser parse) {
-        gameBuilder.getPlayer(parse.getId()).disconnect(GameTime.parse(parse.getGameTime()));
+        gameBuilder.getPlayer(parse.getId()).disconnect(GameTime.of(parse.getGameTime()));
     }
 
     private void processKill(Game.GameBuilder gameBuilder, KillObParser parse) {
         gameBuilder.getPlayer(parse.getKillerID())
-                .kill(GameTime.parse(parse.getGameTime()),
+                .kill(GameTime.of(parse.getGameTime()),
                         gameBuilder.getPlayer(parse.getKilledID()),
                         Mod.byModID(parse.getKilledModeID()));
     }
@@ -74,7 +74,7 @@ class GameParseProcessorImpl implements GameParseProcessor {
     }
 
     private void processClientBegin(Game.GameBuilder gameBuilder, ClientBeginParseObParser parse) {
-        gameBuilder.getPlayer(parse.getId()).begin(GameTime.parse(parse.getGameTime()));
+        gameBuilder.getPlayer(parse.getId()).begin(GameTime.of(parse.getGameTime()));
     }
 
     private void processClientUserInfoChanged(Game.GameBuilder gameBuilder, ClientUserInfoChangedObParser parse) {
@@ -82,6 +82,6 @@ class GameParseProcessorImpl implements GameParseProcessor {
     }
 
     private void processClientConnected(Game.GameBuilder gameBuilder, ClientConnectObParser parse) {
-        gameBuilder.addPlayer(new Player(GameTime.parse(parse.getGameTime()), parse.getId()));
+        gameBuilder.addPlayer(new Player(GameTime.of(parse.getGameTime()), parse.getId()));
     }
 }

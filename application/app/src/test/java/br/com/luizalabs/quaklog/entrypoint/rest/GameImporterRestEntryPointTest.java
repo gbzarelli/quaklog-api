@@ -46,8 +46,8 @@ class GameImporterRestEntryPointTest {
 
     private GamesImported loadGamesImportedTest() {
         List<GameUUID> list = new ArrayList<>();
-        list.add(new GameUUID());
-        list.add(new GameUUID());
+        list.add(GameUUID.create());
+        list.add(GameUUID.create());
         return GamesImported.fromList(list);
     }
 }

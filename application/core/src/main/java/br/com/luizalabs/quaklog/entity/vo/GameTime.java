@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GameTime {
 
-    public static GameTime parse(String time) {
+    public static GameTime of(String time) {
         return new GameTime(time);
     }
 

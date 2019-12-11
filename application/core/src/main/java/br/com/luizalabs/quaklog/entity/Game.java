@@ -17,20 +17,20 @@ public class Game extends Notifiable {
     private final Map<String, String> gameParameters;
     private final AtomicInteger totalKills;
     @Getter
-    private final GameUUID gameUUID;
-    @Getter
-    private final WorldPlayer world;
-    @Getter
     private final GameTime startGameTime;
     @Getter
     private final LocalDate gameDate;
+    @Getter
+    private GameUUID gameUUID;
+    @Getter
+    private WorldPlayer world;
     @Getter
     private GameTime endGameTime;
 
     private Game(GameTime startGameTime, LocalDate gameDate) {
         this.startGameTime = startGameTime;
         this.gameDate = gameDate;
-        gameUUID = new GameUUID();
+        gameUUID = GameUUID.create();
         world = new WorldPlayer();
         totalKills = new AtomicInteger();
         gameParameters = new HashMap<>();
@@ -100,6 +100,17 @@ public class Game extends Notifiable {
 
         public GameBuilder setTotalKills(Integer totalKills) {
             game.totalKills.set(totalKills);
+            return this;
+        }
+
+
+        public GameBuilder setGameUUID(GameUUID gameUUID) {
+            game.gameUUID = gameUUID;
+            return this;
+        }
+
+        public GameBuilder setWorld(WorldPlayer world) {
+            game.world = world;
             return this;
         }
 

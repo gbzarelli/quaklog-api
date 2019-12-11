@@ -15,8 +15,8 @@ class GamesImportedMapperTest {
     @Test
     void conversionWithoutNotificationsWithSuccess() {
         ArrayList<GameUUID> list = new ArrayList<>();
-        list.add(new GameUUID());
-        list.add(new GameUUID());
+        list.add(GameUUID.create());
+        list.add(GameUUID.create());
 
         GamesImported gamesImported = GamesImported.fromList(list);
         GamesImportedDTO gamesImportedDTO = GamesImportedMapper.toDTO(gamesImported);
@@ -29,8 +29,8 @@ class GamesImportedMapperTest {
     @Test
     void conversionWithNotificationsWithSuccess() {
         ArrayList<GameUUID> list = new ArrayList<>();
-        list.add(new GameUUID());
-        list.add(new GameUUID());
+        list.add(GameUUID.create());
+        list.add(GameUUID.create());
         String[] notifications = new String[]{"Failed load 1", "Failed load 2"};
         GamesImported gamesImported = GamesImported.fromList(list, notifications);
 

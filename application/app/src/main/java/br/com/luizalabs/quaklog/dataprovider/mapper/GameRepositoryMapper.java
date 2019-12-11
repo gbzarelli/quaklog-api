@@ -2,6 +2,8 @@ package br.com.luizalabs.quaklog.dataprovider.mapper;
 
 import br.com.luizalabs.quaklog.dataprovider.entity.GameEntity;
 import br.com.luizalabs.quaklog.entity.Game;
+import br.com.luizalabs.quaklog.entity.vo.GameTime;
+import br.com.luizalabs.quaklog.entity.vo.GameUUID;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +15,8 @@ public class GameRepositoryMapper {
     }
 
     public static Game toDomainEntity(GameEntity gameEntity) {
-        //TODO
-        return null;
+        return new Game.GameBuilder(GameTime.of("00:00"), gameEntity.getDate())
+                .setGameUUID(GameUUID.of(gameEntity.getUuid()))
+                .build();
     }
 }

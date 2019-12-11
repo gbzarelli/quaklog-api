@@ -26,8 +26,8 @@ class GamesImportedTest {
     @Test
     void createFromListWithoutNotification() {
         List<GameUUID> games = new ArrayList<>();
-        games.add(new GameUUID());
-        games.add(new GameUUID());
+        games.add(GameUUID.create());
+        games.add(GameUUID.create());
 
         GamesImported imported = GamesImported.fromList(games);
         assertEquals(games.size(), imported.getGames().size());
