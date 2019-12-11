@@ -47,28 +47,25 @@ Body:
 ```text
     {
         "games":[
-            "1":{
-                uuid: "d37f37d1-0df6-4e9e-9feb-b0362736518a"
-                total_kills: 45;
-                players: ["Dono da bola", "Isgalamido", "Zeh"]
-                kills: {
-                    "Dono da bola": 5,
-                    "Isgalamido": 18,
-                    "Zeh": 20
+           "2094f7e5-2f61-40b6-b5a2-a99c72b506c8": {
+              "players": [
+                {
+                  "id": 2,
+                  "name": "Dono da Bola",
+                  "kills": 13
+                },
+                {
+                  "id": 3,
+                  "name": "Isgalamido",
+                  "kills": 19
                 }
-            },
-            "2":{
-                uuid: "d37f37d1-0df6-4e9e-9feb-b0362736518b"
-                total_kills: 40;
-                players: ["Isgalamido", "Zeh"]
-                kills: {
-                    "Dono da bola": 1,
-                    "Isgalamido": 10,
-                    "Zeh": 15
-                }
-            }
-        // [n...]
+              ],
+              "total_kills": 105,
+              "detail_path": "/game/2094f7e5-2f61-40b6-b5a2-a99c72b506c8"
+        }
+            // [n...]
         ]
+        "quantity":10
     }
 ```
 

@@ -1,7 +1,7 @@
 package br.com.luizalabs.quaklog.entrypoint.rest;
 
 import br.com.luizalabs.quaklog.configuration.SwaggerConfig;
-import br.com.luizalabs.quaklog.entrypoint.GameImporter;
+import br.com.luizalabs.quaklog.entrypoint.GameImporterEntryPoint;
 import br.com.luizalabs.quaklog.entrypoint.dto.GamesImportedDTO;
 import br.com.luizalabs.quaklog.entrypoint.mapper.GamesImportedMapper;
 import br.com.luizalabs.quaklog.usecase.GameImporterUseCase;
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping(RestConstants.PATH_GAME)
 @Api(tags = SwaggerConfig.TAG_GAME_ENTRY_POINT)
-class GameImporterRestEntryPoint implements GameImporter<MultipartFile, ResponseEntity<GamesImportedDTO>> {
+class GameImporterRestEntryPoint implements GameImporterEntryPoint<MultipartFile, ResponseEntity<GamesImportedDTO>> {
 
     private final GameImporterUseCase gameImporterUseCase;
 
