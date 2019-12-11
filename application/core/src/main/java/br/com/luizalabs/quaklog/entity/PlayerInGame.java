@@ -3,13 +3,16 @@ package br.com.luizalabs.quaklog.entity;
 import br.com.luizalabs.quaklog.entity.vo.ConnectStatus;
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import br.com.luizalabs.quaklog.entity.vo.Mod;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ToString
 public class PlayerInGame extends PlayerKiller implements CanDead {
@@ -28,6 +31,16 @@ public class PlayerInGame extends PlayerKiller implements CanDead {
         this.items = new ArrayList<>();
         status = new ArrayList<>();
         connect(time);
+    }
+
+    @Builder
+    public PlayerInGame(Integer kills, List<KillHistory> kdHistory, Integer id, String name, List<Item> items, List<PlayerStatus> status, Map<String, String> parameters) {
+        super(new AtomicInteger(kills), kdHistory);
+        this.id = id;
+        this.name = name;
+        this.items = items;
+        this.status = status;
+        this.parameters = parameters;
     }
 
     public List<PlayerStatus> getStatus() {

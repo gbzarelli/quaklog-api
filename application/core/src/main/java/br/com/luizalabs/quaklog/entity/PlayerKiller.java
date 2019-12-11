@@ -2,6 +2,7 @@ package br.com.luizalabs.quaklog.entity;
 
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import br.com.luizalabs.quaklog.entity.vo.Mod;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +23,11 @@ public abstract class PlayerKiller implements Player {
     PlayerKiller() {
         kills = new AtomicInteger();
         kdHistory = new ArrayList<>();
+    }
+
+    PlayerKiller(AtomicInteger kills, List<KillHistory> kdHistory) {
+        this.kills = kills;
+        this.kdHistory = kdHistory;
     }
 
     public void kill(GameTime gameTime, PlayerInGame client, Mod mod) {

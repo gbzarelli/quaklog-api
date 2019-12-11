@@ -3,11 +3,13 @@ package br.com.luizalabs.quaklog.entity;
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import br.com.luizalabs.quaklog.entity.vo.KillMode;
 import br.com.luizalabs.quaklog.entity.vo.Mod;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
+@Builder
 public class KillHistory {
 
     private final GameTime gameTime;

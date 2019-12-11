@@ -110,6 +110,11 @@ public class Game extends Notifiable {
             return this;
         }
 
+        public GameBuilder setPlayers(Map<Integer, PlayerInGame> players) {
+            this.players = players;
+            return this;
+        }
+
         public GameBuilder setWorld(World world) {
             this.world = world;
             return this;

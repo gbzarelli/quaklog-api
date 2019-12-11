@@ -2,14 +2,12 @@ package br.com.luizalabs.quaklog.entity;
 
 import br.com.luizalabs.quaklog.entity.vo.ConnectStatus;
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class PlayerStatus {
 
     private final GameTime time;
