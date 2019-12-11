@@ -40,4 +40,24 @@ class GameKeysTest {
         Assertions.assertTrue(true);
     }
 
+
+    @Test
+    void extractModFromFile() throws IOException {
+        final Map<String, Integer> keyMap = new HashMap<>();
+        final Pattern pattern = Pattern.compile("(?<=:\\d\\d\\s)(.*?)(?=:)");
+
+        Path path = Paths.get("../../documentation/games.log");
+        InputStream is = Files.newInputStream(path);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            while (reader.ready()) {
+                String line = reader.readLine();
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    String value = matcher.group();
+                    keyMap.put(value, keyMap.getOrDefault(value, 0) + 1);
+                }
+            }
+        }
+        Assertions.assertTrue(true);
+    }
 }

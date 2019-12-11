@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public class GameRepositoryMongo implements GameRepository {
     @Override
     public void save(Game game) {
-
+        System.out.println(game);
     }
 }

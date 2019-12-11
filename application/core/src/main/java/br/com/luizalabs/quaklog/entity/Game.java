@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
@@ -20,22 +18,20 @@ public class Game extends Notifiable {
     private final Map<Integer, Player> players;
     private final WorldPlayer world;
     private final GameTime startGameTime;
-    private LocalDate importDate;
-    private AtomicInteger totalKills;
-    private Map<String, String> gameParameters;
+    private final Map<String, String> gameParameters;
+    private final AtomicInteger totalKills;
+    private final LocalDate gameDate;
+    private GameTime endGameTime;
 
-    private Game(GameTime startGameTime) {
+    private Game(GameTime startGameTime, LocalDate gameDate) {
         this.startGameTime = startGameTime;
+        this.gameDate = gameDate;
         gameUUID = new GameUUID();
         world = new WorldPlayer();
-        addKillListener(world);
+        totalKills = new AtomicInteger();
+        gameParameters = new HashMap<>();
         players = new HashMap<>();
-    }
-
-    private void addPlayer(Player player) {
-        if (players.containsKey(player.getId())) return;
-        players.put(player.getId(), player);
-        addKillListener(player);
+        addKillListener(world);
     }
 
     private void addKillListener(Player world) {
@@ -46,15 +42,19 @@ public class Game extends Notifiable {
         totalKills.addAndGet(1);
     }
 
-    public Map<Integer, Player> getPlayers() {
-        return Collections.unmodifiableMap(players);
+    public Map<String, String> getGameParameters() {
+        return Collections.unmodifiableMap(gameParameters);
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(new ArrayList<>(players.values()));
     }
 
     public static class GameBuilder {
         private final Game game;
 
-        public GameBuilder(GameTime startGameTime) {
-            game = new Game(startGameTime);
+        public GameBuilder(GameTime gameTime, LocalDate gameDate) {
+            game = new Game(gameTime, gameDate);
         }
 
         public GameBuilder addNotification(String notification) {
@@ -62,17 +62,15 @@ public class Game extends Notifiable {
             return this;
         }
 
-        public GameBuilder importDate(LocalDate localDate) {
-            game.importDate = localDate;
-            return this;
-        }
-
         public GameBuilder addPlayer(Player player) {
-            game.addPlayer(player);
+            if (game.players.containsKey(player.getId())) return this;
+            game.players.put(player.getId(), player);
+            game.addKillListener(player);
             return this;
         }
 
         public Player getPlayer(Integer id) {
+            if (id.equals(game.world.getId())) return game.world;
             return game.players.get(id);
         }
 
@@ -80,9 +78,22 @@ public class Game extends Notifiable {
             return game;
         }
 
-        public GameBuilder gameParameters(Map<String, String> parameters) {
-            game.gameParameters = parameters;
+        public GameBuilder setGameParameters(Map<String, String> parameters) {
+            game.gameParameters.clear();
+            game.gameParameters.putAll(parameters);
             return this;
         }
+
+        public GameBuilder setEndGameTime(GameTime endGameTime) {
+            game.endGameTime = endGameTime;
+            return this;
+        }
+
+
+        public GameBuilder setTotalKills(Integer totalKills) {
+            game.totalKills.set(totalKills);
+            return this;
+        }
+
     }
 }
