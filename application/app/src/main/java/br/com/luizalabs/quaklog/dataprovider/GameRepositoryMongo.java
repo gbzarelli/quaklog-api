@@ -1,13 +1,11 @@
 package br.com.luizalabs.quaklog.dataprovider;
 
-import br.com.luizalabs.quaklog.entity.Game;
-import br.com.luizalabs.quaklog.usecase.repository.GameRepository;
-import org.springframework.stereotype.Repository;
+import br.com.luizalabs.quaklog.dataprovider.entity.GameEntity;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public class GameRepositoryMongo implements GameRepository {
-    @Override
-    public void save(Game game) {
-        System.out.println(game);
-    }
+import java.time.LocalDate;
+import java.util.List;
+
+public interface GameRepositoryMongo extends MongoRepository<GameEntity, String> {
+    List<GameEntity> findAllByDate(LocalDate date);
 }
