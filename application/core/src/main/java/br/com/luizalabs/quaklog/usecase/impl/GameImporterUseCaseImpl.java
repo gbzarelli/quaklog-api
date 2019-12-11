@@ -69,7 +69,7 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
                     if (isGameRunning(gameBuilder)) {
                         gamesImported.add(buildAndPersistGame(gameBuilder));
                     }
-                    gameBuilder = parseProcessor.initGame(gameDate,parserKey.getParsable(), line);
+                    gameBuilder = parseProcessor.initGame(gameDate, parserKey.getParsable(), line);
                 } else if (isGameRunning(gameBuilder)) {
                     parseProcessor.processLine(gameBuilder, parserKey, line);
                 } else {

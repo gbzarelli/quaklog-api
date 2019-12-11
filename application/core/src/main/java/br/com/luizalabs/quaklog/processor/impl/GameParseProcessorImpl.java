@@ -2,7 +2,7 @@ package br.com.luizalabs.quaklog.processor.impl;
 
 import br.com.luizalabs.quaklog.entity.Game;
 import br.com.luizalabs.quaklog.entity.Item;
-import br.com.luizalabs.quaklog.entity.Player;
+import br.com.luizalabs.quaklog.entity.PlayerInGame;
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import br.com.luizalabs.quaklog.entity.vo.Mod;
 import br.com.luizalabs.quaklog.parser.GameParserException;
@@ -59,29 +59,29 @@ class GameParseProcessorImpl implements GameParseProcessor {
     }
 
     private void processClientDisconnected(Game.GameBuilder gameBuilder, ClientDisconnectObParser parse) {
-        gameBuilder.getPlayer(parse.getId()).disconnect(GameTime.of(parse.getGameTime()));
+        gameBuilder.getPlayerInGame(parse.getId()).disconnect(GameTime.of(parse.getGameTime()));
     }
 
     private void processKill(Game.GameBuilder gameBuilder, KillObParser parse) {
-        gameBuilder.getPlayer(parse.getKillerID())
+        gameBuilder.getPlayerKiller(parse.getKillerID())
                 .kill(GameTime.of(parse.getGameTime()),
-                        gameBuilder.getPlayer(parse.getKilledID()),
+                        gameBuilder.getPlayerInGame(parse.getKilledID()),
                         Mod.byModID(parse.getKilledModeID()));
     }
 
     private void processItem(Game.GameBuilder gameBuilder, ItemObParser parse) {
-        gameBuilder.getPlayer(parse.getId()).addItem(Item.valueOf(parse.getItem()));
+        gameBuilder.getPlayerInGame(parse.getId()).addItem(Item.valueOf(parse.getItem()));
     }
 
     private void processClientBegin(Game.GameBuilder gameBuilder, ClientBeginParseObParser parse) {
-        gameBuilder.getPlayer(parse.getId()).begin(GameTime.of(parse.getGameTime()));
+        gameBuilder.getPlayerInGame(parse.getId()).begin(GameTime.of(parse.getGameTime()));
     }
 
     private void processClientUserInfoChanged(Game.GameBuilder gameBuilder, ClientUserInfoChangedObParser parse) {
-        gameBuilder.getPlayer(parse.getId()).changeInfos(parse.getName(), parse.getArguments());
+        gameBuilder.getPlayerInGame(parse.getId()).changeInfos(parse.getName(), parse.getArguments());
     }
 
     private void processClientConnected(Game.GameBuilder gameBuilder, ClientConnectObParser parse) {
-        gameBuilder.addPlayer(new Player(GameTime.of(parse.getGameTime()), parse.getId()));
+        gameBuilder.addPlayerInGame(new PlayerInGame(GameTime.of(parse.getGameTime()), parse.getId()));
     }
 }

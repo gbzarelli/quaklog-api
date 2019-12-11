@@ -13,30 +13,30 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 public class Game extends Notifiable {
 
-    private final Collection<Player> players;
+    private final List<Player> players;
     private final Map<String, String> gameParameters;
     private final Integer totalKills;
     private final GameTime startGameTime;
     private final LocalDate gameDate;
     private final GameUUID gameUUID;
-    private final WorldPlayer world;
+    private final World world;
     private final GameTime endGameTime;
 
     public static class GameBuilder extends Notifiable {
-        private Map<Integer, Player> players;
+        private Map<Integer, PlayerInGame> players;
         private Map<String, String> gameParameters;
         private AtomicInteger totalKills;
         private GameTime startGameTime;
         private LocalDate gameDate;
         private GameUUID gameUUID;
-        private WorldPlayer world;
+        private World world;
         private GameTime endGameTime;
 
         public GameBuilder(GameTime startGameTime, LocalDate gameDate) {
             this.startGameTime = startGameTime;
             this.gameDate = gameDate;
             gameUUID = GameUUID.create();
-            world = new WorldPlayer();
+            world = new World();
             totalKills = new AtomicInteger();
             gameParameters = new HashMap<>();
             players = new HashMap<>();
@@ -48,14 +48,14 @@ public class Game extends Notifiable {
             super.addNotification(notification);
         }
 
-        public GameBuilder addPlayer(Player player) {
+        public GameBuilder addPlayerInGame(PlayerInGame player) {
             if (players.containsKey(player.getId())) return this;
             players.put(player.getId(), player);
             addKillListener(player);
             return this;
         }
 
-        private void addKillListener(Player world) {
+        private void addKillListener(PlayerKiller world) {
             world.setKillListener(killed -> incrementGameKill());
         }
 
@@ -63,14 +63,18 @@ public class Game extends Notifiable {
             totalKills.addAndGet(1);
         }
 
-        public Player getPlayer(Integer id) {
+        public PlayerInGame getPlayerInGame(Integer id) {
+            return players.get(id);
+        }
+
+        public PlayerKiller getPlayerKiller(Integer id) {
             if (id.equals(world.getId())) return world;
             return players.get(id);
         }
 
         public Game build() {
             val game = new Game(
-                    Collections.unmodifiableCollection(players.values()),
+                    Collections.unmodifiableList(new ArrayList<>(players.values())),
                     Collections.unmodifiableMap(gameParameters),
                     totalKills.get(),
                     startGameTime,
@@ -106,7 +110,7 @@ public class Game extends Notifiable {
             return this;
         }
 
-        public GameBuilder setWorld(WorldPlayer world) {
+        public GameBuilder setWorld(World world) {
             this.world = world;
             return this;
         }
