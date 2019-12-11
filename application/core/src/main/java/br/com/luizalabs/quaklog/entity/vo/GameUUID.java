@@ -3,7 +3,7 @@ package br.com.luizalabs.quaklog.entity.vo;
 import java.util.UUID;
 
 public class GameUUID {
-    private UUID uuid;
+    private final UUID uuid;
 
     public GameUUID(String uuid) {
         this.uuid = UUID.fromString(uuid);

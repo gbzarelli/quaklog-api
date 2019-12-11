@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @ToString
 @EqualsAndHashCode
-@Getter
 public class Player {
 
     @FunctionalInterface
@@ -23,13 +22,15 @@ public class Player {
         void kill(Player player);
     }
 
+    @Getter
     private final Integer id;
+    @Getter
+    private String name;
     private final AtomicInteger kills;
     private final List<KillHistory> kdHistory;
     private final List<Item> items;
     private final List<PlayerGameTime> times;
     private PlayerKillListener killListener;
-    private String name;
     private Map<String, String> parameters;
 
     public Player(GameTime time, Integer id) {
@@ -39,6 +40,26 @@ public class Player {
         this.items = new ArrayList<>();
         times = new ArrayList<>();
         connect(time);
+    }
+
+    public Integer getKills() {
+        return kills.get();
+    }
+
+    public List<PlayerGameTime> getTimes() {
+        return Collections.unmodifiableList(times);
+    }
+
+    public Map<String, String> getParameters() {
+        return Collections.unmodifiableMap(parameters);
+    }
+
+    public List<KillHistory> getKdHistory() {
+        return Collections.unmodifiableList(kdHistory);
+    }
+
+    public List<Item> getItems() {
+        return Collections.unmodifiableList(items);
     }
 
     public ConnectStatus getConnectStatus() {
@@ -54,7 +75,7 @@ public class Player {
         times.add(PlayerGameTime.newConnectedTime(time));
     }
 
-    public void setKillListener(PlayerKillListener killListener) {
+    void setKillListener(PlayerKillListener killListener) {
         this.killListener = killListener;
     }
 
@@ -64,14 +85,6 @@ public class Player {
 
     public void disconnect(GameTime timeBegin) {
         times.add(PlayerGameTime.newDisconnectedTime(timeBegin));
-    }
-
-    public List<KillHistory> getKdHistory() {
-        return Collections.unmodifiableList(kdHistory);
-    }
-
-    public List<Item> getItems() {
-        return Collections.unmodifiableList(items);
     }
 
     public void addItem(Item item) {
@@ -92,6 +105,8 @@ public class Player {
     private void deadBy(GameTime gameTime, Player player, Mod mod) {
         kdHistory.add(KillHistory.deadBy(gameTime, player, mod));
         if (isWorld(player)) {
+            //Não estrou controlando se o valor passa a ser negativo, posteriormente,
+            //poderia aprimorar essa parte para um objeto mais complexo;
             kills.decrementAndGet();
         }
     }

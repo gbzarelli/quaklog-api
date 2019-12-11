@@ -10,17 +10,21 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Getter
 @Setter(AccessLevel.PRIVATE)
 public class Game extends Notifiable {
 
-    private final GameUUID gameUUID;
     private final Map<Integer, Player> players;
-    private final WorldPlayer world;
-    private final GameTime startGameTime;
     private final Map<String, String> gameParameters;
     private final AtomicInteger totalKills;
+    @Getter
+    private final GameUUID gameUUID;
+    @Getter
+    private final WorldPlayer world;
+    @Getter
+    private final GameTime startGameTime;
+    @Getter
     private final LocalDate gameDate;
+    @Getter
     private GameTime endGameTime;
 
     private Game(GameTime startGameTime, LocalDate gameDate) {
@@ -32,6 +36,10 @@ public class Game extends Notifiable {
         gameParameters = new HashMap<>();
         players = new HashMap<>();
         addKillListener(world);
+    }
+
+    public Integer getTotalKills() {
+        return totalKills.get();
     }
 
     private void addKillListener(Player world) {
@@ -46,8 +54,8 @@ public class Game extends Notifiable {
         return Collections.unmodifiableMap(gameParameters);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(new ArrayList<>(players.values()));
+    public Collection<Player> getPlayers() {
+        return Collections.unmodifiableCollection(players.values());
     }
 
     public static class GameBuilder {
