@@ -11,5 +11,4 @@ public class QuaklogApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(QuaklogApiApplication.class, args);
     }
-
 }

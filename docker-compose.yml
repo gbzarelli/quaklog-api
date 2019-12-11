@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  
+
   # Database - Mongo DB
   mongo:
     image: mongo
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_USERNAME: quaklog
       MONGO_INITDB_ROOT_PASSWORD: 123456
     ports:
       - "27017:27017"
@@ -21,7 +21,7 @@ services:
     depends_on:
       - mongo
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: quaklog
+      ME_CONFIG_BASICAUTH_USERNAME: express
       ME_CONFIG_BASICAUTH_PASSWORD: 123456
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: quaklog
@@ -30,7 +30,7 @@ services:
       - mongo
     networks:
       - mongo-network
-  
+
   # Application - QuakLog API
   quaklog:
     image: luizalabs/quaklog-api

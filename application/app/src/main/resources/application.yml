@@ -11,3 +11,7 @@ spring:
   data:
     mongodb:
       host: \${MONGODB_HOST:localhost}
+      database: \${MONGODB_DATABASE:quaklog_db}
+      username: \${MONGODB_USERNAME:quaklog}
+      password: \${MONGODB_PASSWORD:123456}
+      authentication-database: admin

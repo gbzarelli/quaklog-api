@@ -6,6 +6,7 @@ import br.com.luizalabs.quaklog.entity.Game;
 import br.com.luizalabs.quaklog.entity.vo.GameUUID;
 import br.com.luizalabs.quaklog.usecase.repository.GameRepository;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -18,7 +19,8 @@ class GameRepositoryImpl implements GameRepository {
 
     private final GameRepositoryMongo mongo;
 
-    public GameRepositoryImpl(GameRepositoryMongo mongo) {
+    @Autowired
+    GameRepositoryImpl(GameRepositoryMongo mongo) {
         this.mongo = mongo;
     }
 

@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 public class GameRepositoryMapper {
 
     public static GameEntity toDatabaseEntity(Game game) {
-        //TODO
-        return null;
+        return new GameEntity(game.getGameUUID().toString(), game.getGameDate());
     }
 
     public static Game toDomainEntity(GameEntity gameEntity) {
