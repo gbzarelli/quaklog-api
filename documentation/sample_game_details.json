@@ -1,0 +1,235 @@
+{
+  "uuid": "84479f1d-c33a-400b-82d7-8dc9968bff16",
+  "word": {
+    "id": 1022,
+    "name": "<world>",
+    "items": [],
+    "kills": 3,
+    "parameters": {},
+    "status": [
+      {
+        "time": "00:00",
+        "status": "CONNECTED"
+      }
+    ],
+    "kd_history": [
+      {
+        "time": "1:26",
+        "killMode": "KILL",
+        "player": 4,
+        "mod": "MOD_TRIGGER_HURT"
+      },
+      {
+        "time": "1:32",
+        "killMode": "KILL",
+        "player": 4,
+        "mod": "MOD_TRIGGER_HURT"
+      },
+      {
+        "time": "1:41",
+        "killMode": "KILL",
+        "player": 2,
+        "mod": "MOD_FALLING"
+      }
+    ]
+  },
+  "players": [
+    {
+      "id": 2,
+      "name": "Dono da Bola",
+      "items": [
+        "weapon_rocketlauncher",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_combat",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_health_large",
+        "weapon_rocketlauncher",
+        "ammo_rockets",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_shard",
+        "weapon_rocketlauncher",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_health_large",
+        "ammo_rockets",
+        "weapon_rocketlauncher",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_shard"
+      ],
+      "kills": -1,
+      "parameters": {
+        "tt": "0",
+        "hmodel": "sarge",
+        "l": "0",
+        "n": "Dono da Bola",
+        "c1": "4",
+        "c2": "5",
+        "t": "0",
+        "w": "0",
+        "tl": "0",
+        "g_redteam": "",
+        "model": "sarge",
+        "hc": "95",
+        "g_blueteam": ""
+      },
+      "status": [
+        {
+          "time": "0:25",
+          "status": "CONNECTED"
+        },
+        {
+          "time": "0:27",
+          "status": "BEGIN"
+        }
+      ],
+      "kd_history": [
+        {
+          "time": "1:08",
+          "killMode": "DEAD",
+          "player": 3,
+          "mod": "MOD_ROCKET"
+        },
+        {
+          "time": "1:41",
+          "killMode": "DEAD",
+          "player": 1022,
+          "mod": "MOD_FALLING"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Isgalamido",
+      "items": [
+        "weapon_rocketlauncher",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_shard",
+        "item_armor_combat",
+        "weapon_railgun",
+        "weapon_railgun",
+        "weapon_railgun",
+        "weapon_railgun",
+        "weapon_railgun",
+        "weapon_railgun"
+      ],
+      "kills": 1,
+      "parameters": {
+        "tt": "0",
+        "hmodel": "uriel/zael",
+        "l": "0",
+        "n": "Isgalamido",
+        "c1": "5",
+        "c2": "5",
+        "t": "0",
+        "w": "0",
+        "tl": "0",
+        "g_redteam": "",
+        "model": "uriel/zael",
+        "hc": "100",
+        "g_blueteam": ""
+      },
+      "status": [
+        {
+          "time": "0:59",
+          "status": "CONNECTED"
+        },
+        {
+          "time": "1:01",
+          "status": "BEGIN"
+        }
+      ],
+      "kd_history": [
+        {
+          "time": "1:08",
+          "killMode": "KILL",
+          "player": 2,
+          "mod": "MOD_ROCKET"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Zeh",
+      "items": [
+        "weapon_shotgun",
+        "ammo_shells",
+        "item_health_large",
+        "weapon_rocketlauncher",
+        "ammo_rockets"
+      ],
+      "kills": -2,
+      "parameters": {
+        "tt": "0",
+        "hmodel": "sarge/default",
+        "l": "0",
+        "n": "Zeh",
+        "c1": "1",
+        "c2": "5",
+        "t": "0",
+        "w": "0",
+        "tl": "0",
+        "g_redteam": "",
+        "model": "sarge/default",
+        "hc": "100",
+        "g_blueteam": ""
+      },
+      "status": [
+        {
+          "time": "1:06",
+          "status": "CONNECTED"
+        },
+        {
+          "time": "1:08",
+          "status": "BEGIN"
+        }
+      ],
+      "kd_history": [
+        {
+          "time": "1:26",
+          "killMode": "DEAD",
+          "player": 1022,
+          "mod": "MOD_TRIGGER_HURT"
+        },
+        {
+          "time": "1:32",
+          "killMode": "DEAD",
+          "player": 1022,
+          "mod": "MOD_TRIGGER_HURT"
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "dmflags": "0",
+    "fraglimit": "20",
+    "gamename": "baseq3",
+    "sv_minPing": "0",
+    "sv_maxclients": "16",
+    "g_needpass": "0",
+    "g_gametype": "0",
+    "mapname": "q3dm17",
+    "version": "ioq3 1.36 linux-x86_64 Apr 12 2009",
+    "sv_maxRate": "10000",
+    "timelimit": "15",
+    "sv_privateClients": "2",
+    "protocol": "68",
+    "sv_hostname": "Code Miner Server",
+    "sv_allowDownload": "0",
+    "sv_minRate": "0",
+    "sv_floodProtect": "1",
+    "sv_maxPing": "0",
+    "g_maxGameClients": "0",
+    "capturelimit": "8"
+  },
+  "total_kills": 4,
+  "start_time": "0:00",
+  "end_time": "1:47"
+}

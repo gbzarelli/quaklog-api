@@ -63,6 +63,7 @@ public class GameMapper {
                 .killMode(kdHistory.getKillMode().name())
                 .mod(kdHistory.getMod().name())
                 .player(kdHistory.getPlayer())
+                .time(kdHistory.getGameTime().toString())
                 .build();
     }
 }
