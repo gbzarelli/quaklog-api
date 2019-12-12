@@ -1,5 +1,6 @@
 package br.com.luizalabs.quaklog.parser;
 
+import lombok.val;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -23,6 +24,29 @@ class GameRegexUtilsTest {
         assertValuesInitGame(map);
     }
 
+    @Test
+    void failedToExtractIntegerID() {
+        Integer integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "", -1);
+        assertEquals(-1, integer.intValue());
+    }
+
+    @Test
+    void successToExtractIntegerID() {
+        Integer integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "00:00 ABC: 10 XXX", -1);
+        assertEquals(10, integer.intValue());
+    }
+
+    @Test
+    void failedToExtractKey() {
+        String value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "");
+        assertNull(value);
+    }
+
+    @Test
+    void successToExtractKey() {
+        String value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "00:00 ABC: 10 XXX");
+        assertEquals("ABC", value);
+    }
 
     private void assertValuesInitGame(Map<String, String> map) {
         assertEquals("1", map.get("sv_floodProtect"));

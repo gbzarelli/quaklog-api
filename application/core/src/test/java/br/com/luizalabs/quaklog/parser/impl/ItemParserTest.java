@@ -34,6 +34,11 @@ class ItemParserTest {
     }
 
     @Test
+    void assertThrowsWhenParseInvalidItemExtract() {
+        assertThrows(GameParserException.class, () -> parser.parse("  1:17 Item: 6"));
+    }
+
+    @Test
     void assertThrowsWhenParseInvalidFormat() {
         assertThrows(GameParserException.class, () -> parser.parse("abc abc abc"));
     }
@@ -45,7 +50,7 @@ class ItemParserTest {
 
     private boolean assertParse(Item valueToParse) {
         ItemObParser parse = parse(valueToParse.line);
-        return parse.getId() == valueToParse.expectedID && parse.getGameTime().equals(valueToParse.expectedTime) &&
+        return parse.getId().equals(valueToParse.expectedID) && parse.getGameTime().equals(valueToParse.expectedTime) &&
                 parse.getItem().equals(valueToParse.expectedItem);
     }
 

@@ -32,8 +32,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    'br.com.luizalabs.quakelog/Application**',
-                    'br.com.luizalabs.quakelog/ServletInitializer**'
+                    'br.com.luizalabs.quakelog/QuaklogApiApplication**'
             ])
         })
     }

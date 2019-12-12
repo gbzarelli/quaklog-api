@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Game extends Notifiable {
 
     private final List<Player> players;
@@ -21,6 +21,10 @@ public class Game extends Notifiable {
     private final GameUUID gameUUID;
     private final World world;
     private final GameTime endGameTime;
+
+    public Player getPlayerByID(Integer id) {
+        return players.stream().filter(it -> it.getId().equals(id)).findFirst().orElse(null);
+    }
 
     public static class GameBuilder extends Notifiable {
         private Map<Integer, PlayerInGame> players;
