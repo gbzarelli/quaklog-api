@@ -1,7 +1,10 @@
 package br.com.luizalabs.quaklog.entity.vo;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.UUID;
 
+@EqualsAndHashCode
 public class GameUUID {
     private final UUID uuid;
 

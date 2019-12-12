@@ -44,6 +44,7 @@ dependencies {
 
     implementation libs.database
     implementation libs.spring_config
+    implementation libs.cacheable
     implementation libs.entrypoint
     implementation libs.communs_libs
     implementation libs.inject

@@ -9,7 +9,9 @@ import br.com.luizalabs.quaklog.entrypoint.mapper.GameMapper;
 import br.com.luizalabs.quaklog.entrypoint.mapper.SimpleGamesMapper;
 import br.com.luizalabs.quaklog.usecase.GameGetterUseCase;
 import io.swagger.annotations.Api;
+import lombok.val;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,8 +36,19 @@ class GameGetterRestEntryPoint implements GameGetterEntryPoint {
         return SimpleGamesMapper.toDTO(useCase.getGamesByDate(date));
     }
 
+
+    @GetMapping(value = "/{uuid}")
+    public ResponseEntity<GameDTO> getGameByUUIDEndpoint(@PathVariable String uuid) {
+        val game = getGameByUUID(uuid);
+        return game == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(game);
+    }
+
     @Override
     public GameDTO getGameByUUID(String uuid) {
-        return GameMapper.toDTO(useCase.getGameByUUID(GameUUID.of(uuid)));
+        val game = useCase.getGameByUUID(GameUUID.of(uuid));
+        if (game == null) {
+            return null;
+        }
+        return GameMapper.toDTO(game);
     }
 }

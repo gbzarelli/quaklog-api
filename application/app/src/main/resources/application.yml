@@ -8,6 +8,11 @@ application:
   artifact-id: ${project.artifactId}
 
 spring:
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterAccess=3600s
+
   data:
     mongodb:
       host: \${MONGODB_HOST:localhost}

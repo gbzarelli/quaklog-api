@@ -7,6 +7,7 @@ import br.com.luizalabs.quaklog.entity.vo.GameUUID;
 import br.com.luizalabs.quaklog.usecase.repository.GameRepository;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
+    @Cacheable(value = "getByUUID", key = "#gameUUID", unless = "#result==null")
     public Game getByUUID(GameUUID gameUUID) {
         Optional<GameEntity> gameEntity = mongo.findById(gameUUID.toString());
         return gameEntity.map(GameRepositoryMapper::toDomainEntity).orElse(null);

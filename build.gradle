@@ -38,13 +38,14 @@ allprojects {
 subprojects {
     ext {
         versions = [
-                junit  : "5.2.0",
-                assertj: "3.11.1",
-                spring : "2.2.2.RELEASE",
-                swagger: '2.9.2',
-                inject : '1',
-                mockito: '1.10.19',
-                lombok : '1.18.10',
+                junit   : "5.2.0",
+                assertj : "3.11.1",
+                spring  : "2.2.2.RELEASE",
+                swagger : '2.9.2',
+                inject  : '1',
+                mockito : '1.10.19',
+                lombok  : '1.18.10',
+                caffeine: '2.8.0',
         ]
 
         libs = [
@@ -64,6 +65,12 @@ subprojects {
                 spring_config               : [
                         "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
                         "io.springfox:springfox-swagger2:${versions.swagger}",
+                ],
+                cacheable                   : [
+                        "org.springframework.boot:spring-boot-starter-cache:${versions.spring}",
+                        "com.github.ben-manes.caffeine:caffeine:${versions.caffeine}",
+                        "com.github.ben-manes.caffeine:guava:${versions.caffeine}",
+                        "com.github.ben-manes.caffeine:jcache:${versions.caffeine}",
                 ],
                 spring_annotation_processor : [
                         "org.springframework.boot:spring-boot-configuration-processor:${versions.spring}",

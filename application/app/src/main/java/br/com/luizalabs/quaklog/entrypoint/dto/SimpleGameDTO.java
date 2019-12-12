@@ -15,12 +15,12 @@ public class SimpleGameDTO {
     private String uuid;
     @JsonProperty("total_kills")
     private Integer totalKills;
-    private List<PlayerDTO> players;
+    private List<SimplePlayerDTO> players;
     @JsonProperty("detail_path")
     private String detailPath;
 
     @Builder
-    public SimpleGameDTO(String uuid, Integer totalKills, List<PlayerDTO> players) {
+    public SimpleGameDTO(String uuid, Integer totalKills, List<SimplePlayerDTO> players) {
         this.uuid = uuid;
         this.totalKills = totalKills;
         this.players = players;

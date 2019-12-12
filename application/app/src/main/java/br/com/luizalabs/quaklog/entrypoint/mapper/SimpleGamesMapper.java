@@ -2,7 +2,7 @@ package br.com.luizalabs.quaklog.entrypoint.mapper;
 
 import br.com.luizalabs.quaklog.entity.Game;
 import br.com.luizalabs.quaklog.entity.Player;
-import br.com.luizalabs.quaklog.entrypoint.dto.PlayerDTO;
+import br.com.luizalabs.quaklog.entrypoint.dto.SimplePlayerDTO;
 import br.com.luizalabs.quaklog.entrypoint.dto.SimpleGameDTO;
 import br.com.luizalabs.quaklog.entrypoint.dto.SimpleListGamesDTO;
 import lombok.AccessLevel;
@@ -30,12 +30,12 @@ public class SimpleGamesMapper {
                 .build();
     }
 
-    private static List<PlayerDTO> mapPlayers(Game game) {
+    private static List<SimplePlayerDTO> mapPlayers(Game game) {
         return game.getPlayers().stream().map(SimpleGamesMapper::mapPlayer).collect(Collectors.toList());
     }
 
-    private static PlayerDTO mapPlayer(Player player) {
-        return PlayerDTO.builder()
+    private static SimplePlayerDTO mapPlayer(Player player) {
+        return SimplePlayerDTO.builder()
                 .id(player.getId())
                 .kills(player.getKills())
                 .name(player.getName())
