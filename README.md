@@ -18,7 +18,7 @@ seja permitido posteriormente realizar consultas mais detalhadas.
 
 # Tecnologias utilizadas
 
-- [`Java/JDK 8`](https://www.oracle.com/technetwork/pt/java/index.html) - Java Development Kit 8
+- [`Java/OpenJDK 11`](https://openjdk.java.net/projects/jdk/11/) - Java Development Kit 11
 - [`Spring boot`](https://spring.io) - Framework base para a API
 - [`MongoDB`](https://www.mongodb.com) - Base de dados não relacional
 - [`Swagger`](https://swagger.io) - Documentação de API de forma dinâmica

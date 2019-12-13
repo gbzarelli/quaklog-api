@@ -3,11 +3,9 @@ package br.com.luizalabs.quaklog.entity;
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import lombok.Builder;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class World extends PlayerKiller {
 

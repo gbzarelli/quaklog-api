@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 }
 
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 //Generate jar with other name
 bootJar {

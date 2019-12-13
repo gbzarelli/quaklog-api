@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jdk
 
 ENV MONGODB_HOST mongo
 ENV MONGODB_DATABASE quaklog_db

@@ -6,6 +6,8 @@ import br.com.luizalabs.quaklog.parser.Parsable;
 import br.com.luizalabs.quaklog.parser.objects.ItemObParser;
 import lombok.val;
 
+import java.util.Objects;
+
 import static br.com.luizalabs.quaklog.parser.GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN;
 import static br.com.luizalabs.quaklog.parser.GameRegexUtils.extractInteger;
 
@@ -17,7 +19,7 @@ public class ItemParser implements Parsable<ItemObParser> {
             return ItemObParser.builder()
                     .gameTime(extractTime(value))
                     .id(extractItemID(value))
-                    .item(extractItem(value))
+                    .item(Objects.requireNonNull(extractItem(value)))
                     .build();
         } catch (Exception e) {
             throw new GameParserException(e.getMessage(), e);

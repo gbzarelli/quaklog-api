@@ -1,5 +1,5 @@
 group 'br.com.luizalabs'
-version '0.0.1'
+version '0.0.2'
 description = "API para importação e consulta de arquivos de log do jogo Quake"
 
 buildscript {
@@ -8,7 +8,6 @@ buildscript {
     ext.archive_file_name = "${artifactId}.${archive_extension}"
 
     ext.jacoco_palantir_version = '0.4.0'
-    ext.google_jib_version = '1.8.0'
 
     repositories {
         maven {

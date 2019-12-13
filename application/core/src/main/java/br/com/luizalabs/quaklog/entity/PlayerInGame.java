@@ -6,10 +6,8 @@ import br.com.luizalabs.quaklog.entity.vo.Mod;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @ToString
 public class PlayerInGame extends PlayerKiller implements CanDead {

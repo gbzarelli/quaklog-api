@@ -1,6 +1,6 @@
 description = "Casos de uso do projeto"
 
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 dependencies {
     implementation libs.inject
