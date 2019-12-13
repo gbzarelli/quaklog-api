@@ -4,26 +4,27 @@ import br.com.luizalabs.quaklog.dataprovider.entity.ItemEntity;
 import br.com.luizalabs.quaklog.entity.Item;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 class ItemRepositoryMapper {
 
-    static List<ItemEntity> toDatabaseEntity(List<Item> items) {
+    static List<ItemEntity> toDatabaseEntity(final List<Item> items) {
         return items.stream().map(ItemRepositoryMapper::toDatabaseEntity).collect(Collectors.toList());
     }
 
-    static ItemEntity toDatabaseEntity(Item item) {
+    static ItemEntity toDatabaseEntity(final Item item) {
         return ItemEntity.builder().item(item.toString()).build();
     }
 
-    static List<Item> mapItems(List<ItemEntity> items) {
+    static List<Item> mapItems(final List<ItemEntity> items) {
         return items.stream().map(ItemRepositoryMapper::mapItems).collect(Collectors.toList());
     }
 
-    static Item mapItems(ItemEntity item) {
+    static Item mapItems(final ItemEntity item) {
         return Item.valueOf(item.getItem());
     }
 

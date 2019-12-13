@@ -7,18 +7,19 @@ import br.com.luizalabs.quaklog.entity.vo.KillMode;
 import br.com.luizalabs.quaklog.entity.vo.Mod;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 class KillHistoryRepositoryMapper {
 
-    static List<KillHistoryEntity> toDatabaseEntity(List<KillHistory> kdHistory) {
+    static List<KillHistoryEntity> toDatabaseEntity(final List<KillHistory> kdHistory) {
         return kdHistory.stream().map(KillHistoryRepositoryMapper::toDatabaseEntity).collect(Collectors.toList());
     }
 
-    static KillHistoryEntity toDatabaseEntity(KillHistory kdHistory) {
+    static KillHistoryEntity toDatabaseEntity(final KillHistory kdHistory) {
         return KillHistoryEntity.builder()
                 .gameTime(kdHistory.getGameTime().toString())
                 .killMode(kdHistory.getKillMode().name())
@@ -27,11 +28,11 @@ class KillHistoryRepositoryMapper {
                 .build();
     }
 
-    static List<KillHistory> mapKdHistory(List<KillHistoryEntity> kdHistory) {
+    static List<KillHistory> mapKdHistory(final List<KillHistoryEntity> kdHistory) {
         return kdHistory.stream().map(KillHistoryRepositoryMapper::mapKdHistory).collect(Collectors.toList());
     }
 
-    static KillHistory mapKdHistory(KillHistoryEntity kdHistory) {
+    static KillHistory mapKdHistory(final KillHistoryEntity kdHistory) {
         return KillHistory.builder()
                 .gameTime(GameTime.of(kdHistory.getGameTime()))
                 .killMode(KillMode.valueOf(kdHistory.getKillMode()))

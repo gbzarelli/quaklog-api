@@ -7,14 +7,15 @@ import br.com.luizalabs.quaklog.entrypoint.dto.PlayerDTO;
 import br.com.luizalabs.quaklog.entrypoint.dto.PlayerStatusDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class GameMapper {
 
-    public static GameDTO toDTO(Game game) {
+    public static GameDTO toDTO(final Game game) {
         return GameDTO.builder()
                 .startTime(game.getStartGameTime().toString())
                 .endTime(game.getEndGameTime().toString())
@@ -26,19 +27,19 @@ public class GameMapper {
                 .build();
     }
 
-    private static List<PlayerDTO> mapPlayers(List<Player> players) {
+    private static List<PlayerDTO> mapPlayers(final List<Player> players) {
         return players.stream().map(GameMapper::mapPlayer).collect(Collectors.toList());
     }
 
-    private static List<PlayerStatusDTO> mapStatus(List<PlayerStatus> status) {
+    private static List<PlayerStatusDTO> mapStatus(final List<PlayerStatus> status) {
         return status.stream().map(GameMapper::mapStatus).collect(Collectors.toList());
     }
 
-    private static List<KillHistoryDTO> mapKdHistory(List<KillHistory> kdHistory) {
+    private static List<KillHistoryDTO> mapKdHistory(final List<KillHistory> kdHistory) {
         return kdHistory.stream().map(GameMapper::mapKdHistory).collect(Collectors.toList());
     }
 
-    private static PlayerDTO mapPlayer(Player player) {
+    private static PlayerDTO mapPlayer(final Player player) {
         return PlayerDTO.builder()
                 .name(player.getName())
                 .kills(player.getKills())
@@ -51,14 +52,14 @@ public class GameMapper {
     }
 
 
-    private static PlayerStatusDTO mapStatus(PlayerStatus status) {
+    private static PlayerStatusDTO mapStatus(final PlayerStatus status) {
         return PlayerStatusDTO.builder()
                 .status(status.getStatus().name())
                 .time(status.getTime().toString())
                 .build();
     }
 
-    private static KillHistoryDTO mapKdHistory(KillHistory kdHistory) {
+    private static KillHistoryDTO mapKdHistory(final KillHistory kdHistory) {
         return KillHistoryDTO.builder()
                 .killMode(kdHistory.getKillMode().name())
                 .mod(kdHistory.getMod().name())

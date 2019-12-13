@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class LocalDateToStringConverter implements Converter<LocalDate, String> {
     @Override
-    public String convert(@Nullable LocalDate source) {
+    public String convert(@Nullable final LocalDate source) {
         if (source == null) return null;
         return DateFormatUtils.DATE_FORMATTER.format(source);
     }

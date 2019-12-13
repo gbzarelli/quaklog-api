@@ -6,19 +6,20 @@ import br.com.luizalabs.quaklog.entity.PlayerInGame;
 import br.com.luizalabs.quaklog.entity.World;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 class PlayerRepositoryMapper {
 
-    static List<PlayerEntity> toDatabaseEntity(Collection<Player> players) {
+    static List<PlayerEntity> toDatabaseEntity(final Collection<Player> players) {
         return players.stream().map(PlayerRepositoryMapper::toDatabaseEntity).collect(Collectors.toList());
     }
 
-    static PlayerEntity toDatabaseEntity(Player player) {
+    static PlayerEntity toDatabaseEntity(final Player player) {
         return PlayerEntity.builder()
                 .id(player.getId())
                 .items(ItemRepositoryMapper.toDatabaseEntity(player.getItems()))
@@ -30,7 +31,7 @@ class PlayerRepositoryMapper {
                 .build();
     }
 
-    static PlayerInGame mapPlayer(PlayerEntity playerEntity) {
+    static PlayerInGame mapPlayer(final PlayerEntity playerEntity) {
         return PlayerInGame.builder()
                 .kills(playerEntity.getKills())
                 .kdHistory(KillHistoryRepositoryMapper.mapKdHistory(playerEntity.getKdHistory()))
@@ -42,7 +43,7 @@ class PlayerRepositoryMapper {
                 .build();
     }
 
-    static World mapWorld(PlayerEntity world) {
+    static World mapWorld(final PlayerEntity world) {
         return World.builder()
                 .kills(world.getKills())
                 .kdHistory(KillHistoryRepositoryMapper.mapKdHistory(world.getKdHistory()))

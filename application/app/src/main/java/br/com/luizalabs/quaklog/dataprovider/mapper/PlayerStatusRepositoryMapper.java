@@ -6,29 +6,30 @@ import br.com.luizalabs.quaklog.entity.vo.ConnectStatus;
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 class PlayerStatusRepositoryMapper {
 
-    static List<PlayerStatusEntity> toDatabaseEntity(List<PlayerStatus> status) {
+    static List<PlayerStatusEntity> toDatabaseEntity(final List<PlayerStatus> status) {
         return status.stream().map(PlayerStatusRepositoryMapper::toDatabaseEntity).collect(Collectors.toList());
     }
 
-    static PlayerStatusEntity toDatabaseEntity(PlayerStatus status) {
+    static PlayerStatusEntity toDatabaseEntity(final PlayerStatus status) {
         return PlayerStatusEntity.builder()
                 .connectStatus(status.getStatus().name())
                 .gameTime(status.getTime().toString())
                 .build();
     }
 
-    static List<PlayerStatus> mapStatus(List<PlayerStatusEntity> status) {
+    static List<PlayerStatus> mapStatus(final List<PlayerStatusEntity> status) {
         return status.stream().map(PlayerStatusRepositoryMapper::mapStatus).collect(Collectors.toList());
     }
 
-    static PlayerStatus mapStatus(PlayerStatusEntity status) {
+    static PlayerStatus mapStatus(final PlayerStatusEntity status) {
         return PlayerStatus.builder()
                 .status(ConnectStatus.valueOf(status.getConnectStatus()))
                 .time(GameTime.of(status.getGameTime()))

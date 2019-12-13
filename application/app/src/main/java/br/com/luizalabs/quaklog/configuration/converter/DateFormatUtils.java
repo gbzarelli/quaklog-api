@@ -1,11 +1,10 @@
 package br.com.luizalabs.quaklog.configuration.converter;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.time.format.DateTimeFormatter;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 class DateFormatUtils {
     static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 }
