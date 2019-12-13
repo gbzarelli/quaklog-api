@@ -8,10 +8,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ToString
@@ -35,12 +32,12 @@ public class PlayerInGame extends PlayerKiller implements CanDead {
 
     @Builder
     public PlayerInGame(Integer kills, List<KillHistory> kdHistory, Integer id, String name, List<Item> items, List<PlayerStatus> status, Map<String, String> parameters) {
-        super(new AtomicInteger(kills), kdHistory);
-        this.id = id;
+        super(kills,kdHistory);
+        this.id = Objects.requireNonNull(id);
+        this.status = Objects.requireNonNull(status);
         this.name = name;
-        this.items = items;
-        this.status = status;
-        this.parameters = parameters;
+        this.items = items == null ? Collections.emptyList() : items;
+        this.parameters = parameters == null ? Collections.emptyMap() : parameters;
     }
 
     public List<PlayerStatus> getStatus() {
