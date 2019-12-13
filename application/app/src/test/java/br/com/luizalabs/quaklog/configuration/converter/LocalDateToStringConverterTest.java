@@ -11,13 +11,13 @@ class LocalDateToStringConverterTest {
     private final LocalDateToStringConverter converter = new LocalDateToStringConverter();
 
     @Test
-    void convertNullObject() {
+    void shouldNotThrowExceptionWhenConvertingNullParameter() {
         final String convert = converter.convert(null);
         assertNull(convert);
     }
 
     @Test
-    void converterWithSuccess() {
+    void shouldThrowDateTimeParseExceptionWhenTryingToConvertInvalidDate() {
         final String convert = converter.convert(LocalDate.of(2010, 10, 10));
         assertEquals("2010-10-10", convert);
     }

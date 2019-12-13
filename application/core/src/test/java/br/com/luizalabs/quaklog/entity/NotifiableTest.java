@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class NotifiableTest {
 
     @Test
-    void createNotificationAndAddNotifications() {
+    void shouldCreateNotificationAndAddNotificationsWithSuccess() {
         Notifiable myNotifiable = new Notifiable() {
         };
         myNotifiable.addNotification("A");
@@ -18,7 +18,7 @@ class NotifiableTest {
     }
 
     @Test
-    void createNotificationWithOtherNotification() {
+    void shouldCreateNotificationWithOtherNotificationWithSuccess() {
         Notifiable myNotifiable = new Notifiable() {
         };
         myNotifiable.addNotification("A");
@@ -38,7 +38,7 @@ class NotifiableTest {
     }
 
     @Test
-    void testHasNotificationMethod() {
+    void shouldHaveNotification() {
         Notifiable myNotifiable = new Notifiable() {
         };
         myNotifiable.addNotification("A");

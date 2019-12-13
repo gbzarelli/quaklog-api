@@ -10,20 +10,20 @@ class GameUUIDTest {
     private static final String VALID_UUID = "83ad6f30-5372-44cf-86d4-3d9d3edc919b";
 
     @Test
-    void createGameUUIDWithValidUUID() {
+    void shouldCreateGameUUIDWithValidUUID() {
         GameUUID gameUUID = GameUUID.of(VALID_UUID);
         assertEquals(VALID_UUID, gameUUID.toString());
     }
 
     @Test
-    void createGameUUIDWithRandomUUID() {
+    void shouldCreateGameUUIDWithRandomUUID() {
         GameUUID gameUUID = GameUUID.create();
         GameUUID gameUUID_2 = GameUUID.of(gameUUID.toString());
         assertEquals(gameUUID.toString(), gameUUID_2.toString());
     }
 
     @Test
-    void createGameUUIDWithFailed() {
+    void shouldThrowIllegalArgumentExceptionWhenCreateGameUUIDWithInvalidUUID() {
         assertThrows(IllegalArgumentException.class, () -> GameUUID.of(INVALID_UUID));
     }
 

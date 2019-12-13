@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ModTest {
     @Test
-    void byModID() {
+    void shouldCreateModByModID() {
         Mod mod = Mod.byModID(13);
         assertEquals(Mod.MOD_BFG_SPLASH, mod);
     }
 
     @Test
-    void byModIDNotFoundID() {
+    void shouldCreateTheNotFoundModWhenModIDNotFound() {
         Mod mod = Mod.byModID(1300);
         assertEquals(Mod.NOT_FOUND, mod);
     }

@@ -27,7 +27,7 @@ class GameImporterUseCaseImplTest {
     private final GameImporterUseCaseImpl useCase = new GameImporterUseCaseImpl(parser, repository);
 
     @Test
-    void importWithEmptyStream() throws IOException {
+    void shouldNotImportGamesWithEmptyStream() throws IOException {
         when(is.available()).thenReturn(0);
         GamesImported gamesImported = useCase.importGame(LocalDate.now(), is);
         assertNotNull(gamesImported);
@@ -35,7 +35,7 @@ class GameImporterUseCaseImplTest {
     }
 
     @Test
-    void failedToReadStream() throws IOException {
+    void shouldThrowIOExceptionWhenHaveFailedToReadStream() throws IOException {
         when(is.available()).thenReturn(10);
         when(is.read()).thenThrow(new IOException());
 
@@ -45,7 +45,7 @@ class GameImporterUseCaseImplTest {
     }
 
     @Test
-    void importGame1() throws IOException, GameParserException {
+    void shouldImportGameWithSuccess() throws IOException, GameParserException {
         LocalDate importDate = LocalDate.now();
         Game.GameBuilder gameBuilder = mock(Game.GameBuilder.class);
         Game game = mock(Game.class);
@@ -61,7 +61,7 @@ class GameImporterUseCaseImplTest {
     }
 
     @Test
-    void importGame2WithoutShutdown() throws IOException, GameParserException {
+    void shouldImportGamesWhenTheFirstGameNotHaveShutdownKey() throws IOException, GameParserException {
         LocalDate importDate = LocalDate.now();
         Game.GameBuilder gameBuilder1 = mock(Game.GameBuilder.class);
         Game game1 = mock(Game.class);
@@ -85,7 +85,7 @@ class GameImporterUseCaseImplTest {
 
 
     @Test
-    void importGame3StartingWithoutInitGame() throws IOException, GameParserException {
+    void shouldImportOneGameWithFileStartWithAGameWithoutInitGameKey() throws IOException, GameParserException {
         LocalDate importDate = LocalDate.now();
         Game.GameBuilder gameBuilder = mock(Game.GameBuilder.class);
         Game game = mock(Game.class);

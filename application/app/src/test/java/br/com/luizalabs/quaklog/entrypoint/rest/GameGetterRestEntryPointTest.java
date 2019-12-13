@@ -30,7 +30,7 @@ class GameGetterRestEntryPointTest {
     private GameGetterRestEntryPoint gameGetter = new GameGetterRestEntryPoint(useCase);
 
     @Test
-    void gameNotFound() {
+    void shouldReturnHttpStatusNotFoundWhenNoGameBeFound() {
         UUID uuid = UUID.randomUUID();
         when(useCase.getGameByUUID(GameUUID.of(uuid.toString()))).thenReturn(null);
 
@@ -39,7 +39,7 @@ class GameGetterRestEntryPointTest {
     }
 
     @Test
-    void gameListNotFoundGames() {
+    void shouldReturnEmptyListWhenNoGamesBeFoundInSearchGameByDate() {
         final LocalDate now = LocalDate.now();
         when(useCase.getGamesByDate(now)).thenReturn(null);
         final SimpleListGamesDTO simpleListGamesDTO = gameGetter.searchGameByDate(now);
@@ -50,7 +50,7 @@ class GameGetterRestEntryPointTest {
     }
 
     @Test
-    void gameListFound() {
+    void shouldReturnListOfGames() {
         final LocalDate now = LocalDate.now();
         List<Game> mocks = getTwoFakeGames();
         when(useCase.getGamesByDate(now)).thenReturn(mocks);
@@ -61,6 +61,27 @@ class GameGetterRestEntryPointTest {
         assertEquals(2, simpleListGamesDTO.getGames().size());
 
         assertSimpleGames(simpleListGamesDTO, mocks);
+    }
+
+
+    @Test
+    void shouldReturnDetailsGame() {
+        UUID uuid = UUID.randomUUID();
+        final Game mock = getFakeGame();
+        when(useCase.getGameByUUID(GameUUID.of(uuid.toString()))).thenReturn(mock);
+
+        final ResponseEntity<GameDTO> response = gameGetter.getGameByUUIDEndpoint(uuid.toString());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        final GameDTO body = response.getBody();
+        assertGame(mock, body);
+
+        List<Player> mockPlayers = mock.getPlayers();
+        List<PlayerDTO> bodyPlayers = body.getPlayers();
+        assertPlayers(mockPlayers, bodyPlayers);
+
+        List<KillHistory> mockKdHistory = mock.getWorld().getKdHistory();
+        List<KillHistoryDTO> bodyKdHistory = body.getWord().getKdHistory();
+        assertKdHistory(mockKdHistory, bodyKdHistory);
     }
 
     private void assertSimpleGames(SimpleListGamesDTO simpleListGamesDTO, List<Game> mocks) {
@@ -94,26 +115,6 @@ class GameGetterRestEntryPointTest {
 
     private List<Game> getTwoFakeGames() {
         return Lists.newArrayList(getFakeGame(), getFakeGame());
-    }
-
-    @Test
-    void gameFound() {
-        UUID uuid = UUID.randomUUID();
-        final Game mock = getFakeGame();
-        when(useCase.getGameByUUID(GameUUID.of(uuid.toString()))).thenReturn(mock);
-
-        final ResponseEntity<GameDTO> response = gameGetter.getGameByUUIDEndpoint(uuid.toString());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        final GameDTO body = response.getBody();
-        assertGame(mock, body);
-
-        List<Player> mockPlayers = mock.getPlayers();
-        List<PlayerDTO> bodyPlayers = body.getPlayers();
-        assertPlayers(mockPlayers, bodyPlayers);
-
-        List<KillHistory> mockKdHistory = mock.getWorld().getKdHistory();
-        List<KillHistoryDTO> bodyKdHistory = body.getWord().getKdHistory();
-        assertKdHistory(mockKdHistory, bodyKdHistory);
     }
 
     private void assertGame(Game mock, GameDTO body) {

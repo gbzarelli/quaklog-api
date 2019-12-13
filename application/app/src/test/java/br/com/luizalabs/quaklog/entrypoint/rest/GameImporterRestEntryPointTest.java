@@ -29,7 +29,7 @@ class GameImporterRestEntryPointTest {
     private GameImporterRestEntryPoint gm = new GameImporterRestEntryPoint(importerUseCase);
 
     @Test
-    void importGame() throws IOException {
+    void shouldImportGameWithSuccess() throws IOException {
         LocalDate localDate = LocalDate.now();
         InputStream inputStream = mock(InputStream.class);
         MultipartFile multipartFile = mock(MultipartFile.class);

@@ -31,7 +31,7 @@ class ClientBeginParserTest {
     }
 
     @Test
-    void assertThrowsWhenParseInvalidFormat() {
+    void shouldThrowGameParseExceptionWhenParseInvalidFormat() {
         assertThrows(GameParserException.class, () -> parser.parse("abc abc abc"));
     }
 
@@ -42,7 +42,7 @@ class ClientBeginParserTest {
 
     private boolean assertParse(ClientsBegin valueToParse) {
         ClientBeginParseObParser parse = parse(valueToParse.line);
-        return parse.getId() == valueToParse.expectedID && parse.getGameTime().equals(valueToParse.expectedTime);
+        return parse.getId().equals(valueToParse.expectedID) && parse.getGameTime().equals(valueToParse.expectedTime);
     }
 
     private ClientBeginParseObParser parse(String value) {

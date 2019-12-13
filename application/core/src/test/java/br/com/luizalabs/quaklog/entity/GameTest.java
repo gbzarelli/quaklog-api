@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     @Test
-    void gameBuilder() {
+    void shouldBuildGameWithSuccess() {
         final PlayerInGame playerInGame1 = Mockito.mock(PlayerInGame.class);
         final PlayerInGame playerInGame = Mockito.mock(PlayerInGame.class);
         final World world = Mockito.mock(World.class);

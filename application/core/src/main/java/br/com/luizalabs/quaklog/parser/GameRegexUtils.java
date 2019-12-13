@@ -23,7 +23,7 @@ public class GameRegexUtils {
     public static final Pattern KILL_MODE = Pattern.compile("(?<=\\sby\\s).*");
 
     public static Integer extractInteger(Pattern pattern, String value, Integer defaultValue) {
-        final val matcher = pattern.matcher(value);
+        val matcher = pattern.matcher(value);
         if (matcher.find()) return Integer.parseInt(matcher.group().trim());
         return defaultValue;
     }
@@ -46,7 +46,7 @@ public class GameRegexUtils {
     }
 
     public static String extractString(Pattern pattern, String value) {
-        final val matcher = pattern.matcher(value);
+        val matcher = pattern.matcher(value);
         if (matcher.find()) {
             return matcher.group();
         }

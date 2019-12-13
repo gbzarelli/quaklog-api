@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GamesImportedMapperTest {
 
     @Test
-    void conversionWithoutNotificationsWithSuccess() {
+    void shouldConversionWithoutNotificationsWithSuccess() {
         ArrayList<GameUUID> list = new ArrayList<>();
         list.add(GameUUID.create());
         list.add(GameUUID.create());
@@ -27,7 +27,7 @@ class GamesImportedMapperTest {
     }
 
     @Test
-    void conversionWithNotificationsWithSuccess() {
+    void shouldConversionWithNotificationsWithSuccess() {
         ArrayList<GameUUID> list = new ArrayList<>();
         list.add(GameUUID.create());
         list.add(GameUUID.create());

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class GamesImportedTest {
 
     @Test
-    void createFromListWithNotification() {
+    void shouldCreateGamesImportedFromListWithNotification() {
         String[] notifications = new String[]{"Failed load 1", "Failed load 2"};
         GamesImported empty = GamesImported.empty(notifications);
         assertEquals(0, empty.getGames().size());
@@ -24,7 +24,7 @@ class GamesImportedTest {
     }
 
     @Test
-    void createFromListWithoutNotification() {
+    void shouldCreateGamesImportedFromListWithoutNotification() {
         List<GameUUID> games = new ArrayList<>();
         games.add(GameUUID.create());
         games.add(GameUUID.create());

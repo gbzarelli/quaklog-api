@@ -1,11 +1,11 @@
 package br.com.luizalabs.quaklog.parser;
 
-import lombok.val;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class GameRegexUtilsTest {
 
@@ -13,37 +13,37 @@ class GameRegexUtilsTest {
     private static final String INIT_GAME = "\\sv_floodProtect\\1\\sv_maxPing\\0\\sv_minPing\\0\\sv_maxRate\\10000\\sv_minRate\\0\\sv_hostname\\Code Miner Server\\g_gametype\\0\\sv_privateClients\\2\\sv_maxclients\\16\\sv_allowDownload\\0\\bot_minplayers\\0\\dmflags\\0\\fraglimit\\20\\timelimit\\15\\g_maxGameClients\\0\\capturelimit\\8\\version\\ioq3 1.36 linux-x86_64 Apr 12 2009\\protocol\\68\\mapname\\q3dm17\\gamename\\baseq3\\g_needpass\\0";
 
     @Test
-    void extractParametersFromClientChanged() {
+    void shouldExtractParametersFromClientChangedWithSuccess() {
         Map<String, String> map = GameRegexUtils.extractPairsMap("\\", CLIENT_USER_INFO_CHANGED);
         assertValuesClient(map);
     }
 
     @Test
-    void extractParametersFromInitGame() {
+    void shouldExtractParametersFromInitGameWithSuccess() {
         Map<String, String> map = GameRegexUtils.extractPairsMap("\\", INIT_GAME);
         assertValuesInitGame(map);
     }
 
     @Test
-    void failedToExtractIntegerID() {
+    void shouldExtractInvalidIntegerInExtractIntegerWhenHaveInvalidInput() {
         Integer integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "", -1);
         assertEquals(-1, integer.intValue());
     }
 
     @Test
-    void successToExtractIntegerID() {
+    void shouldExtractValidIntegerInExtractIntegerWithValidInput() {
         Integer integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "00:00 ABC: 10 XXX", -1);
         assertEquals(10, integer.intValue());
     }
 
     @Test
-    void failedToExtractKey() {
+    void shouldExtractNullObjectInExtractStringWhenExtractInvalidInput() {
         String value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "");
         assertNull(value);
     }
 
     @Test
-    void successToExtractKey() {
+    void shouldExtractValueStringInExtractStringWhenExtractInvalidInput() {
         String value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "00:00 ABC: 10 XXX");
         assertEquals("ABC", value);
     }

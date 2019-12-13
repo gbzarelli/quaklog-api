@@ -37,7 +37,7 @@ public enum GameParserKey {
     }
 
     public static Optional<GameParserKey> getParserByText(String text) {
-        final val matcher = KEY_PATTERN.matcher(text);
+        val matcher = KEY_PATTERN.matcher(text);
         if (matcher.find()) {
             return getByKey(matcher.group());
         }

@@ -22,7 +22,7 @@ class GameParseProcessorImplTest {
     private final LocalDate localDate = LocalDate.now();
 
     @Test
-    void processInitGame() throws GameParserException {
+    void shouldProcessInitGameWithSuccess() throws GameParserException {
         final Game.GameBuilder gameBuilder = initGame(INIT_GAME_LINE);
         final Game build = gameBuilder.build();
         assertEquals(GameTime.of("01:01"), build.getStartGameTime());
@@ -34,7 +34,7 @@ class GameParseProcessorImplTest {
     }
 
     @Test
-    void processShutdownGame() throws GameParserException {
+    void shouldProcessShutdownGameWithSuccess() throws GameParserException {
         final Game.GameBuilder gameBuilder = initGame(INIT_GAME_LINE);
         parser.processLine(gameBuilder, GameParserKey.SHUTDOWN_GAME, "30:10 ShutdownGame: ");
         final Game build = gameBuilder.build();
@@ -49,12 +49,12 @@ class GameParseProcessorImplTest {
     }
 
     @Test
-    void failedToParseInitGame() {
+    void shouldThrowGameParserExceptionWhenParseInitGameWithInvalidInput() {
         assertThrows(GameParserException.class, () -> initGame("ABC"));
     }
 
     @Test
-    void processLineClientConnect() throws GameParserException {
+    void shouldProcessLineClientConnectWithSuccess() throws GameParserException {
         final Game.GameBuilder gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 2");
         assertNotNull(gameBuilder.getPlayerKiller(2));
         assertNotNull(gameBuilder.getPlayerInGame(2));
@@ -63,7 +63,7 @@ class GameParseProcessorImplTest {
     }
 
     @Test
-    void processLineClientInfoChanged() throws GameParserException {
+    void shouldProcessLineClientInfoChangedWithSuccess() throws GameParserException {
         final Game.GameBuilder gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 4");
         addInfos(gameBuilder, "20:34 ClientUserinfoChanged: 4 n\\Isgalamido\\t\\0\\model\\xian/default\\hmodel\\xian/default\\g_redteam\\\\g_blueteam\\\\c1\\4\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0");
 
@@ -76,7 +76,7 @@ class GameParseProcessorImplTest {
     }
 
     @Test
-    void processLineClientBegin() throws GameParserException {
+    void shouldProcessLineClientBeginWithSuccess() throws GameParserException {
         final Game.GameBuilder gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 4");
         addInfos(gameBuilder, "20:34 ClientUserinfoChanged: 4 n\\Isgalamido\\t\\0\\model\\xian/default\\hmodel\\xian/default\\g_redteam\\\\g_blueteam\\\\c1\\4\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0");
         beginClient(gameBuilder, "20:37 ClientBegin: 4");
@@ -90,7 +90,7 @@ class GameParseProcessorImplTest {
     }
 
     @Test
-    void processLineDisconnect() throws GameParserException {
+    void shouldProcessLineDisconnectWithSuccess() throws GameParserException {
         final Game.GameBuilder builder = getGameWithOneUserWithSuccess();
         connectClient(builder, " 20:38 ClientConnect: 2");
         addInfos(builder, "20:38 ClientUserinfoChanged: 2 n\\XXXX\\t\\0\\model\\uriel/zael\\hmodel\\uriel/zael\\g_redteam\\\\g_blueteam\\\\c1\\5\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0");
@@ -103,7 +103,7 @@ class GameParseProcessorImplTest {
     }
 
     @Test
-    void processKill() throws GameParserException {
+    void shouldProcessKillsWithSuccess() throws GameParserException {
         final Game.GameBuilder builder = getGameWithOneUserWithSuccess();
 
         //*connect rival
@@ -136,12 +136,9 @@ class GameParseProcessorImplTest {
         assertEquals(3, isgalamido.getKdHistory().size());
     }
 
-    private void beginClient(Game.GameBuilder gameBuilder, String line) throws GameParserException {
-        parser.processLine(gameBuilder, GameParserKey.CLIENT_BEGIN, line);
-    }
 
     @Test
-    void addItems() throws GameParserException {
+    void shouldAddItemsWithSuccess() throws GameParserException {
         final Game.GameBuilder builder = getGameWithOneUserWithSuccess();
         parser.processLine(builder, GameParserKey.ITEM, "20:40 Item: 4 weapon_rocketlauncher");
         assertTrueAddItemWithInexistingPlayer(builder);
@@ -150,6 +147,10 @@ class GameParseProcessorImplTest {
         assertEquals(2, player.getItems().size());
         assertEquals("weapon_rocketlauncher", player.getItems().get(0).toString());
         assertEquals("item_armor_body", player.getItems().get(1).toString());
+    }
+
+    private void beginClient(Game.GameBuilder gameBuilder, String line) throws GameParserException {
+        parser.processLine(gameBuilder, GameParserKey.CLIENT_BEGIN, line);
     }
 
     private void assertTrueAddItemWithInexistingPlayer(Game.GameBuilder builder) {

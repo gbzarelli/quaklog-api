@@ -33,7 +33,7 @@ class ClientUserInfoChangedParserTest {
     }
 
     @Test
-    void assertThrowsWhenParseInvalidFormat() {
+    void shouldThrowGameParseExceptionWhenParseInvalidFormat() {
         assertThrows(GameParserException.class, () -> parser.parse("abc abc abc"));
     }
 

@@ -19,7 +19,7 @@ class GameGetterUseCaseImplTest {
     private final GameGetterUseCase useCase = new GameGetterUseCaseImpl(repository);
 
     @Test
-    void getGamesByDate() {
+    void shouldGetGamesByDateWithSuccess() {
         LocalDate localDate = LocalDate.now();
         List<Game> gamesMock = Mockito.mock(List.class);
         when(repository.getAllByDate(localDate)).thenReturn(gamesMock);
@@ -29,7 +29,7 @@ class GameGetterUseCaseImplTest {
     }
 
     @Test
-    void getGame() {
+    void shouldGetSingleGameWithSuccess() {
         GameUUID gameUUID = mock(GameUUID.class);
         Game gameMock = Mockito.mock(Game.class);
         when(repository.getByUUID(gameUUID)).thenReturn(gameMock);
