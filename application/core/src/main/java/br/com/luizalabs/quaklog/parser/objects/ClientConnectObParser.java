@@ -1,11 +1,11 @@
 package br.com.luizalabs.quaklog.parser.objects;
 
 import br.com.luizalabs.quaklog.parser.ParseObject;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 public class ClientConnectObParser implements ParseObject {
     @NonNull

@@ -52,7 +52,7 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
             val line = reader.readLine();
             val keyExtracted = GameParserKey.getParserByText(line);
 
-            if (!keyExtracted.isPresent()) {
+            if (keyExtracted.isEmpty()) {
                 val message = logKeyNotFound(gameBuilder, numberLine, line);
                 importNotifications.add(message);
                 continue;

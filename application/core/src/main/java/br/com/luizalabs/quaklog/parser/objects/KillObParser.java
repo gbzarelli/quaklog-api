@@ -1,13 +1,12 @@
 package br.com.luizalabs.quaklog.parser.objects;
 
 import br.com.luizalabs.quaklog.parser.ParseObject;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
+@Data
 @Builder
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 public class KillObParser implements ParseObject {
 
     public static final int WORLD_USER_ID = 1022;
