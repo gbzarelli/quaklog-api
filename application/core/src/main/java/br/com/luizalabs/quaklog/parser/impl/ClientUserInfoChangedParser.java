@@ -18,7 +18,7 @@ public class ClientUserInfoChangedParser implements Parsable<ClientUserInfoChang
     @Override
     public ClientUserInfoChangedObParser parse(String value) throws GameParserException {
         try {
-            final val stringStringMap = extractParameters(value);
+            val stringStringMap = extractParameters(value);
             return ClientUserInfoChangedObParser.builder()
                     .gameTime(extractTime(value))
                     .id(extractUserID(value))
@@ -35,9 +35,9 @@ public class ClientUserInfoChangedParser implements Parsable<ClientUserInfoChang
     }
 
     private Map<String, String> extractParameters(String value) {
-        final val matcher = GameRegexUtils.AFTER_KEY_AND_NUMBER_GROUP2.matcher(value);
+        val matcher = GameRegexUtils.AFTER_KEY_AND_NUMBER_GROUP2.matcher(value);
         if (matcher.find()) {
-            final val parameters = matcher.group(1);
+            val parameters = matcher.group(1);
             return GameRegexUtils.extractPairsMap("\\", parameters);
         }
         return Collections.emptyMap();

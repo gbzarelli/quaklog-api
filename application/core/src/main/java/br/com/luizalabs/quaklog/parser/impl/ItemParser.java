@@ -27,7 +27,7 @@ public class ItemParser implements Parsable<ItemObParser> {
     }
 
     private String extractItem(String value) {
-        final val matcher = GameRegexUtils.AFTER_KEY_AND_NUMBER_GROUP2.matcher(value);
+        val matcher = GameRegexUtils.AFTER_KEY_AND_NUMBER_GROUP2.matcher(value);
         if (matcher.find()) {
             return matcher.group(1);
         }

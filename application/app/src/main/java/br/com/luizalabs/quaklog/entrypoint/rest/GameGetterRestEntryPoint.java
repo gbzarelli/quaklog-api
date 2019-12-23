@@ -36,7 +36,7 @@ class GameGetterRestEntryPoint implements GameGetterEntryPoint {
     @Override
     @GetMapping("/date/{date}")
     public SimpleListGamesDTO searchGameByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        final List<Game> gamesByDate = useCase.getGamesByDate(date);
+        val gamesByDate = useCase.getGamesByDate(date);
         if (gamesByDate == null) {
             return new SimpleListGamesDTO(Collections.emptyMap());
         }

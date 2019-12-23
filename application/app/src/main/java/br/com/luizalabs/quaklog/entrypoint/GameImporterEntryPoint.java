@@ -8,5 +8,5 @@ import java.time.LocalDate;
  * @param <O> output type
  */
 public interface GameImporterEntryPoint<I, O> {
-    public O importGame(LocalDate fileDate, I file) throws IOException;
+    O importGame(LocalDate fileDate, I file) throws IOException;
 }

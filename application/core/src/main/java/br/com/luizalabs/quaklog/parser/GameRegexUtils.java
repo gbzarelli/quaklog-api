@@ -28,12 +28,12 @@ public class GameRegexUtils {
     }
 
     public static Map<String, String> extractPairsMap(String splitBy, String text) {
-        Map<String, String> map = new HashMap<>();
+        val map = new HashMap<String, String>();
         if (text.startsWith(splitBy)) {
             text = text.substring(1);
         }
-        String[] split = text.split(Pattern.quote(splitBy));
-        String key = "null";
+        val split = text.split(Pattern.quote(splitBy));
+        var key = "null";
         for (int i = 0; i < split.length; i++) {
             if (i % 2 == 0) {
                 key = split[i];

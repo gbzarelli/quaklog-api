@@ -16,7 +16,7 @@ public class KillParser implements Parsable<KillObParser> {
     @Override
     public KillObParser parse(String value) throws GameParserException {
         try {
-            List<Integer> ids = getIDs(value);
+            val ids = getIDs(value);
             if (ids.size() != 3) throw new GameParserException("Falha ao extrair IDs da Kill");
             return KillObParser.builder()
                     .gameTime(extractTime(value))
@@ -45,9 +45,9 @@ public class KillParser implements Parsable<KillObParser> {
     }
 
     private List<Integer> getIDs(String value) {
-        final val matcher = GameRegexUtils.KILL_IDS.matcher(value);
+        val matcher = GameRegexUtils.KILL_IDS.matcher(value);
         if (matcher.find()) {
-            final val group = matcher.group();
+            val group = matcher.group();
             return Arrays.stream(group.split(" ")).map(Integer::parseInt).collect(Collectors.toList());
         }
         return Collections.emptyList();

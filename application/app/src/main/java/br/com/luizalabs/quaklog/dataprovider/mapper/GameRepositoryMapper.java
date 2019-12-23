@@ -12,6 +12,7 @@ import lombok.val;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class GameRepositoryMapper {
@@ -42,9 +43,14 @@ public class GameRepositoryMapper {
     }
 
     private static Map<Integer, PlayerInGame> mapPlayers(final List<PlayerEntity> players) {
-        val map = new HashMap<Integer, PlayerInGame>();
-        players.forEach(playerEntity -> map.put(playerEntity.getId(), PlayerRepositoryMapper.mapPlayer(playerEntity)));
-        return map;
+        return players.stream()
+                .collect(Collectors.toMap(
+                        PlayerEntity::getId,
+                        PlayerRepositoryMapper::mapPlayer,
+                        (a, b) -> b,
+                        HashMap::new
+                        )
+                );
     }
 
 

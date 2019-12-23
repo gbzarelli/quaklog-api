@@ -45,7 +45,7 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
         val gamesImported = new ArrayList<GameUUID>();
         Game.GameBuilder gameBuilder = null;
 
-        int numberLine = 0;
+        var numberLine = 0;
 
         while (reader.ready()) {
             numberLine++;

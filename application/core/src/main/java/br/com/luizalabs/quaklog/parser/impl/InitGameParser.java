@@ -14,7 +14,7 @@ public class InitGameParser implements Parsable<InitGameObParser> {
     @Override
     public InitGameObParser parse(String value) throws GameParserException {
         try {
-            final val stringStringMap = extractParameters(value);
+            val stringStringMap = extractParameters(value);
             return InitGameObParser.builder()
                     .gameTime(extractTime(value))
                     .arguments(stringStringMap)
@@ -25,9 +25,9 @@ public class InitGameParser implements Parsable<InitGameObParser> {
     }
 
     private Map<String, String> extractParameters(String value) {
-        final val matcher = GameRegexUtils.AFTER_KEY.matcher(value);
+        val matcher = GameRegexUtils.AFTER_KEY.matcher(value);
         if (matcher.find()) {
-            final val afterKey = matcher.group();
+            val afterKey = matcher.group();
             return GameRegexUtils.extractPairsMap("\\", afterKey);
         }
         return Collections.emptyMap();
