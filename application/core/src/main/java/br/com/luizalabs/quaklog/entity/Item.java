@@ -7,11 +7,12 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Item {
-    private final String name;
 
     public static Item valueOf(String itemName) {
         return new Item(itemName);
     }
+
+    private final String name;
 
     @Override
     public String toString() {
