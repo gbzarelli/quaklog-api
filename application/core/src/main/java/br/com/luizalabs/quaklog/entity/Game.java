@@ -2,15 +2,16 @@ package br.com.luizalabs.quaklog.entity;
 
 import br.com.luizalabs.quaklog.entity.vo.GameTime;
 import br.com.luizalabs.quaklog.entity.vo.GameUUID;
-import lombok.*;
+import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Setter(AccessLevel.PRIVATE)
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Game extends Notifiable {
 
     private final List<Player> players;
@@ -21,6 +22,18 @@ public class Game extends Notifiable {
     private final GameUUID gameUUID;
     private final World world;
     private final GameTime endGameTime;
+
+    private Game(GameBuilder builder) {
+        this.players = List.copyOf(builder.players.values());
+        this.gameParameters = Collections.unmodifiableMap(builder.gameParameters);
+        this.totalKills = builder.totalKills.get();
+        this.startGameTime = builder.startGameTime;
+        this.gameDate = builder.gameDate;
+        this.gameUUID = builder.gameUUID;
+        this.world = builder.world;
+        this.endGameTime = builder.endGameTime;
+        this.addNotifiable(builder);
+    }
 
     public Player getPlayerByID(Integer id) {
         return players.stream().filter(it -> it.getId().equals(id)).findFirst().orElse(null);
@@ -45,6 +58,10 @@ public class Game extends Notifiable {
             gameParameters = new HashMap<>();
             players = new HashMap<>();
             addKillListener(world);
+        }
+
+        public Game build() {
+            return new Game(this);
         }
 
         @Override
@@ -74,21 +91,6 @@ public class Game extends Notifiable {
         public PlayerKiller getPlayerKiller(Integer id) {
             if (id.equals(world.getId())) return world;
             return players.get(id);
-        }
-
-        public Game build() {
-            val game = new Game(
-                    Collections.unmodifiableList(new ArrayList<>(players.values())),
-                    Collections.unmodifiableMap(gameParameters),
-                    totalKills.get(),
-                    startGameTime,
-                    gameDate,
-                    gameUUID,
-                    world,
-                    endGameTime
-            );
-            game.addNotifiable(this);
-            return game;
         }
 
         public GameBuilder setGameParameters(Map<String, String> parameters) {
