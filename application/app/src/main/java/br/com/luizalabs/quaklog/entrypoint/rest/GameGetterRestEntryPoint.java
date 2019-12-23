@@ -1,7 +1,6 @@
 package br.com.luizalabs.quaklog.entrypoint.rest;
 
 import br.com.luizalabs.quaklog.configuration.SwaggerConfig;
-import br.com.luizalabs.quaklog.entity.Game;
 import br.com.luizalabs.quaklog.entity.vo.GameUUID;
 import br.com.luizalabs.quaklog.entrypoint.GameGetterEntryPoint;
 import br.com.luizalabs.quaklog.entrypoint.dto.GameDTO;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping(RestConstants.PATH_GAME)
