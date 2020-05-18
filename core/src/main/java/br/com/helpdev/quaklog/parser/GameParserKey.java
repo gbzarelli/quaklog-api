@@ -1,7 +1,7 @@
 package br.com.helpdev.quaklog.parser;
 
 import br.com.helpdev.quaklog.parser.impl.*;
-import lombok.val;
+
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public enum GameParserKey {
     }
 
     public static Optional<GameParserKey> getParserByText(String text) {
-        val matcher = KEY_PATTERN.matcher(text);
+        final var matcher = KEY_PATTERN.matcher(text);
         if (matcher.find()) {
             return getByKey(matcher.group());
         }

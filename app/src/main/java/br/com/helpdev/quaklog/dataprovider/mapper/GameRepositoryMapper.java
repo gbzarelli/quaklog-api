@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class GameRepositoryMapper {
 
-    public static GameEntity toDatabaseEntity(final Game game) {
+    public GameEntity toDatabaseEntity(final Game game) {
         return GameEntity.builder()
                 .date(game.getGameDate())
                 .endGameTime(game.getEndGameTime() == null ? null : game.getEndGameTime().toString())
@@ -29,7 +29,7 @@ public class GameRepositoryMapper {
                 .build();
     }
 
-    public static Game toDomainEntity(final GameEntity gameEntity) {
+    public Game toDomainEntity(final GameEntity gameEntity) {
         return new Game.GameBuilder(GameTime.of(gameEntity.getStartGameTime()), gameEntity.getDate())
                 .setGameUUID(GameUUID.of(gameEntity.getUuid()))
                 .setTotalKills(gameEntity.getTotalKills())
@@ -41,7 +41,7 @@ public class GameRepositoryMapper {
 
     }
 
-    private static Map<Integer, PlayerInGame> mapPlayers(final List<PlayerEntity> players) {
+    private Map<Integer, PlayerInGame> mapPlayers(final List<PlayerEntity> players) {
         return players.stream()
                 .collect(Collectors.toMap(
                         PlayerEntity::getId,

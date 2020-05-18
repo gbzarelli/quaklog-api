@@ -8,7 +8,7 @@ import java.util.UUID;
 public class GameUUID {
     private final UUID uuid;
 
-    public static GameUUID of(String uuid) {
+    public static GameUUID of(final String uuid) {
         return new GameUUID(uuid);
     }
 
@@ -16,7 +16,7 @@ public class GameUUID {
         return new GameUUID();
     }
 
-    private GameUUID(String uuid) {
+    private GameUUID(final String uuid) {
         this.uuid = UUID.fromString(uuid);
     }
 

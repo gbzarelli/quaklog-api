@@ -23,7 +23,7 @@ public class Game extends Notifiable {
     private final World world;
     private final GameTime endGameTime;
 
-    private Game(GameBuilder builder) {
+    private Game(final GameBuilder builder) {
         this.players = List.copyOf(builder.players.values());
         this.gameParameters = Collections.unmodifiableMap(builder.gameParameters);
         this.totalKills = builder.totalKills.get();
@@ -35,7 +35,7 @@ public class Game extends Notifiable {
         this.addNotifiable(builder);
     }
 
-    public Player getPlayerByID(Integer id) {
+    public Player getPlayerByID(final Integer id) {
         return players.stream().filter(it -> it.getId().equals(id)).findFirst().orElse(null);
     }
 
@@ -49,7 +49,7 @@ public class Game extends Notifiable {
         private World world;
         private GameTime endGameTime;
 
-        public GameBuilder(GameTime startGameTime, LocalDate gameDate) {
+        public GameBuilder(final GameTime startGameTime, final LocalDate gameDate) {
             this.startGameTime = startGameTime;
             this.gameDate = gameDate;
             gameUUID = GameUUID.create();
@@ -69,7 +69,7 @@ public class Game extends Notifiable {
             super.addNotification(notification);
         }
 
-        public GameBuilder addPlayerInGame(PlayerInGame player) {
+        public GameBuilder addPlayerInGame(final PlayerInGame player) {
             if (players.containsKey(player.getId())) return this;
             players.put(player.getId(), player);
             addKillListener(player);

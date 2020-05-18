@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @UtilityClass
 class KillHistoryRepositoryMapper {
 
-    static List<KillHistoryEntity> toDatabaseEntity(final List<KillHistory> kdHistory) {
+    List<KillHistoryEntity> toDatabaseEntity(final List<KillHistory> kdHistory) {
         return kdHistory.stream().map(KillHistoryRepositoryMapper::toDatabaseEntity).collect(Collectors.toList());
     }
 
-    static KillHistoryEntity toDatabaseEntity(final KillHistory kdHistory) {
+    KillHistoryEntity toDatabaseEntity(final KillHistory kdHistory) {
         return KillHistoryEntity.builder()
                 .gameTime(kdHistory.getGameTime().toString())
                 .killMode(kdHistory.getKillMode().name())
@@ -26,11 +26,11 @@ class KillHistoryRepositoryMapper {
                 .build();
     }
 
-    static List<KillHistory> mapKdHistory(final List<KillHistoryEntity> kdHistory) {
+    List<KillHistory> mapKdHistory(final List<KillHistoryEntity> kdHistory) {
         return kdHistory.stream().map(KillHistoryRepositoryMapper::mapKdHistory).collect(Collectors.toList());
     }
 
-    static KillHistory mapKdHistory(final KillHistoryEntity kdHistory) {
+    KillHistory mapKdHistory(final KillHistoryEntity kdHistory) {
         return KillHistory.builder()
                 .gameTime(GameTime.of(kdHistory.getGameTime()))
                 .killMode(KillMode.valueOf(kdHistory.getKillMode()))

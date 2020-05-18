@@ -6,7 +6,7 @@ import br.com.helpdev.quaklog.parser.ParseObject;
 
 interface SingleIDParser<T extends ParseObject> extends Parsable<T> {
 
-    default Integer extractSingleIDAfterKeyPattern(String value) {
+    default Integer extractSingleIDAfterKeyPattern(final String value) {
         return GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, value, -1);
     }
 

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class GamesImportedMapper {
-    public static GamesImportedDTO toDTO(final GamesImported gamesImported) {
+    public GamesImportedDTO toDTO(final GamesImported gamesImported) {
         return new GamesImportedDTO(
                 gamesImported.getGames().stream().map(GameUUID::toString).collect(Collectors.toList()),
                 new ArrayList<>(gamesImported.getNotifications())

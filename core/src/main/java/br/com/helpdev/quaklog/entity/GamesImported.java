@@ -4,7 +4,7 @@ import br.com.helpdev.quaklog.entity.vo.GameUUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.val;
+
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,13 +23,13 @@ public class GamesImported extends Notifiable {
     }
 
     public static GamesImported fromList(List<GameUUID> gamesUUIDs, Collection<String> notifications) {
-        val game = new GamesImported(gamesUUIDs);
+        final var game = new GamesImported(gamesUUIDs);
         game.addNotifications(notifications);
         return game;
     }
 
     public static GamesImported empty(String... notifications) {
-        val game = new GamesImported(Collections.emptyList());
+        final var game = new GamesImported(Collections.emptyList());
         Arrays.stream(notifications).forEach(game::addNotification);
         return game;
     }

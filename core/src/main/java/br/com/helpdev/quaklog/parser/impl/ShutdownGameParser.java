@@ -7,7 +7,7 @@ import br.com.helpdev.quaklog.parser.objects.ShutdownGameObParser;
 public class ShutdownGameParser implements Parsable<ShutdownGameObParser> {
 
     @Override
-    public ShutdownGameObParser parse(String value) throws GameParserException {
+    public ShutdownGameObParser parse(final String value) throws GameParserException {
         try {
             return ShutdownGameObParser.builder().gameTime(extractTime(value)).build();
         } catch (Exception e) {

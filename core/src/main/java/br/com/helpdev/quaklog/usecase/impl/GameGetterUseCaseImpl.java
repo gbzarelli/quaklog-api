@@ -8,23 +8,24 @@ import br.com.helpdev.quaklog.usecase.GameGetterUseCase;
 import javax.inject.Named;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Named
 class GameGetterUseCaseImpl implements GameGetterUseCase {
 
     private final GameRepository repository;
 
-    GameGetterUseCaseImpl(GameRepository gameRepository) {
+    GameGetterUseCaseImpl(final GameRepository gameRepository) {
         this.repository = gameRepository;
     }
 
     @Override
-    public List<Game> getGamesByDate(LocalDate date) {
+    public List<Game> getGamesByDate(final LocalDate date) {
         return repository.getAllByDate(date);
     }
 
     @Override
-    public Game getGameByUUID(GameUUID gameUUID) {
+    public Optional<Game> getGameByUUID(final GameUUID gameUUID) {
         return repository.getByUUID(gameUUID);
     }
 }

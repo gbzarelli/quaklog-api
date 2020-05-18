@@ -5,10 +5,12 @@ import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 
+import static java.util.Objects.isNull;
+
 public class StringToLocalDateConverter implements Converter<String, LocalDate> {
     @Override
     public LocalDate convert(@Nullable final String source) {
-        if (source == null) return null;
+        if (isNull(source)) return null;
         return LocalDate.parse(source, DateFormatUtils.DATE_FORMATTER);
     }
 }

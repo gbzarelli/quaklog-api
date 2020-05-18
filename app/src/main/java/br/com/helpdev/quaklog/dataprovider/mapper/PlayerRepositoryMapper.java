@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @UtilityClass
 class PlayerRepositoryMapper {
 
-    static List<PlayerEntity> toDatabaseEntity(final Collection<Player> players) {
+    List<PlayerEntity> toDatabaseEntity(final Collection<Player> players) {
         return players.stream().map(PlayerRepositoryMapper::toDatabaseEntity).collect(Collectors.toList());
     }
 
-    static PlayerEntity toDatabaseEntity(final Player player) {
+    PlayerEntity toDatabaseEntity(final Player player) {
         return PlayerEntity.builder()
                 .id(player.getId())
                 .items(ItemRepositoryMapper.toDatabaseEntity(player.getItems()))
@@ -29,7 +29,7 @@ class PlayerRepositoryMapper {
                 .build();
     }
 
-    static PlayerInGame mapPlayer(final PlayerEntity playerEntity) {
+    PlayerInGame mapPlayer(final PlayerEntity playerEntity) {
         return PlayerInGame.builder()
                 .kills(playerEntity.getKills())
                 .kdHistory(KillHistoryRepositoryMapper.mapKdHistory(playerEntity.getKdHistory()))
@@ -41,7 +41,7 @@ class PlayerRepositoryMapper {
                 .build();
     }
 
-    static World mapWorld(final PlayerEntity world) {
+    World mapWorld(final PlayerEntity world) {
         return World.builder()
                 .kills(world.getKills())
                 .kdHistory(KillHistoryRepositoryMapper.mapKdHistory(world.getKdHistory()))

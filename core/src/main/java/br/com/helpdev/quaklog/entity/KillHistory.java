@@ -12,11 +12,11 @@ import lombok.ToString;
 @Builder
 public class KillHistory {
 
-    static KillHistory killed(GameTime gameTime, Player player, Mod mod) {
+    static KillHistory killed(final GameTime gameTime, final Player player, final Mod mod) {
         return new KillHistory(gameTime, KillMode.KILL, player.getId(), mod);
     }
 
-    static KillHistory deadBy(GameTime gameTime, Player player, Mod mod) {
+    static KillHistory deadBy(final GameTime gameTime, final Player player, final Mod mod) {
         return new KillHistory(gameTime, KillMode.DEAD, player.getId(), mod);
     }
 
@@ -25,7 +25,7 @@ public class KillHistory {
     private final Integer player;
     private final Mod mod;
 
-    private KillHistory(GameTime gameTime, KillMode killMode, Integer player, Mod mod) {
+    private KillHistory(final GameTime gameTime, final KillMode killMode, final Integer player, final Mod mod) {
         this.gameTime = gameTime;
         this.killMode = killMode;
         this.player = player;

@@ -13,15 +13,15 @@ public class PlayerStatus {
     private final GameTime time;
     private final ConnectStatus status;
 
-    static PlayerStatus newConnectedTime(GameTime time) {
+    static PlayerStatus newConnectedTime(final GameTime time) {
         return new PlayerStatus(time, ConnectStatus.CONNECTED);
     }
 
-    static PlayerStatus newDisconnectedTime(GameTime time) {
+    static PlayerStatus newDisconnectedTime(final GameTime time) {
         return new PlayerStatus(time, ConnectStatus.DISCONNECTED);
     }
 
-    static PlayerStatus newBeginTime(GameTime time) {
+    static PlayerStatus newBeginTime(final GameTime time) {
         return new PlayerStatus(time, ConnectStatus.BEGIN);
     }
 }

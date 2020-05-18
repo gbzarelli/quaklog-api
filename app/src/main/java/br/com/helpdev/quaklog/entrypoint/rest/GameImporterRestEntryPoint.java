@@ -6,7 +6,7 @@ import br.com.helpdev.quaklog.entrypoint.mapper.GamesImportedMapper;
 import br.com.helpdev.quaklog.configuration.SwaggerConfig;
 import br.com.helpdev.quaklog.usecase.GameImporterUseCase;
 import io.swagger.annotations.Api;
-import lombok.val;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +35,8 @@ class GameImporterRestEntryPoint implements GameImporterEntryPoint<MultipartFile
     public ResponseEntity<GamesImportedDTO> importGame(@RequestHeader(RestConstants.REQUEST_HEADER_LOGFILE_DATE)
                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fileDate,
                                                        @RequestParam("file") MultipartFile file) throws IOException {
-        val gamesImported = gameImporterUseCase.importGame(fileDate, file.getInputStream());
-        val uri = getGameImportedUri(fileDate);
+        final var gamesImported = gameImporterUseCase.importGame(fileDate, file.getInputStream());
+        final var uri = getGameImportedUri(fileDate);
         return ResponseEntity.created(uri).body(GamesImportedMapper.toDTO(gamesImported));
     }
 

@@ -16,11 +16,11 @@ public enum Mod {
 
     public final Integer id;
 
-    Mod(Integer id) {
+    Mod(final Integer id) {
         this.id = id;
     }
 
-    public static Mod byModID(Integer killedModeID) {
+    public static Mod byModID(final Integer killedModeID) {
         return Arrays.stream(values()).filter(it -> it.id.equals(killedModeID)).findFirst().orElse(NOT_FOUND);
     }
 }

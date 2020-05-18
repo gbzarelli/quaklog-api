@@ -7,7 +7,7 @@ import br.com.helpdev.quaklog.entity.vo.GameUUID;
 import br.com.helpdev.quaklog.parser.GameParserKey;
 import br.com.helpdev.quaklog.processor.GameParseProcessor;
 import br.com.helpdev.quaklog.usecase.GameImporterUseCase;
-import lombok.val;
+
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,38 +28,41 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
     private final GameRepository gameRepository;
 
     @Inject
-    public GameImporterUseCaseImpl(GameParseProcessor parseProcessor, GameRepository gameRepository) {
+    public GameImporterUseCaseImpl(final GameParseProcessor parseProcessor,
+                                   final GameRepository gameRepository) {
         this.parseProcessor = parseProcessor;
         this.gameRepository = gameRepository;
     }
 
     @Override
-    public GamesImported importGame(LocalDate gameDate, InputStream inputStream) throws IOException {
-        try (val reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            return importGame(gameDate, reader);
+    public GamesImported importGame(final LocalDate gameDate,
+                                    final InputStream inputStream) throws IOException {
+        try (final var reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            return executeImportGame(gameDate, reader);
         }
     }
 
-    private GamesImported importGame(LocalDate gameDate, BufferedReader reader) throws IOException {
-        val importNotifications = new ArrayList<String>();
-        val gamesImported = new ArrayList<GameUUID>();
+    private GamesImported executeImportGame(final LocalDate gameDate,
+                                            final BufferedReader reader) throws IOException {
+        final var importNotifications = new ArrayList<String>();
+        final var gamesImported = new ArrayList<GameUUID>();
         Game.GameBuilder gameBuilder = null;
 
         var numberLine = 0;
 
         while (reader.ready()) {
             numberLine++;
-            val line = reader.readLine();
-            val keyExtracted = GameParserKey.getParserByText(line);
+            final var line = reader.readLine();
+            final var keyExtracted = GameParserKey.getParserByText(line);
 
             if (keyExtracted.isEmpty()) {
-                val message = logKeyNotFound(gameBuilder, numberLine, line);
+                final var message = logKeyNotFound(gameBuilder, numberLine, line);
                 importNotifications.add(message);
                 continue;
             }
 
             try {
-                val parserKey = keyExtracted.get();
+                final var parserKey = keyExtracted.get();
 
                 if (isShutdownKeyAndGameIsRunning(gameBuilder, parserKey)) {
                     parseProcessor.processLine(gameBuilder, parserKey, line);
@@ -77,7 +80,7 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
                 }
 
             } catch (Exception e) {
-                val message = logException(gameBuilder, numberLine, e);
+                final var message = logException(gameBuilder, numberLine, e);
                 importNotifications.add(message);
             }
         }
@@ -85,43 +88,49 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
         return GamesImported.fromList(gamesImported, importNotifications);
     }
 
-    private boolean isInitGameKey(GameParserKey parserKey) {
+    private boolean isInitGameKey(final GameParserKey parserKey) {
         return parserKey == GameParserKey.INIT_GAME;
     }
 
-    private boolean isShutdownKeyAndGameIsRunning(Game.GameBuilder gameBuilder, GameParserKey parserKey) {
+    private boolean isShutdownKeyAndGameIsRunning(final Game.GameBuilder gameBuilder,
+                                                  final GameParserKey parserKey) {
         return isShutdownKey(parserKey) && isGameRunning(gameBuilder);
     }
 
-    private boolean isShutdownKey(GameParserKey parserKey) {
+    private boolean isShutdownKey(final GameParserKey parserKey) {
         return parserKey == GameParserKey.SHUTDOWN_GAME;
     }
 
-    private GameUUID buildAndPersistGame(Game.GameBuilder gameBuilder) {
-        val game = gameBuilder.build();
+    private GameUUID buildAndPersistGame(final Game.GameBuilder gameBuilder) {
+        final var game = gameBuilder.build();
         gameRepository.save(game);
         return game.getGameUUID();
     }
 
-    private boolean isGameRunning(Game.GameBuilder gameBuilder) {
+    private boolean isGameRunning(final Game.GameBuilder gameBuilder) {
         return gameBuilder != null;
     }
 
-    private String logKeyNotFound(Game.GameBuilder gameBuilder, int numberLine, String line) {
-        val message = numberLine + " - KEY not found to parse {" + line + "}";
+    private String logKeyNotFound(final Game.GameBuilder gameBuilder,
+                                  final int numberLine,
+                                  final String line) {
+        final var message = numberLine + " - KEY not found to parse {" + line + "}";
         logger.warning(message);
         addGameLog(gameBuilder, message);
         return message;
     }
 
-    private String logException(Game.GameBuilder gameBuilder, int numberLine, Exception e) {
-        val message = numberLine + " - " + e.getMessage();
+    private String logException(final Game.GameBuilder gameBuilder,
+                                final int numberLine,
+                                final Exception e) {
+        final var message = numberLine + " - " + e.getMessage();
         logger.severe(message);
         addGameLog(gameBuilder, message);
         return message;
     }
 
-    private void addGameLog(Game.GameBuilder gameBuilder, String message) {
+    private void addGameLog(final Game.GameBuilder gameBuilder,
+                            final String message) {
         if (isGameRunning(gameBuilder)) {
             gameBuilder.addNotification(message);
         }

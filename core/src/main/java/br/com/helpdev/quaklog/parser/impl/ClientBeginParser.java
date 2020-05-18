@@ -6,7 +6,7 @@ import br.com.helpdev.quaklog.parser.objects.ClientBeginParseObParser;
 public class ClientBeginParser implements SingleIDParser<ClientBeginParseObParser> {
 
     @Override
-    public ClientBeginParseObParser parse(String value) throws GameParserException {
+    public ClientBeginParseObParser parse(final String value) throws GameParserException {
         try {
             return ClientBeginParseObParser.builder()
                     .gameTime(extractTime(value))

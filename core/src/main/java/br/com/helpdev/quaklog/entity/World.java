@@ -23,7 +23,10 @@ public class World extends PlayerKiller {
     }
 
     @Builder
-    World(Integer kills, List<KillHistory> kdHistory, List<Item> items, Map<String, String> parameters, List<PlayerStatus> status) {
+    World(final Integer kills, List<KillHistory> kdHistory,
+          final List<Item> items,
+          final Map<String, String> parameters,
+          final List<PlayerStatus> status) {
         super(kills, kdHistory);
         this.items = items == null ? Collections.emptyList() : items;
         this.parameters = parameters == null ? Collections.emptyMap() : parameters;

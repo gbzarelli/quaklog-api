@@ -1,7 +1,7 @@
 package br.com.helpdev.quaklog.parser;
 
 import lombok.experimental.UtilityClass;
-import lombok.val;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,17 +22,17 @@ public class GameRegexUtils {
     public static final Pattern KILL_MODE = Pattern.compile("(?<=\\sby\\s).*");
 
     public static Integer extractInteger(Pattern pattern, String value, Integer defaultValue) {
-        val matcher = pattern.matcher(value);
+        final var matcher = pattern.matcher(value);
         if (matcher.find()) return Integer.parseInt(matcher.group().trim());
         return defaultValue;
     }
 
     public static Map<String, String> extractPairsMap(String splitBy, String text) {
-        val map = new HashMap<String, String>();
+        final var map = new HashMap<String, String>();
         if (text.startsWith(splitBy)) {
             text = text.substring(1);
         }
-        val split = text.split(Pattern.quote(splitBy));
+        final var split = text.split(Pattern.quote(splitBy));
         var key = "null";
         for (int i = 0; i < split.length; i++) {
             if (i % 2 == 0) {
@@ -45,7 +45,7 @@ public class GameRegexUtils {
     }
 
     public static String extractString(Pattern pattern, String value) {
-        val matcher = pattern.matcher(value);
+        final var matcher = pattern.matcher(value);
         if (matcher.find()) {
             return matcher.group();
         }

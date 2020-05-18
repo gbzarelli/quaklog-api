@@ -4,7 +4,7 @@ import br.com.helpdev.quaklog.parser.GameParserException;
 import br.com.helpdev.quaklog.parser.GameRegexUtils;
 import br.com.helpdev.quaklog.parser.Parsable;
 import br.com.helpdev.quaklog.parser.objects.KillObParser;
-import lombok.val;
+
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 public class KillParser implements Parsable<KillObParser> {
 
     @Override
-    public KillObParser parse(String value) throws GameParserException {
+    public KillObParser parse(final String value) throws GameParserException {
         try {
-            val ids = getIDs(value);
+            final var ids = getIDs(value);
             if (ids.size() != 3) throw new GameParserException("Falha ao extrair IDs da Kill");
             return KillObParser.builder()
                     .gameTime(extractTime(value))
@@ -32,22 +32,22 @@ public class KillParser implements Parsable<KillObParser> {
         }
     }
 
-    private String getKilledMode(String value) {
+    private String getKilledMode(final String value) {
         return GameRegexUtils.extractString(GameRegexUtils.KILL_MODE, value);
     }
 
-    private String getKilledName(String value) {
+    private String getKilledName(final String value) {
         return GameRegexUtils.extractString(GameRegexUtils.KILL_KILLED, value);
     }
 
-    private String getKillerName(String value) {
+    private String getKillerName(final String value) {
         return GameRegexUtils.extractString(GameRegexUtils.KILL_KILLER, value);
     }
 
-    private List<Integer> getIDs(String value) {
-        val matcher = GameRegexUtils.KILL_IDS.matcher(value);
+    private List<Integer> getIDs(final String value) {
+        final var matcher = GameRegexUtils.KILL_IDS.matcher(value);
         if (matcher.find()) {
-            val group = matcher.group();
+            final var group = matcher.group();
             return Arrays.stream(group.split(" ")).map(Integer::parseInt).collect(Collectors.toList());
         }
         return Collections.emptyList();

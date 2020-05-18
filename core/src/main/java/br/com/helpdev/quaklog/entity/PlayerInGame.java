@@ -21,7 +21,7 @@ public class PlayerInGame extends PlayerKiller implements CanDead {
     private final List<PlayerStatus> status;
     private Map<String, String> parameters;
 
-    public PlayerInGame(GameTime time, Integer id) {
+    public PlayerInGame(final GameTime time, final Integer id) {
         this.id = id;
         this.items = new ArrayList<>();
         status = new ArrayList<>();
@@ -29,8 +29,9 @@ public class PlayerInGame extends PlayerKiller implements CanDead {
     }
 
     @Builder
-    public PlayerInGame(Integer kills, List<KillHistory> kdHistory, Integer id, String name, List<Item> items, List<PlayerStatus> status, Map<String, String> parameters) {
-        super(kills,kdHistory);
+    public PlayerInGame(final Integer kills, final List<KillHistory> kdHistory, final Integer id, final String name,
+                        final List<Item> items, final List<PlayerStatus> status, final Map<String, String> parameters) {
+        super(kills, kdHistory);
         this.id = Objects.requireNonNull(id);
         this.status = Objects.requireNonNull(status);
         this.name = name;

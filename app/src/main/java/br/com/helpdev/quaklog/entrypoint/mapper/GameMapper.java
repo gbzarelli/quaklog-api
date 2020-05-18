@@ -25,19 +25,19 @@ public class GameMapper {
                 .build();
     }
 
-    private static List<PlayerDTO> mapPlayers(final List<Player> players) {
+    private List<PlayerDTO> mapPlayers(final List<Player> players) {
         return players.stream().map(GameMapper::mapPlayer).collect(Collectors.toList());
     }
 
-    private static List<PlayerStatusDTO> mapStatus(final List<PlayerStatus> status) {
+    private List<PlayerStatusDTO> mapStatus(final List<PlayerStatus> status) {
         return status.stream().map(GameMapper::mapStatus).collect(Collectors.toList());
     }
 
-    private static List<KillHistoryDTO> mapKdHistory(final List<KillHistory> kdHistory) {
+    private List<KillHistoryDTO> mapKdHistory(final List<KillHistory> kdHistory) {
         return kdHistory.stream().map(GameMapper::mapKdHistory).collect(Collectors.toList());
     }
 
-    private static PlayerDTO mapPlayer(final Player player) {
+    private PlayerDTO mapPlayer(final Player player) {
         return PlayerDTO.builder()
                 .name(player.getName())
                 .kills(player.getKills())
@@ -50,14 +50,14 @@ public class GameMapper {
     }
 
 
-    private static PlayerStatusDTO mapStatus(final PlayerStatus status) {
+    private PlayerStatusDTO mapStatus(final PlayerStatus status) {
         return PlayerStatusDTO.builder()
                 .status(status.getStatus().name())
                 .time(status.getTime().toString())
                 .build();
     }
 
-    private static KillHistoryDTO mapKdHistory(final KillHistory kdHistory) {
+    private KillHistoryDTO mapKdHistory(final KillHistory kdHistory) {
         return KillHistoryDTO.builder()
                 .killMode(kdHistory.getKillMode().name())
                 .mod(kdHistory.getMod().name())

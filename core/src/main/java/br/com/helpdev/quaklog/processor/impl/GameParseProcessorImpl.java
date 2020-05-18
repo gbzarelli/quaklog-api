@@ -10,7 +10,7 @@ import br.com.helpdev.quaklog.parser.GameParserKey;
 import br.com.helpdev.quaklog.parser.Parsable;
 import br.com.helpdev.quaklog.parser.objects.*;
 import br.com.helpdev.quaklog.processor.GameParseProcessor;
-import lombok.val;
+
 
 import javax.inject.Named;
 import java.time.LocalDate;
@@ -19,14 +19,18 @@ import java.time.LocalDate;
 class GameParseProcessorImpl implements GameParseProcessor {
 
     @Override
-    public Game.GameBuilder initGame(LocalDate gameDate, Parsable<InitGameObParser> gameParser, String line) throws GameParserException {
-        val initGameObParser = gameParser.parse(line);
-        val gameTime = GameTime.of(initGameObParser.getGameTime());
+    public Game.GameBuilder initGame(final LocalDate gameDate,
+                                     final Parsable<InitGameObParser> gameParser,
+                                     final String line) throws GameParserException {
+        final var initGameObParser = gameParser.parse(line);
+        final var gameTime = GameTime.of(initGameObParser.getGameTime());
         return new Game.GameBuilder(gameTime, gameDate).setGameParameters(initGameObParser.getArguments());
     }
 
     @Override
-    public void processLine(Game.GameBuilder gameBuilder, GameParserKey parserKey, String line) throws GameParserException {
+    public void processLine(final Game.GameBuilder gameBuilder,
+                            final GameParserKey parserKey,
+                            final String line) throws GameParserException {
         switch (parserKey) {
             case CLIENT_CONNECT:
                 processClientConnected(gameBuilder, (ClientConnectObParser) parserKey.getParsable().parse(line));
@@ -54,34 +58,41 @@ class GameParseProcessorImpl implements GameParseProcessor {
         }
     }
 
-    private void processShutdownGame(Game.GameBuilder gameBuilder, ShutdownGameObParser parse) {
+    private void processShutdownGame(final Game.GameBuilder gameBuilder,
+                                     final ShutdownGameObParser parse) {
         gameBuilder.setEndGameTime(GameTime.of(parse.getGameTime()));
     }
 
-    private void processClientDisconnected(Game.GameBuilder gameBuilder, ClientDisconnectObParser parse) {
+    private void processClientDisconnected(final Game.GameBuilder gameBuilder,
+                                           final ClientDisconnectObParser parse) {
         gameBuilder.getPlayerInGame(parse.getId()).disconnect(GameTime.of(parse.getGameTime()));
     }
 
-    private void processKill(Game.GameBuilder gameBuilder, KillObParser parse) {
+    private void processKill(final Game.GameBuilder gameBuilder,
+                             final KillObParser parse) {
         gameBuilder.getPlayerKiller(parse.getKillerID())
                 .kill(GameTime.of(parse.getGameTime()),
                         gameBuilder.getPlayerInGame(parse.getKilledID()),
                         Mod.byModID(parse.getKilledModeID()));
     }
 
-    private void processItem(Game.GameBuilder gameBuilder, ItemObParser parse) {
+    private void processItem(final Game.GameBuilder gameBuilder,
+                             final ItemObParser parse) {
         gameBuilder.getPlayerInGame(parse.getId()).addItem(Item.valueOf(parse.getItem()));
     }
 
-    private void processClientBegin(Game.GameBuilder gameBuilder, ClientBeginParseObParser parse) {
+    private void processClientBegin(final Game.GameBuilder gameBuilder,
+                                    final ClientBeginParseObParser parse) {
         gameBuilder.getPlayerInGame(parse.getId()).begin(GameTime.of(parse.getGameTime()));
     }
 
-    private void processClientUserInfoChanged(Game.GameBuilder gameBuilder, ClientUserInfoChangedObParser parse) {
+    private void processClientUserInfoChanged(final Game.GameBuilder gameBuilder,
+                                              final ClientUserInfoChangedObParser parse) {
         gameBuilder.getPlayerInGame(parse.getId()).changeInfos(parse.getName(), parse.getArguments());
     }
 
-    private void processClientConnected(Game.GameBuilder gameBuilder, ClientConnectObParser parse) {
+    private void processClientConnected(final Game.GameBuilder gameBuilder,
+                                        final ClientConnectObParser parse) {
         gameBuilder.addPlayerInGame(new PlayerInGame(GameTime.of(parse.getGameTime()), parse.getId()));
     }
 }

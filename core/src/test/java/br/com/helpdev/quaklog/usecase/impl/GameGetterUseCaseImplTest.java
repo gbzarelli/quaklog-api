@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -33,9 +34,9 @@ class GameGetterUseCaseImplTest {
     void shouldGetSingleGameWithSuccess() {
         GameUUID gameUUID = mock(GameUUID.class);
         Game gameMock = Mockito.mock(Game.class);
-        when(repository.getByUUID(gameUUID)).thenReturn(gameMock);
+        when(repository.getByUUID(gameUUID)).thenReturn(Optional.of(gameMock));
 
-        final Game game = useCase.getGameByUUID(gameUUID);
-        Assertions.assertEquals(gameMock, game);
+        var game = useCase.getGameByUUID(gameUUID);
+        Assertions.assertEquals(gameMock, game.get());
     }
 }

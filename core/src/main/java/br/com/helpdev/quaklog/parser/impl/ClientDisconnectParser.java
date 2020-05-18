@@ -6,7 +6,7 @@ import br.com.helpdev.quaklog.parser.objects.ClientDisconnectObParser;
 public class ClientDisconnectParser implements SingleIDParser<ClientDisconnectObParser> {
 
     @Override
-    public ClientDisconnectObParser parse(String value) throws GameParserException {
+    public ClientDisconnectObParser parse(final String value) throws GameParserException {
         try {
             return ClientDisconnectObParser.builder()
                     .gameTime(extractTime(value))

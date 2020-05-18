@@ -24,7 +24,7 @@ public abstract class PlayerKiller implements Player {
         kdHistory = new ArrayList<>();
     }
 
-    PlayerKiller(Integer kills, List<KillHistory> kdHistory) {
+    PlayerKiller(final Integer kills, final List<KillHistory> kdHistory) {
         this.kills = kills == null ? new AtomicInteger(0) : new AtomicInteger(kills);
         this.kdHistory = kdHistory == null ? Collections.emptyList() : kdHistory;
     }

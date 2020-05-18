@@ -6,7 +6,7 @@ import br.com.helpdev.quaklog.entity.Game;
 import br.com.helpdev.quaklog.entity.Player;
 import br.com.helpdev.quaklog.entrypoint.dto.SimplePlayerDTO;
 import lombok.experimental.UtilityClass;
-import lombok.val;
+
 
 import java.util.List;
 import java.util.function.Function;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class SimpleGamesMapper {
 
     public static SimpleListGamesDTO toDTO(final List<Game> games) {
-        val collect = games.stream().map(SimpleGamesMapper::toSimpleGame)
+        final var collect = games.stream().map(SimpleGamesMapper::toSimpleGame)
                 .collect(Collectors.toMap(SimpleGameDTO::getUuid, Function.identity()));
         return SimpleListGamesDTO.builder().games(collect).build();
     }

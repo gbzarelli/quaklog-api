@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class GameTime {
 
-    public static GameTime of(String time) {
+    public static GameTime of(final String time) {
         return new GameTime(time);
     }
 

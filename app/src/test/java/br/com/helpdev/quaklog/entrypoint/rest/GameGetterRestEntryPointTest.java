@@ -24,13 +24,13 @@ class GameGetterRestEntryPointTest {
     private static final String NAME_PLAYER_1 = "JESUS";
     private static final String NAME_PLAYER_2 = "JOSE";
     private static final String NAME_PLAYER_3 = "MARIA";
-    private GameGetterUseCase useCase = mock(GameGetterUseCase.class);
-    private GameGetterRestEntryPoint gameGetter = new GameGetterRestEntryPoint(useCase);
+    private final GameGetterUseCase useCase = mock(GameGetterUseCase.class);
+    private final GameGetterRestEntryPoint gameGetter = new GameGetterRestEntryPoint(useCase);
 
     @Test
     void shouldReturnHttpStatusNotFoundWhenNoGameBeFound() {
         UUID uuid = UUID.randomUUID();
-        when(useCase.getGameByUUID(GameUUID.of(uuid.toString()))).thenReturn(null);
+        when(useCase.getGameByUUID(GameUUID.of(uuid.toString()))).thenReturn(Optional.empty());
 
         final ResponseEntity<GameDTO> response = gameGetter.getGameByUUIDEndpoint(uuid.toString());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -39,7 +39,7 @@ class GameGetterRestEntryPointTest {
     @Test
     void shouldReturnEmptyListWhenNoGamesBeFoundInSearchGameByDate() {
         final LocalDate now = LocalDate.now();
-        when(useCase.getGamesByDate(now)).thenReturn(null);
+        when(useCase.getGamesByDate(now)).thenReturn(Collections.emptyList());
         final SimpleListGamesDTO simpleListGamesDTO = gameGetter.searchGameByDate(now);
         assertNotNull(simpleListGamesDTO);
         assertEquals(0, simpleListGamesDTO.getQuantity().intValue());
@@ -66,7 +66,7 @@ class GameGetterRestEntryPointTest {
     void shouldReturnDetailsGame() {
         UUID uuid = UUID.randomUUID();
         final Game mock = getFakeGame();
-        when(useCase.getGameByUUID(GameUUID.of(uuid.toString()))).thenReturn(mock);
+        when(useCase.getGameByUUID(GameUUID.of(uuid.toString()))).thenReturn(Optional.of(mock));
 
         final ResponseEntity<GameDTO> response = gameGetter.getGameByUUIDEndpoint(uuid.toString());
         assertEquals(HttpStatus.OK, response.getStatusCode());
