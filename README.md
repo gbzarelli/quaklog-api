@@ -30,8 +30,8 @@ seja permitido posteriormente realizar consultas mais detalhadas.
 
 # Arquitetura
 
-Utilizei uma arquitetura baseada na `Clean Architecture` porém mais flexível para ajudar na manutenção
-do projeto.
+A arquitetura utilizada nesse projeto foi baseada na `Clean Architecture` porém mais flexível, 
+apenas com duas camadas, deixando a `core` totalmente isolada e livre de dependência de frameworks.
 
 <p align="center">
     <img src="./documentation/simple-clean-arch.png" height="450">
