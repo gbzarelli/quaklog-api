@@ -2,6 +2,7 @@
 ![Forks](https://img.shields.io/github/forks/gbzarelli/quaklog-api.svg)
 ![Stars](https://img.shields.io/github/stars/gbzarelli/quaklog-api.svg)
 ![Release Version](https://img.shields.io/github/release/gbzarelli/quaklog-api.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b5bd97e809fa4c9ca591312671fc65a5)](https://app.codacy.com/manual/gbzarelli/quaklog-api?utm_source=github.com&utm_medium=referral&utm_content=gbzarelli/quaklog-api&utm_campaign=Badge_Grade_Dashboard)
 [![Coverage Status](https://coveralls.io/repos/github/gbzarelli/quaklog-api/badge.svg?branch=master)](https://coveralls.io/github/gbzarelli/quaklog-api?branch=master)
 
 # QuakLog API  [![CircleCI](https://circleci.com/gh/gbzarelli/quaklog-api.svg?style=svg)](https://circleci.com/gh/gbzarelli/quaklog-api)
