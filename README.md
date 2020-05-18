@@ -2,6 +2,7 @@
 ![Forks](https://img.shields.io/github/forks/gbzarelli/quaklog-api.svg)
 ![Stars](https://img.shields.io/github/stars/gbzarelli/quaklog-api.svg)
 ![Release Version](https://img.shields.io/github/release/gbzarelli/quaklog-api.svg)
+[![Coverage Status](https://coveralls.io/repos/github/gbzarelli/quaklog-api/badge.svg?branch=master)](https://coveralls.io/github/gbzarelli/quaklog-api?branch=master)
 
 # QuakLog API
 
