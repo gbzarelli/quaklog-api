@@ -18,7 +18,7 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String BASE_SCAN_PACKAGE = "br.com.luizalabs.quaklog.entrypoint";
+    private static final String BASE_SCAN_PACKAGE = "br.com.helpdev.quaklog.entrypoint";
 
     /**
      * Tags

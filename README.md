@@ -28,6 +28,15 @@ seja permitido posteriormente realizar consultas mais detalhadas.
 - [`Docker`](https://www.docker.com) - Executa e gerencia aplicações dentro de invólucros chamados containers
 - [`jUnit5 e Mockito`](https://junit.org/junit5/) - Execução de testes
 
+# Arquitetura
+
+Utilizei uma arquitetura baseada na `Clean Architecture` porém mais flexível para ajudar na manutenção
+do projeto.
+
+<p align="center">
+    <img src="./documentation/simple-clean-arch.png" height="450">
+</p>
+
 # Endpoints
 
 A `QuakLog` disponibiliza os seguintes `endpoints` em sua `API`
@@ -159,10 +168,10 @@ $./gradlew clean build
 ```
 
 - Agora será realizado o `build` do [`Dockerfile`](./Dockerfile) gerando uma imagem
-no repositório local denominada de `luizalabs/quaklog-api`.
+no repositório local denominada de `helpdev/quaklog-api`.
 
 ```shell
-$docker build -t luizalabs/quaklog-api .
+$docker build -t helpdev/quaklog-api .
 ```
 
 - Após ter gerado a imagem da API iremos executar o projeto utilizando o [`docker-compose`](./docker-compose.yml). O `compose` irá preparar todo ambiente necessário para sua aplicação executar.

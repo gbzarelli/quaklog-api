@@ -33,7 +33,7 @@ services:
 
   # Application - QuakLog API
   quaklog:
-    image: luizalabs/quaklog-api
+    image: helpdev/quaklog-api
     container_name: quaklog-api
     restart: always
     volumes:

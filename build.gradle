@@ -15,8 +15,8 @@ buildscript {
     }
 }
 
-group 'br.com.luizalabs'
-version '0.0.2'
+group 'br.com.helpdev'
+version '1.0.0'
 description = "API para importação e consulta de arquivos de log do jogo Quake"
 
 allprojects {
