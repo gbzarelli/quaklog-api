@@ -1,15 +1,12 @@
 package br.com.helpdev.quaklog.parser.impl;
 
 import br.com.helpdev.quaklog.parser.GameParserException;
-import br.com.helpdev.quaklog.parser.GameRegexUtils;
 import br.com.helpdev.quaklog.parser.Parsable;
 import br.com.helpdev.quaklog.parser.objects.ItemObParser;
 
-
 import java.util.Objects;
 
-import static br.com.helpdev.quaklog.parser.GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN;
-import static br.com.helpdev.quaklog.parser.GameRegexUtils.extractInteger;
+import static br.com.helpdev.quaklog.parser.GameRegexUtils.*;
 
 public class ItemParser implements Parsable<ItemObParser> {
 
@@ -27,7 +24,7 @@ public class ItemParser implements Parsable<ItemObParser> {
     }
 
     private String extractItem(final String value) {
-        final var matcher = GameRegexUtils.AFTER_KEY_AND_NUMBER_GROUP2.matcher(value);
+        final var matcher = AFTER_KEY_AND_NUMBER_GROUP2.matcher(value);
         if (matcher.find()) {
             return matcher.group(1);
         }
@@ -35,7 +32,7 @@ public class ItemParser implements Parsable<ItemObParser> {
     }
 
     private Integer extractItemID(final String value) {
-        return extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, value, -1);
+        return extractInteger(SINGLE_ID_AFTER_KEY_PATTERN, value, -1);
     }
 
 }
