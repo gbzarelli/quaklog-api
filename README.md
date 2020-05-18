@@ -4,7 +4,7 @@
 ![Release Version](https://img.shields.io/github/release/gbzarelli/quaklog-api.svg)
 [![Coverage Status](https://coveralls.io/repos/github/gbzarelli/quaklog-api/badge.svg?branch=master)](https://coveralls.io/github/gbzarelli/quaklog-api?branch=master)
 
-# QuakLog API
+# QuakLog API  [![CircleCI](https://circleci.com/gh/gbzarelli/quaklog-api.svg?style=svg)](https://circleci.com/gh/gbzarelli/quaklog-api)
 
 <p align="center">
     <img src="./documentation/quaklog.png" height="150">
