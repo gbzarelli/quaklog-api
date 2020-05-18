@@ -55,6 +55,7 @@ class GameParseProcessorImpl implements GameParseProcessor {
                 break;
             default:
                 gameBuilder.addNotification("KEY NOT FOUND IN PARSER BUILDER PROCESSOR {" + parserKey + "}");
+                break;
         }
     }
 
