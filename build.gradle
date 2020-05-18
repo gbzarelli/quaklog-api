@@ -1,13 +1,7 @@
-group 'br.com.luizalabs'
-version '0.0.2'
-description = "API para importação e consulta de arquivos de log do jogo Quake"
-
 buildscript {
     ext.artifactId = 'quaklog-api'
     ext.archive_extension = 'jar'
     ext.archive_file_name = "${artifactId}.${archive_extension}"
-
-    ext.jacoco_palantir_version = '0.4.0'
 
     repositories {
         maven {
@@ -17,24 +11,25 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.palantir:jacoco-coverage:$jacoco_palantir_version"
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
     }
 }
 
-apply plugin: 'jacoco'
-apply plugin: 'com.palantir.jacoco-full-report'
-
-jacoco {
-    toolVersion = "0.8.3"
-}
+group 'br.com.luizalabs'
+version '0.0.2'
+description = "API para importação e consulta de arquivos de log do jogo Quake"
 
 allprojects {
+    apply plugin: 'com.github.kt3k.coveralls'
+    apply plugin: 'jacoco'
     repositories {
         jcenter()
     }
 }
 
 subprojects {
+    apply plugin: 'java'
+
     ext {
         versions = [
                 junit   : "5.2.0",
@@ -89,15 +84,34 @@ subprojects {
                 ],
         ]
     }
-}
-
-configure(allprojects - project(":application")) {
-    apply plugin: "java"
-    apply plugin: 'jacoco'
 
     test {
         useJUnitPlatform()
     }
+
+    jacocoTestReport {
+        reports {
+            html.enabled = true // human readable
+            xml.enabled = true // required by coveralls
+        }
+    }
+}
+
+task jacocoRootReport(type: JacocoReport) {
+    description = 'Generates an aggregate report from all subprojects'
+    dependsOn = subprojects.test
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+    reports {
+        html.enabled = true // human readable
+        xml.enabled = true // required by coveralls
+    }
+}
+
+coveralls {
+    sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
 }
 
 wrapper {

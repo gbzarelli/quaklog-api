@@ -39,7 +39,7 @@ jacocoTestReport {
 }
 
 dependencies {
-    implementation project(":application:core")
+    implementation project(":core")
 
     implementation libs.database
     implementation libs.spring_config
