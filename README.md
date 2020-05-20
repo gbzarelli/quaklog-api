@@ -34,7 +34,7 @@ A arquitetura utilizada nesse projeto foi baseada na `Clean Architecture` porém
 apenas com duas camadas, deixando a `core` totalmente isolada e livre de dependência de frameworks.
 
 <p align="center">
-    <img src="./documentation/simple-clean-arch.png" height="450">
+    <img src="./documentation/helpdev-clean-arch.png" height="450">
 </p>
 
 # Endpoints
