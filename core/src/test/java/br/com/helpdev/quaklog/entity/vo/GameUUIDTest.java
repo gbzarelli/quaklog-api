@@ -2,7 +2,10 @@ package br.com.helpdev.quaklog.entity.vo;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GameUUIDTest {
 
@@ -11,20 +14,20 @@ class GameUUIDTest {
 
     @Test
     void shouldCreateGameUUIDWithValidUUID() {
-        GameUUID gameUUID = GameUUID.of(VALID_UUID);
+        GameUUID gameUUID = GameUUID.of(UUID.fromString(VALID_UUID));
         assertEquals(VALID_UUID, gameUUID.toString());
     }
 
     @Test
     void shouldCreateGameUUIDWithRandomUUID() {
         GameUUID gameUUID = GameUUID.create();
-        GameUUID gameUUID_2 = GameUUID.of(gameUUID.toString());
+        GameUUID gameUUID_2 = GameUUID.of(UUID.fromString(gameUUID.toString()));
         assertEquals(gameUUID.toString(), gameUUID_2.toString());
     }
 
     @Test
     void shouldThrowIllegalArgumentExceptionWhenCreateGameUUIDWithInvalidUUID() {
-        assertThrows(IllegalArgumentException.class, () -> GameUUID.of(INVALID_UUID));
+        assertThrows(IllegalArgumentException.class, () -> GameUUID.of(UUID.fromString(INVALID_UUID)));
     }
 
 }

@@ -4,10 +4,11 @@ import br.com.helpdev.quaklog.dataprovider.GameRepository;
 import br.com.helpdev.quaklog.entity.Game;
 import br.com.helpdev.quaklog.entity.GamesImported;
 import br.com.helpdev.quaklog.entity.vo.GameUUID;
-import br.com.helpdev.quaklog.parser.GameParserKey;
 import br.com.helpdev.quaklog.processor.GameParseProcessor;
+import br.com.helpdev.quaklog.processor.parser.GameParserKey;
 import br.com.helpdev.quaklog.usecase.GameImporterUseCase;
-
+import br.com.helpdev.quaklog.usecase.dto.GamesImportedDTO;
+import br.com.helpdev.quaklog.usecase.dto.mapper.GamesImportedMapper;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,26 +27,29 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
 
     private final GameParseProcessor parseProcessor;
     private final GameRepository gameRepository;
+    private final GamesImportedMapper mapper;
 
     @Inject
     public GameImporterUseCaseImpl(final GameParseProcessor parseProcessor,
-                                   final GameRepository gameRepository) {
+                                   final GameRepository gameRepository,
+                                   final GamesImportedMapper mapper) {
         this.parseProcessor = parseProcessor;
         this.gameRepository = gameRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public GamesImported importGame(final LocalDate gameDate,
-                                    final InputStream inputStream) throws IOException {
+    public GamesImportedDTO importGame(final LocalDate gameDate,
+                                       final InputStream inputStream) throws IOException {
         try (final var reader = new BufferedReader(new InputStreamReader(inputStream))) {
             return executeImportGame(gameDate, reader);
         }
     }
 
-    private GamesImported executeImportGame(final LocalDate gameDate,
-                                            final BufferedReader reader) throws IOException {
+    private GamesImportedDTO executeImportGame(final LocalDate gameDate,
+                                               final BufferedReader reader) throws IOException {
         final var importNotifications = new ArrayList<String>();
-        final var gamesImported = new ArrayList<GameUUID>();
+        final var gameUUIDS = new ArrayList<GameUUID>();
         Game.GameBuilder gameBuilder = null;
 
         var numberLine = 0;
@@ -66,11 +70,11 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
 
                 if (isShutdownKeyAndGameIsRunning(gameBuilder, parserKey)) {
                     parseProcessor.processLine(gameBuilder, parserKey, line);
-                    gamesImported.add(buildAndPersistGame(gameBuilder));
+                    gameUUIDS.add(buildAndPersistGame(gameBuilder));
                     gameBuilder = null;
                 } else if (isInitGameKey(parserKey)) {
                     if (isGameRunning(gameBuilder)) {
-                        gamesImported.add(buildAndPersistGame(gameBuilder));
+                        gameUUIDS.add(buildAndPersistGame(gameBuilder));
                     }
                     gameBuilder = parseProcessor.initGame(gameDate, parserKey.getParsable(), line);
                 } else if (isGameRunning(gameBuilder)) {
@@ -85,7 +89,9 @@ class GameImporterUseCaseImpl implements GameImporterUseCase {
             }
         }
 
-        return GamesImported.fromList(gamesImported, importNotifications);
+        final var gamesImported = GamesImported.fromList(gameUUIDS, importNotifications);
+
+        return mapper.toDTO(gamesImported);
     }
 
     private boolean isInitGameKey(final GameParserKey parserKey) {

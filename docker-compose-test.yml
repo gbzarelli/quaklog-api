@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  # Database - Mongo DB
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: quaklog
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-network
+
+  # Database Manager
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: express
+      ME_CONFIG_BASICAUTH_PASSWORD: 123456
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: quaklog
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
+    links:
+      - mongo
+    networks:
+      - mongo-network
+
+networks:
+  quaklog-network:
+    driver: bridge
+  mongo-network:
+    driver: bridge

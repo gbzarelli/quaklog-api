@@ -1,16 +1,16 @@
 package br.com.helpdev.quaklog.usecase;
 
-import br.com.helpdev.quaklog.entity.Game;
-import br.com.helpdev.quaklog.entity.vo.GameUUID;
+import br.com.helpdev.quaklog.usecase.dto.GameDTO;
+import br.com.helpdev.quaklog.usecase.dto.SimpleListGamesDTO;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface GameGetterUseCase {
 
-    List<Game> getGamesByDate(LocalDate date);
+    SimpleListGamesDTO getGamesByDate(LocalDate date);
 
-    Optional<Game> getGameByUUID(GameUUID gameUUID);
+    Optional<GameDTO> getGameByUUID(UUID gameUUID);
 
 }

@@ -1,5 +1,6 @@
 package br.com.helpdev.quaklog.parser;
 
+import br.com.helpdev.quaklog.processor.parser.GameParserKey;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

@@ -8,7 +8,7 @@ class NotifiableTest {
 
     @Test
     void shouldCreateNotificationAndAddNotificationsWithSuccess() {
-        Notifiable myNotifiable = new Notifiable() {
+        final var myNotifiable = new Notifiable() {
         };
         myNotifiable.addNotification("A");
         myNotifiable.addNotification("B");
@@ -19,12 +19,12 @@ class NotifiableTest {
 
     @Test
     void shouldCreateNotificationWithOtherNotificationWithSuccess() {
-        Notifiable myNotifiable = new Notifiable() {
+        final var myNotifiable = new Notifiable() {
         };
         myNotifiable.addNotification("A");
         myNotifiable.addNotification("B");
 
-        Notifiable myNotifiable2 = new Notifiable() {
+        final var myNotifiable2 = new Notifiable() {
         };
         myNotifiable2.addNotification("C");
         myNotifiable2.addNotification("D");
@@ -39,14 +39,14 @@ class NotifiableTest {
 
     @Test
     void shouldHaveNotification() {
-        Notifiable myNotifiable = new Notifiable() {
+        final var myNotifiable = new Notifiable() {
         };
         myNotifiable.addNotification("A");
         assertTrue(myNotifiable.getNotifications().contains("A"));
         assertEquals(1, myNotifiable.getNotifications().size());
         assertTrue(myNotifiable.hasNotifications());
 
-        Notifiable myNotifiable2 = new Notifiable() {
+        final var myNotifiable2 = new Notifiable() {
         };
         assertFalse(myNotifiable2.hasNotifications());
     }

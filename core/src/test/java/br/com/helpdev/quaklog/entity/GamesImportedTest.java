@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,8 +14,8 @@ class GamesImportedTest {
 
     @Test
     void shouldCreateGamesImportedFromListWithNotification() {
-        String[] notifications = new String[]{"Failed load 1", "Failed load 2"};
-        GamesImported empty = GamesImported.empty(notifications);
+        final var notifications = new String[]{"Failed load 1", "Failed load 2"};
+        final var empty = GamesImported.empty(notifications);
         assertEquals(0, empty.getGames().size());
         assertEquals(notifications.length, empty.getNotifications().size());
         for (String notification : notifications) {
@@ -26,11 +25,11 @@ class GamesImportedTest {
 
     @Test
     void shouldCreateGamesImportedFromListWithoutNotification() {
-        List<GameUUID> games = new ArrayList<>();
+        final var games = new ArrayList<GameUUID>();
         games.add(GameUUID.create());
         games.add(GameUUID.create());
 
-        GamesImported imported = GamesImported.fromList(games);
+        final var imported = GamesImported.fromList(games);
         assertEquals(games.size(), imported.getGames().size());
 
         IntStream.range(0, games.size()).forEachOrdered(i -> Assertions.assertEquals(games.get(i).toString(), imported.getGames().get(i).toString()));

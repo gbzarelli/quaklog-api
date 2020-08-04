@@ -5,9 +5,8 @@ import br.com.helpdev.quaklog.entity.Player;
 import br.com.helpdev.quaklog.entity.PlayerInGame;
 import br.com.helpdev.quaklog.entity.vo.ConnectStatus;
 import br.com.helpdev.quaklog.entity.vo.GameTime;
-import br.com.helpdev.quaklog.parser.GameParserException;
-import br.com.helpdev.quaklog.parser.GameParserKey;
-import org.junit.jupiter.api.Assertions;
+import br.com.helpdev.quaklog.processor.parser.GameParserException;
+import br.com.helpdev.quaklog.processor.parser.GameParserKey;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -23,9 +22,9 @@ class GameParseProcessorImplTest {
 
     @Test
     void shouldProcessInitGameWithSuccess() throws GameParserException {
-        final Game.GameBuilder gameBuilder = initGame(INIT_GAME_LINE);
-        final Game build = gameBuilder.build();
-        Assertions.assertEquals(GameTime.of("01:01"), build.getStartGameTime());
+        final var gameBuilder = initGame(INIT_GAME_LINE);
+        final var build = gameBuilder.build();
+        assertEquals(GameTime.of("01:01"), build.getStartGameTime());
         assertEquals(20, build.getGameParameters().size());
         assertEquals(0, build.getPlayers().size());
         assertEquals(0, build.getTotalKills().intValue());
@@ -35,9 +34,9 @@ class GameParseProcessorImplTest {
 
     @Test
     void shouldProcessShutdownGameWithSuccess() throws GameParserException {
-        final Game.GameBuilder gameBuilder = initGame(INIT_GAME_LINE);
+        final var gameBuilder = initGame(INIT_GAME_LINE);
         parser.processLine(gameBuilder, GameParserKey.SHUTDOWN_GAME, "30:10 ShutdownGame: ");
-        final Game build = gameBuilder.build();
+        final var build = gameBuilder.build();
 
         assertEquals(GameTime.of("01:01"), build.getStartGameTime());
         assertEquals(20, build.getGameParameters().size());
@@ -55,37 +54,37 @@ class GameParseProcessorImplTest {
 
     @Test
     void shouldProcessLineClientConnectWithSuccess() throws GameParserException {
-        final Game.GameBuilder gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 2");
+        final var gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 2");
         assertNotNull(gameBuilder.getPlayerKiller(2));
         assertNotNull(gameBuilder.getPlayerInGame(2));
         assertEquals(gameBuilder.getPlayerKiller(2), gameBuilder.getPlayerInGame(2));
-        Assertions.assertEquals(ConnectStatus.CONNECTED, gameBuilder.getPlayerInGame(2).getConnectStatus());
+        assertEquals(ConnectStatus.CONNECTED, gameBuilder.getPlayerInGame(2).getConnectStatus());
     }
 
     @Test
     void shouldProcessLineClientInfoChangedWithSuccess() throws GameParserException {
-        final Game.GameBuilder gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 4");
+        final var gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 4");
         addInfos(gameBuilder, "20:34 ClientUserinfoChanged: 4 n\\Isgalamido\\t\\0\\model\\xian/default\\hmodel\\xian/default\\g_redteam\\\\g_blueteam\\\\c1\\4\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0");
 
-        Player user = gameBuilder.getPlayerKiller(4);
+        final var user = gameBuilder.getPlayerKiller(4);
         assertNotNull(user);
         assertNotNull(gameBuilder.getPlayerInGame(4));
         assertEquals(user, gameBuilder.getPlayerInGame(4));
-        Assertions.assertEquals(ConnectStatus.CONNECTED, gameBuilder.getPlayerInGame(4).getConnectStatus());
+        assertEquals(ConnectStatus.CONNECTED, gameBuilder.getPlayerInGame(4).getConnectStatus());
         assertEquals("Isgalamido", user.getName());
     }
 
     @Test
     void shouldProcessLineClientBeginWithSuccess() throws GameParserException {
-        final Game.GameBuilder gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 4");
+        final var gameBuilder = connectClient(initGame(INIT_GAME_LINE), " 20:34 ClientConnect: 4");
         addInfos(gameBuilder, "20:34 ClientUserinfoChanged: 4 n\\Isgalamido\\t\\0\\model\\xian/default\\hmodel\\xian/default\\g_redteam\\\\g_blueteam\\\\c1\\4\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0");
         beginClient(gameBuilder, "20:37 ClientBegin: 4");
 
-        Player user = gameBuilder.getPlayerKiller(4);
+        final var user = gameBuilder.getPlayerKiller(4);
         assertNotNull(user);
         assertNotNull(gameBuilder.getPlayerInGame(4));
         assertEquals(user, gameBuilder.getPlayerInGame(4));
-        Assertions.assertEquals(ConnectStatus.BEGIN, gameBuilder.getPlayerInGame(4).getConnectStatus());
+        assertEquals(ConnectStatus.BEGIN, gameBuilder.getPlayerInGame(4).getConnectStatus());
         assertEquals("Isgalamido", user.getName());
     }
 
@@ -98,8 +97,8 @@ class GameParseProcessorImplTest {
         parser.processLine(builder, GameParserKey.CLIENT_DISCONNECT, "30:00 ClientDisconnect: 4");
         assertEquals("Isgalamido", builder.getPlayerInGame(4).getName());
         assertEquals("XXXX", builder.getPlayerInGame(2).getName());
-        Assertions.assertEquals(ConnectStatus.DISCONNECTED, builder.getPlayerInGame(4).getConnectStatus());
-        Assertions.assertEquals(ConnectStatus.BEGIN, builder.getPlayerInGame(2).getConnectStatus());
+        assertEquals(ConnectStatus.DISCONNECTED, builder.getPlayerInGame(4).getConnectStatus());
+        assertEquals(ConnectStatus.BEGIN, builder.getPlayerInGame(2).getConnectStatus());
     }
 
     @Test
@@ -114,8 +113,8 @@ class GameParseProcessorImplTest {
         //*assert user begins
         assertEquals("Isgalamido", builder.getPlayerInGame(4).getName());
         assertEquals("XXXX", builder.getPlayerInGame(2).getName());
-        Assertions.assertEquals(ConnectStatus.BEGIN, builder.getPlayerInGame(4).getConnectStatus());
-        Assertions.assertEquals(ConnectStatus.BEGIN, builder.getPlayerInGame(2).getConnectStatus());
+        assertEquals(ConnectStatus.BEGIN, builder.getPlayerInGame(4).getConnectStatus());
+        assertEquals(ConnectStatus.BEGIN, builder.getPlayerInGame(2).getConnectStatus());
 
         parser.processLine(builder, GameParserKey.KILL, "20:54 Kill: 1022 2 22: <world> killed XXXX by MOD_TRIGGER_HURT");
         parser.processLine(builder, GameParserKey.KILL, "20:54 Kill: 1022 4 22: <world> killed Isgalamido by MOD_TRIGGER_HURT");

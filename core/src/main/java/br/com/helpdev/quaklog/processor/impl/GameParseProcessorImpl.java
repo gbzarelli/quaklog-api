@@ -5,11 +5,11 @@ import br.com.helpdev.quaklog.entity.Item;
 import br.com.helpdev.quaklog.entity.PlayerInGame;
 import br.com.helpdev.quaklog.entity.vo.GameTime;
 import br.com.helpdev.quaklog.entity.vo.Mod;
-import br.com.helpdev.quaklog.parser.GameParserException;
-import br.com.helpdev.quaklog.parser.GameParserKey;
-import br.com.helpdev.quaklog.parser.Parsable;
-import br.com.helpdev.quaklog.parser.objects.*;
+import br.com.helpdev.quaklog.processor.parser.GameParserException;
+import br.com.helpdev.quaklog.processor.parser.GameParserKey;
+import br.com.helpdev.quaklog.processor.parser.Parsable;
 import br.com.helpdev.quaklog.processor.GameParseProcessor;
+import br.com.helpdev.quaklog.processor.parser.objects.*;
 
 
 import javax.inject.Named;

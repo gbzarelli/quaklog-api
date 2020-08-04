@@ -1,7 +1,8 @@
 package br.com.helpdev.quaklog.parser.impl;
 
-import br.com.helpdev.quaklog.parser.GameParserException;
-import br.com.helpdev.quaklog.parser.objects.ClientDisconnectObParser;
+import br.com.helpdev.quaklog.processor.parser.GameParserException;
+import br.com.helpdev.quaklog.processor.parser.impl.ClientDisconnectParser;
+import br.com.helpdev.quaklog.processor.parser.objects.ClientDisconnectObParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

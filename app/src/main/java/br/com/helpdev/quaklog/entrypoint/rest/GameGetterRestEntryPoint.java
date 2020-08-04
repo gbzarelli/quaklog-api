@@ -1,13 +1,10 @@
 package br.com.helpdev.quaklog.entrypoint.rest;
 
 import br.com.helpdev.quaklog.configuration.SwaggerConfig;
-import br.com.helpdev.quaklog.entity.vo.GameUUID;
 import br.com.helpdev.quaklog.entrypoint.GameGetterEntryPoint;
-import br.com.helpdev.quaklog.entrypoint.dto.GameDTO;
-import br.com.helpdev.quaklog.entrypoint.dto.SimpleListGamesDTO;
-import br.com.helpdev.quaklog.entrypoint.mapper.GameMapper;
-import br.com.helpdev.quaklog.entrypoint.mapper.SimpleGamesMapper;
 import br.com.helpdev.quaklog.usecase.GameGetterUseCase;
+import br.com.helpdev.quaklog.usecase.dto.GameDTO;
+import br.com.helpdev.quaklog.usecase.dto.SimpleListGamesDTO;
 import io.swagger.annotations.Api;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(RestConstants.PATH_GAME)
@@ -33,21 +31,20 @@ class GameGetterRestEntryPoint implements GameGetterEntryPoint {
     @Override
     @GetMapping("/date/{date}")
     public SimpleListGamesDTO searchGameByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) final LocalDate date) {
-        return SimpleGamesMapper.toDTO(useCase.getGamesByDate(date));
+        return useCase.getGamesByDate(date);
     }
 
 
     @GetMapping(value = "/{uuid}")
     public ResponseEntity<GameDTO> getGameByUUIDEndpoint(@PathVariable final String uuid) {
-        return getGameByUUID(uuid)
+        return getGameByUUID(UUID.fromString(uuid))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @Override
-    public Optional<GameDTO> getGameByUUID(final String uuid) {
-        return useCase.getGameByUUID(GameUUID.of(uuid))
-                .map(GameMapper::toDTO);
+    public Optional<GameDTO> getGameByUUID(final UUID uuid) {
+        return useCase.getGameByUUID(uuid);
 
     }
 }

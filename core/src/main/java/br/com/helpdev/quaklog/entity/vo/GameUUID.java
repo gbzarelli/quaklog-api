@@ -9,6 +9,10 @@ public class GameUUID {
     private final UUID uuid;
 
     public static GameUUID of(final String uuid) {
+        return new GameUUID(UUID.fromString(uuid));
+    }
+
+    public static GameUUID of(final UUID uuid) {
         return new GameUUID(uuid);
     }
 
@@ -16,8 +20,8 @@ public class GameUUID {
         return new GameUUID();
     }
 
-    private GameUUID(final String uuid) {
-        this.uuid = UUID.fromString(uuid);
+    public GameUUID(final UUID uuid) {
+        this.uuid = uuid;
     }
 
     private GameUUID() {

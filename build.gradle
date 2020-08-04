@@ -16,7 +16,7 @@ buildscript {
 }
 
 group 'br.com.helpdev'
-version '1.0.0'
+version '1.1.0'
 description = "API para importação e consulta de arquivos de log do jogo Quake"
 
 allprojects {
@@ -40,6 +40,7 @@ subprojects {
                 mockito : '1.10.19',
                 lombok  : '1.18.10',
                 caffeine: '2.8.0',
+                jackson : '2.11.1'
         ]
 
         libs = [
@@ -70,6 +71,7 @@ subprojects {
                         "org.springframework.boot:spring-boot-configuration-processor:${versions.spring}",
                 ],
                 communs_libs                : [
+                        "com.fasterxml.jackson.core:jackson-annotations:${versions.jackson}",
                         "org.projectlombok:lombok:${versions.lombok}"
                 ],
                 communs_annotation_pŕocessor: [

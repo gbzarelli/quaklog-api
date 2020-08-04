@@ -1,5 +1,6 @@
 package br.com.helpdev.quaklog.parser;
 
+import br.com.helpdev.quaklog.processor.parser.GameRegexUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -14,37 +15,37 @@ class GameRegexUtilsTest {
 
     @Test
     void shouldExtractParametersFromClientChangedWithSuccess() {
-        Map<String, String> map = GameRegexUtils.extractPairsMap("\\", CLIENT_USER_INFO_CHANGED);
+        final var map = GameRegexUtils.extractPairsMap("\\", CLIENT_USER_INFO_CHANGED);
         assertValuesClient(map);
     }
 
     @Test
     void shouldExtractParametersFromInitGameWithSuccess() {
-        Map<String, String> map = GameRegexUtils.extractPairsMap("\\", INIT_GAME);
+        final var map = GameRegexUtils.extractPairsMap("\\", INIT_GAME);
         assertValuesInitGame(map);
     }
 
     @Test
     void shouldExtractInvalidIntegerInExtractIntegerWhenHaveInvalidInput() {
-        Integer integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "", -1);
+        final var integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "", -1);
         assertEquals(-1, integer.intValue());
     }
 
     @Test
     void shouldExtractValidIntegerInExtractIntegerWithValidInput() {
-        Integer integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "00:00 ABC: 10 XXX", -1);
+        final var integer = GameRegexUtils.extractInteger(GameRegexUtils.SINGLE_ID_AFTER_KEY_PATTERN, "00:00 ABC: 10 XXX", -1);
         assertEquals(10, integer.intValue());
     }
 
     @Test
     void shouldExtractNullObjectInExtractStringWhenExtractInvalidInput() {
-        String value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "");
+        final var value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "");
         assertNull(value);
     }
 
     @Test
     void shouldExtractValueStringInExtractStringWhenExtractInvalidInput() {
-        String value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "00:00 ABC: 10 XXX");
+        final var value = GameRegexUtils.extractString(GameRegexUtils.KEY_PATTERN, "00:00 ABC: 10 XXX");
         assertEquals("ABC", value);
     }
 
