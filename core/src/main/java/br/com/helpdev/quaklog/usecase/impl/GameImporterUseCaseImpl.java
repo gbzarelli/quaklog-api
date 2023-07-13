@@ -10,8 +10,8 @@ import br.com.helpdev.quaklog.usecase.GameImporterUseCase;
 import br.com.helpdev.quaklog.usecase.dto.GamesImportedDTO;
 import br.com.helpdev.quaklog.usecase.dto.mapper.GamesImportedMapper;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

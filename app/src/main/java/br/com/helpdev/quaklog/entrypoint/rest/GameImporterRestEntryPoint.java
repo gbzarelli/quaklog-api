@@ -1,11 +1,9 @@
 package br.com.helpdev.quaklog.entrypoint.rest;
 
-import br.com.helpdev.quaklog.configuration.SwaggerConfig;
 import br.com.helpdev.quaklog.entrypoint.GameImporterEntryPoint;
 import br.com.helpdev.quaklog.usecase.GameImporterUseCase;
 import br.com.helpdev.quaklog.usecase.dto.GamesImportedDTO;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +16,11 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping(RestConstants.PATH_GAME)
-@Api(tags = SwaggerConfig.TAG_GAME_ENTRY_POINT)
+@Api
 class GameImporterRestEntryPoint implements GameImporterEntryPoint<MultipartFile, ResponseEntity<GamesImportedDTO>> {
 
     private final GameImporterUseCase gameImporterUseCase;
 
-    @Autowired
     GameImporterRestEntryPoint(GameImporterUseCase gameImporterUseCase) {
         this.gameImporterUseCase = gameImporterUseCase;
     }

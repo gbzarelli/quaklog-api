@@ -1,6 +1,5 @@
 package br.com.helpdev.quaklog.entrypoint.rest;
 
-import br.com.helpdev.quaklog.configuration.SwaggerConfig;
 import br.com.helpdev.quaklog.entrypoint.GameGetterEntryPoint;
 import br.com.helpdev.quaklog.usecase.GameGetterUseCase;
 import br.com.helpdev.quaklog.usecase.dto.GameDTO;
@@ -19,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(RestConstants.PATH_GAME)
-@Api(tags = SwaggerConfig.TAG_GAME_ENTRY_POINT)
+@Api
 class GameGetterRestEntryPoint implements GameGetterEntryPoint {
 
     private final GameGetterUseCase useCase;

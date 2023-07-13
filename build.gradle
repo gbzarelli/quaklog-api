@@ -1,7 +1,9 @@
+import org.codehaus.groovy.runtime.GStringImpl
+
 buildscript {
     ext.artifactId = 'quaklog-api'
     ext.archive_extension = 'jar'
-    ext.archive_file_name = "${artifactId}.${archive_extension}"
+    ext.archive_file_name = "${artifactId}.${archive_extension}" as GStringImpl
 
     repositories {
         maven {
@@ -11,7 +13,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
+        classpath 'gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.12.2'
     }
 }
 
@@ -32,20 +34,20 @@ subprojects {
 
     ext {
         versions = [
-                junit   : "5.2.0",
+                junit   : "5.9.3",
                 assertj : "3.11.1",
-                spring  : "2.2.2.RELEASE",
-                swagger : '2.9.2',
-                inject  : '1',
-                mockito : '1.10.19',
-                lombok  : '1.18.10',
-                caffeine: '2.8.0',
-                jackson : '2.11.1'
+                spring  : "3.1.1",
+                swagger : '2.1.0',
+                inject  : '2.0.1',
+                mockito : '5.4.0',
+                lombok  : '1.18.28',
+                caffeine: '3.1.6',
+                jackson : '2.15.2'
         ]
 
         libs = [
                 inject                      : [
-                        "javax.inject:javax.inject:${versions.inject}"
+                        "jakarta.inject:jakarta.inject-api:${versions.inject}"
                 ],
                 spring_test                 : [
                         "org.springframework.boot:spring-boot-starter-test:${versions.spring}",
@@ -54,7 +56,7 @@ subprojects {
                         "org.junit.jupiter:junit-jupiter-api:${versions.junit}",
                         "org.junit.jupiter:junit-jupiter-params:${versions.junit}",
                         "org.junit.jupiter:junit-jupiter-engine:${versions.junit}",
-                        "org.mockito:mockito-all:${versions.mockito}"
+                        "org.mockito:mockito-core:${versions.mockito}"
 
                 ],
                 spring_config               : [
@@ -74,12 +76,12 @@ subprojects {
                         "com.fasterxml.jackson.core:jackson-annotations:${versions.jackson}",
                         "org.projectlombok:lombok:${versions.lombok}"
                 ],
-                communs_annotation_pŕocessor: [
+                communs_annotation_processor: [
                         "org.projectlombok:lombok:${versions.lombok}"
                 ],
                 entrypoint                  : [
                         "org.springframework.boot:spring-boot-starter-web:${versions.spring}",
-                        "io.springfox:springfox-swagger-ui:${versions.swagger}",
+                        "org.springdoc:springdoc-openapi-starter-webmvc-ui:${versions.swagger}",
                 ],
                 database                    : [
                         "org.springframework.boot:spring-boot-starter-data-mongodb:${versions.spring}",
@@ -89,33 +91,28 @@ subprojects {
 
     test {
         useJUnitPlatform()
+        finalizedBy jacocoTestReport
     }
 
     jacocoTestReport {
-        reports {
-            html.enabled = true // human readable
-            xml.enabled = true // required by coveralls
-        }
+        dependsOn test
     }
 }
 
-task jacocoRootReport(type: JacocoReport) {
+tasks.register('jacocoRootReport', JacocoReport) {
     description = 'Generates an aggregate report from all subprojects'
     dependsOn = subprojects.test
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
     sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
     classDirectories = files(subprojects.sourceSets.main.output)
     executionData = files(subprojects.jacocoTestReport.executionData)
     reports {
-        html.enabled = true // human readable
-        xml.enabled = true // required by coveralls
+        html.required = true // human readable
+        xml.required = true // required by coveralls
     }
 }
 
 coveralls {
     sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
-}
-
-wrapper {
-    gradleVersion = '5.5.1'
 }

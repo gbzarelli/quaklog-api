@@ -1,12 +1,12 @@
 description = "Casos de uso do projeto"
 
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 dependencies {
     implementation libs.inject
     implementation libs.communs_libs
 
-    annotationProcessor libs.communs_annotation_pŕocessor
+    annotationProcessor libs.communs_annotation_processor
 
     testImplementation libs.unit_test
 }

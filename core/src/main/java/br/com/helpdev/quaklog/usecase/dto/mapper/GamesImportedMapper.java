@@ -4,7 +4,7 @@ import br.com.helpdev.quaklog.entity.GamesImported;
 import br.com.helpdev.quaklog.entity.vo.GameUUID;
 import br.com.helpdev.quaklog.usecase.dto.GamesImportedDTO;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

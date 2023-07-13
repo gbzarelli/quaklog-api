@@ -1,10 +1,10 @@
 //https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#getting-started
 plugins {
-    id 'org.springframework.boot' version '2.2.2.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.springframework.boot' version '3.1.1'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 //Generate jar with other name
 bootJar {
@@ -12,7 +12,7 @@ bootJar {
 }
 
 //task to copy jar to root build dir
-task copyBootJar(type: Copy) {
+tasks.register('copyBootJar', Copy) {
     from bootJar
     into rootProject.buildDir
 }
@@ -28,16 +28,6 @@ processResources {
     }
 }
 
-jacocoTestReport {
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                    'br.com.helpdev.quakelog/QuaklogApiApplication**'
-            ])
-        })
-    }
-}
-
 dependencies {
     implementation project(":core")
 
@@ -49,7 +39,7 @@ dependencies {
     implementation libs.inject
 
     annotationProcessor libs.spring_annotation_processor
-    annotationProcessor libs.communs_annotation_pŕocessor
+    annotationProcessor libs.communs_annotation_processor
 
     testImplementation libs.spring_test
     testImplementation libs.unit_test

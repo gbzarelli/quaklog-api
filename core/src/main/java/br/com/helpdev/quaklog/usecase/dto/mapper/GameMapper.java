@@ -6,7 +6,7 @@ import br.com.helpdev.quaklog.usecase.dto.KillHistoryDTO;
 import br.com.helpdev.quaklog.usecase.dto.PlayerDTO;
 import br.com.helpdev.quaklog.usecase.dto.PlayerStatusDTO;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -6,7 +6,7 @@ import br.com.helpdev.quaklog.usecase.dto.SimpleGameDTO;
 import br.com.helpdev.quaklog.usecase.dto.SimpleListGamesDTO;
 import br.com.helpdev.quaklog.usecase.dto.SimplePlayerDTO;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
