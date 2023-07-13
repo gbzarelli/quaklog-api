@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: openjdk:11-jdk
+      - image: openjdk:17-jdk
 
     working_directory: ~/repo
 
