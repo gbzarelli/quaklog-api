@@ -12,7 +12,7 @@ import br.com.helpdev.quaklog.processor.GameParseProcessor;
 import br.com.helpdev.quaklog.processor.parser.objects.*;
 
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.time.LocalDate;
 
 @Named

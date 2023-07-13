@@ -8,7 +8,7 @@ import br.com.helpdev.quaklog.usecase.dto.SimpleListGamesDTO;
 import br.com.helpdev.quaklog.usecase.dto.mapper.GameMapper;
 import br.com.helpdev.quaklog.usecase.dto.mapper.SimpleGamesMapper;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
