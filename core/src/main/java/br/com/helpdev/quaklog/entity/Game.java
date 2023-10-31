@@ -6,10 +6,12 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Getter
 public class Game extends Notifiable {
@@ -24,7 +26,8 @@ public class Game extends Notifiable {
     private final GameTime endGameTime;
 
     private Game(final GameBuilder builder) {
-        this.players = List.copyOf(builder.players.values());
+        this.players = List.copyOf(builder.players.values().stream().sorted(
+            Comparator.comparing(PlayerInGame::getId)).collect(Collectors.toList()));
         this.gameParameters = Collections.unmodifiableMap(builder.gameParameters);
         this.totalKills = builder.totalKills.get();
         this.startGameTime = builder.startGameTime;
